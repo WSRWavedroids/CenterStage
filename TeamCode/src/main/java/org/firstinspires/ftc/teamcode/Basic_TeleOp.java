@@ -157,7 +157,7 @@ public class Basic_TeleOp extends OpMode {
             robot.turntable.setPower(0);
         }
 
-//other possible code is this without this
+        //other possible code is this without this
         if (this.gamepad2.b) {
             robot.openAndCloseClaw(0.8);
         } else if (this.gamepad2.a) {
