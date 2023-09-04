@@ -38,7 +38,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Robot;
 //import org.firstinspires.ftc.teamcode.Autonomous.AprilTags.MayFlowers;
 
-
 /**
  * This is the autonomous mode. It moves the robot without us having to touch the controller.
  * Previous programmers really sucked at explaining what any of this meant, so we're trying to do better.
