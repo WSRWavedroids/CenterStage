@@ -41,6 +41,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 /**
  * This is the autonomous mode. It moves the robot without us having to touch the controller.
  * Previous programmers really sucked at explaining what any of this meant, so we're trying to do better.
+ * This is our third year now of using this file. It's kind of poetic and also adorable.
  */
 
 public class AutonomousPLUS extends LinearOpMode {
