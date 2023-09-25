@@ -185,7 +185,7 @@ public class Basic_TeleOp extends OpMode {
             return;
         }
         robot.frontLeftDrive.setPower(-motorPowers[0]);
-        robot.frontRightDrive.setPower(-motorPowers[1]);
+        robot.frontRightDrive.setPower(-motorPowers[1]);               
         robot.backLeftDrive.setPower(-motorPowers[2]);
         robot.backRightDrive.setPower(-motorPowers[3]);
     }
