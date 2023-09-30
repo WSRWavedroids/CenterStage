@@ -58,7 +58,6 @@ public class AutonomousPLUS extends LinearOpMode {
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!
     public Robot robot = new Robot();
-    //public MayFlowers MayFlowers = new MayFlowers();
 
     @Override
     public void runOpMode() {

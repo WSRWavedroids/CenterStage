@@ -9,8 +9,18 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.android.util.Size;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
+import org.firstinspires.ftc.vision.apriltag.AprilTagLibrary;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
+import java.lang.reflect.Array;
+import java.util.List;
 import java.util.Objects;
 
 public class Robot {
@@ -50,17 +60,6 @@ public class Robot {
         frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
-        slide = hardwareMap.get(DcMotor.class, "slide");
-        turntable = hardwareMap.get(DcMotor.class, "turntable");
-        whiteClaw = hardwareMap.get(Servo.class, "whiteClaw");
-
-        //this.frontLeftDrive = frontLeftDrive;
-        //this.frontRightDrive = frontRightDrive;
-        //this.backLeftDrive = backLeftDrive;
-        //this.backRightDrive = backRightDrive;
-        //this.slide = slide;
-        //this.turntable = turntable;
-        //this.whiteClaw = whiteClaw;
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -214,6 +213,67 @@ public class Robot {
     public void holdArm(){
         slide.setDirection(DcMotor.Direction.REVERSE);
         slide.setPower(0.1);
+    }
+
+    public void showersAndFlowers(){
+
+        AprilTagProcessor OSHAmobile;
+
+        OSHAmobile = new AprilTagProcessor.Builder()
+                .setTagLibrary(AprilTagGameDatabase.getCurrentGameTagLibrary())
+                .setDrawTagID(true)
+                .setDrawTagOutline(true)
+                .setDrawAxes(true)
+                .setDrawCubeProjection(true)
+                .build();
+    }
+
+    public void tensorFlowDetection(){
+
+        TfodProcessor safetyGlasses;
+
+        safetyGlasses = new TfodProcessor.Builder()
+                .setMaxNumRecognitions(10)
+                .setUseObjectTracker(true)
+                .setTrackerMaxOverlap((float) 0.2)
+                .setTrackerMinSize(16)
+                .build();
+    }
+
+    public void visionPortal(AprilTagProcessor aprilTagProcessor, TfodProcessor tfodProcessor){
+        VisionPortal Oracle;
+
+        /*
+        myVisionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Cam Cam"))
+                .addProcessor(aprilTagProcessor)
+                .setCameraResolution(new Size(640, 480))
+                .setStreamFormat(VisionPortal.StreamFormat.YUY2)
+                .enableCameraMonitoring(true)
+                .setAutoStopLiveView(true)
+                .build();
+         */
+
+        Oracle = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Cam Cam"), aprilTagProcessor, tfodProcessor);
+    }
+
+    public void retrieveAprilTags(AprilTagProcessor ATP){
+        List<AprilTagDetection> ATDS;         // list of all detections // current detection in for() loop
+        int SPOTnum;                           // ID code of current detection, in for() loop
+
+        // Get a list of AprilTag detections.
+        ATDS = ATP.getDetections();
+
+        // Cycle through through the list and process each AprilTag.
+        for (AprilTagDetection SPOT : ATDS) {
+
+            if (SPOT.metadata != null) {  // This check for non-null Metadata is not needed for reading only ID code.
+                SPOTnum = SPOT.id;
+
+                // Now take action based on this tag's ID code, or store info for later action.
+
+            }
+        }
     }
 
 
