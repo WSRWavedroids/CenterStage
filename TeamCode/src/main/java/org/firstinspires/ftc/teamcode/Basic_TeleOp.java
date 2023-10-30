@@ -61,7 +61,7 @@ public class Basic_TeleOp extends OpMode {
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
-    public Robot robot = new Robot();
+    public Robot robot = null;
 
 
     /*
@@ -69,9 +69,8 @@ public class Basic_TeleOp extends OpMode {
      */
     @Override
     public void init() {
-
         // Call the initialization protocol from the Robot class.
-        robot.init(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry, this);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -158,10 +157,10 @@ public class Basic_TeleOp extends OpMode {
         }
 
         //other possible code is this without this
-        if (this.gamepad2.b) {
-            robot.openAndCloseClaw(0.8);
-        } else if (this.gamepad2.a) {
-            robot.openAndCloseClaw(1);
+        if (this.gamepad2.x) {
+            robot.whiteClaw.setPosition(0);
+        } else if (this.gamepad2.y) {
+            robot.whiteClaw.setPosition(1);
         }
 
     }
@@ -217,10 +216,10 @@ public class Basic_TeleOp extends OpMode {
 
         } else if (robot.controlMode == "Field Centric") {
 
-            motorPowers[0] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
-            motorPowers[1] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
-            motorPowers[2] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
-            motorPowers[3] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
+            //motorPowers[0] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
+            //motorPowers[1] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
+            //motorPowers[2] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
+           // motorPowers[3] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
 
         }
 

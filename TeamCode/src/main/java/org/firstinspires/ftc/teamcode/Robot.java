@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.annotation.SuppressLint;
+import android.util.Size;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.android.util.Size;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -44,12 +45,7 @@ public class Robot {
 
 
     //construct robot
-    public Robot() {
-
-    }
-
-    //Initialize motors and servos
-    public void init(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
         this.opmode = opmode;
@@ -60,6 +56,7 @@ public class Robot {
         frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
+        whiteClaw = hardwareMap.get(Servo.class, "whiteClaw");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -79,6 +76,14 @@ public class Robot {
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         telemetry.addData("Status", "Initialized");
+
+        encoderReset();
+        encoderRunningMode();
+
+    }
+
+    //Initialize motors and servos
+    public void init(){
 
     }
 
@@ -201,12 +206,13 @@ public class Robot {
     }
 
     public void moveArm(String direction){
-        if (direction == "Up"){
+        if (Objects.equals(direction, "Up")){
             slide.setPower(0.75);
             slide.setDirection(DcMotor.Direction.REVERSE);
-        } else if (direction == "Down"){
+        } else if (Objects.equals(direction, "Down")){
             slide.setPower(0.25);
             slide.setDirection(DcMotor.Direction.FORWARD);
+            //May blow up
         }
     }
 
@@ -220,7 +226,7 @@ public class Robot {
         AprilTagProcessor OSHAmobile;
 
         OSHAmobile = new AprilTagProcessor.Builder()
-                .setTagLibrary(AprilTagGameDatabase.getCurrentGameTagLibrary())
+                .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
                 .setDrawTagID(true)
                 .setDrawTagOutline(true)
                 .setDrawAxes(true)
@@ -243,18 +249,18 @@ public class Robot {
     public void visionPortal(AprilTagProcessor aprilTagProcessor, TfodProcessor tfodProcessor){
         VisionPortal Oracle;
 
-        /*
-        myVisionPortal = new VisionPortal.Builder()
+        Oracle = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Cam Cam"))
                 .addProcessor(aprilTagProcessor)
                 .setCameraResolution(new Size(640, 480))
                 .setStreamFormat(VisionPortal.StreamFormat.YUY2)
-                .enableCameraMonitoring(true)
+                .enableLiveView(true)
+//.enableCameraMonitoring(true)
                 .setAutoStopLiveView(true)
                 .build();
-         */
 
-        Oracle = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Cam Cam"), aprilTagProcessor, tfodProcessor);
+
+        //Oracle = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Cam Cam"), aprilTagProcessor, tfodProcessor);
     }
 
     public void retrieveAprilTags(AprilTagProcessor ATP){
@@ -270,6 +276,7 @@ public class Robot {
             if (SPOT.metadata != null) {  // This check for non-null Metadata is not needed for reading only ID code.
                 SPOTnum = SPOT.id;
 
+                String name = SPOT.metadata.name;
                 // Now take action based on this tag's ID code, or store info for later action.
 
             }
