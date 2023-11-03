@@ -58,18 +58,14 @@ public class AutonomousPLUS extends LinearOpMode {
     public double slidePos;
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!
-    public Robot robot = new Robot();
+    public Robot robot = null;
 
     @Override
     public void runOpMode() {
-        robot.init(hardwareMap, telemetry, this);
-        robot.encoderReset();
-        robot.encoderRunningMode();
+        robot = new Robot(hardwareMap, telemetry, this);
     }
 
-    public void makeItWork(HardwareMap hardwareMap, Telemetry telemetry, OpMode opMode) {
-        robot.init(hardwareMap, telemetry, opMode);
-    }
+
 
     //I think the setTargets Function is broken. Motors don't stop at the right place
     public void moveRobotForward(int ticks, long pause) {
