@@ -65,8 +65,6 @@ public class AutonomousPLUS extends LinearOpMode {
         robot = new Robot(hardwareMap, telemetry, this);
     }
 
-
-
     //I think the setTargets Function is broken. Motors don't stop at the right place
     public void moveRobotForward(int ticks, long pause) {
         if (opModeIsActive()) {

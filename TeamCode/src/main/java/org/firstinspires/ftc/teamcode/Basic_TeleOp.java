@@ -61,7 +61,7 @@ public class Basic_TeleOp extends OpMode {
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
-    public Robot robot = new Robot();
+    public Robot robot = null;
 
 
     /*
@@ -71,7 +71,7 @@ public class Basic_TeleOp extends OpMode {
     public void init() {
 
         // Call the initialization protocol from the Robot class.
-        robot.init(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry, this);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");

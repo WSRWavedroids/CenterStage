@@ -51,14 +51,8 @@ public class Robot {
     public String startingPosition;
     public String controlMode = "Robot Centric";
 
-
-    //construct robot
-    public Robot() {
-
-    }
-
     //Initialize motors and servos
-    public void init(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
         this.opmode = opmode;
