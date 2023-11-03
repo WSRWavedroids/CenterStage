@@ -154,10 +154,10 @@ public class Basic_TeleOp extends OpMode {
         //We need to switch out these motor functions for servo stuff... Idk the position we need
         if (gamepad2.y){ // lower
             //robot.armL.setPosition(1);
-           robot.rotateRightArm(.3); // Down 3.5 before
+           robot.rotateRightArm(0.5); // Down 3.5 before // perfect
 
         } else if (gamepad2.x) { //Raise
-            robot.rotateRightArm(0.6); // Just Guesses 68 too steepo
+            robot.rotateRightArm(0.7); // Just Guesses 68 too steepo
             //robot.rotateLeftArm(0.6);
         }
         /*else {
