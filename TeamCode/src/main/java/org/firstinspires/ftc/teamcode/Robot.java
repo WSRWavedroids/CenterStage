@@ -203,7 +203,7 @@ public class Robot {
 
     public void rotateLeftArm(double position) // Rememeber these are opposite directions
     {
-        armR.setPosition(position);
+        armL.setPosition(position);
     }
 
     public void encoderRunningMode(){

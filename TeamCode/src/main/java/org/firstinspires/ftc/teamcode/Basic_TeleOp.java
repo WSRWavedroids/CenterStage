@@ -152,12 +152,12 @@ public class Basic_TeleOp extends OpMode {
 
         //Moves the turntable based on the x-coordinate of the right joystick
         //We need to switch out these motor functions for servo stuff... Idk the position we need
-        if (gamepad2.y){ // lower
+        if (gamepad2.y){ // up
             //robot.armL.setPosition(1);
-           robot.rotateRightArm(0.5); // Down 3.5 before // perfect
+           robot.rotateLeftArm(0.29); // was .3 but too shallow
 
-        } else if (gamepad2.x) { //Raise
-            robot.rotateRightArm(0.7); // Just Guesses 68 too steepo
+        } else if (gamepad2.x) { //lower
+            robot.rotateLeftArm(0.49); //
             //robot.rotateLeftArm(0.6);
         }
         /*else {
