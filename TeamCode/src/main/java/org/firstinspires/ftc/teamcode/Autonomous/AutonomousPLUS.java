@@ -68,7 +68,7 @@ public class AutonomousPLUS extends LinearOpMode {
     //I think the setTargets Function is broken. Motors don't stop at the right place
     public void moveRobotForward(int ticks, long pause) {
         if (opModeIsActive()) {
-            robot.setTargets("Forward", ticks);
+            robot.setTargets("Backward", ticks);
             robot.positionRunningMode();
         }
         robot.powerSet(speed);
@@ -86,7 +86,7 @@ public class AutonomousPLUS extends LinearOpMode {
 
     public void moveRobotBackward(int ticks, long pause) {
         if (opModeIsActive()) {
-            robot.setTargets("Backward", ticks);
+            robot.setTargets("Forward", ticks);
             robot.positionRunningMode();
             robot.powerSet(speed);
 
@@ -105,7 +105,7 @@ public class AutonomousPLUS extends LinearOpMode {
     public void moveRobotLeft(int ticks, long pause) {
 
         if (opModeIsActive()) {
-            robot.setTargets("Left", ticks);
+            robot.setTargets("Right", ticks);
             robot.positionRunningMode();
             robot.powerSet(speed);
 
@@ -123,7 +123,7 @@ public class AutonomousPLUS extends LinearOpMode {
     public void moveRobotRight(int ticks, long pause) {
 
         if (opModeIsActive()) {
-            robot.setTargets("Right", ticks);
+            robot.setTargets("Left", ticks);
             robot.positionRunningMode();
             robot.powerSet(speed);
 
