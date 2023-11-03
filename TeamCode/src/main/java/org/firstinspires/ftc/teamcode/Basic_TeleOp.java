@@ -55,13 +55,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
  * did a horrible job of doing that.
  */
 
-@TeleOp(name="Fission our WAVE to Worlds! :)", group="CompBot")
+@TeleOp(name="CenterStage Chonk Drive :)", group="CompBot")
 public class Basic_TeleOp extends OpMode {
 
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
-    public Robot robot = new Robot();
+    public Robot robot = null;
 
 
     /*
@@ -70,7 +70,7 @@ public class Basic_TeleOp extends OpMode {
     public void init() {
 
         // Call the initialization protocol from the Robot class.
-        robot.init(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry, this);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -137,28 +137,40 @@ public class Basic_TeleOp extends OpMode {
         }
 
         if (gamepad2.left_stick_y < -0.5){
-            robot.slide.setPower(-armStickY * 0.75);
+            robot.slideL.setPower(-armStickY * 0.75);
+            robot.slideR.setPower(-armStickY * 0.75);
         } else if (gamepad2.left_stick_y > 0.5){
-            robot.slide.setPower(-armStickY * 0.75);
+            robot.slideL.setPower(-armStickY * 0.75);
+            robot.slideR.setPower(-armStickY * 0.75);
         } else {
             robot.holdArm();
         }
 
         //Moves the turntable based on the x-coordinate of the right joystick
-        if (gamepad2.right_stick_x < -0.5){
-            robot.turntable.setPower(turntableStickX * 0.40);
-        } else if (gamepad2.right_stick_x > 0.5){
-            robot.turntable.setPower(turntableStickX * 0.40);
-        } else {
-            robot.turntable.setPower(0);
+        //We need to switch out these motor functions for servo stuff... Idk the position we need
+        if (gamepad2.y){ // up
+            //robot.armL.setPosition(1);
+           robot.rotateLeftArm(0.29); // was .3 but too shallow
+
+        } else if (gamepad2.x) { //lower
+            robot.rotateLeftArm(0.49); //
+            //robot.rotateLeftArm(0.6);
         }
+        /*else {
+            robot.armR.setPosition(0);
+            robot.armL.setPosition(0);
+        }
+        */
+
 
         //other possible code is this without this
-        if (this.gamepad2.b) {
-            robot.openAndCloseClaw(0.8);
-        } else if (this.gamepad2.a) {
-            robot.openAndCloseClaw(1);
+        if (this.gamepad2.b) { // open
+            robot.openClaw();
+        } else if (this.gamepad2.a) {//close
+            robot.closeClaw();
         }
+
+
 
     }
 
@@ -180,7 +192,7 @@ public class Basic_TeleOp extends OpMode {
             return;
         }
         robot.frontLeftDrive.setPower(-motorPowers[0]);
-        robot.frontRightDrive.setPower(-motorPowers[1]);
+        robot.frontRightDrive.setPower(-motorPowers[1]);               
         robot.backLeftDrive.setPower(-motorPowers[2]);
         robot.backRightDrive.setPower(-motorPowers[3]);
     }
@@ -195,7 +207,7 @@ public class Basic_TeleOp extends OpMode {
 
         double leftStickAngle = Math.atan2(leftY, leftX);
         double leftStickMagnitude = Math.sqrt(leftX * 2.0 + leftY * 2.0);
-        double robotAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle;
+        //double robotAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle;
 
         if (leftStickMagnitude > 1){
             leftStickMagnitude = 1;
@@ -211,12 +223,12 @@ public class Basic_TeleOp extends OpMode {
             motorPowers[3] = (leftY + leftX - rightX);
 
         } else if (robot.controlMode == "Field Centric") {
-
+            /*
             motorPowers[0] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
             motorPowers[1] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
             motorPowers[2] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
             motorPowers[3] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
-
+            */
         }
 
         float max = getLargestAbsVal(motorPowers);

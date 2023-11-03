@@ -5,12 +5,23 @@ import android.annotation.SuppressLint;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.android.util.Size;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
+import org.firstinspires.ftc.vision.apriltag.AprilTagLibrary;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
+import java.lang.reflect.Array;
+import java.util.List;
 import java.util.Objects;
 
 public class Robot {
@@ -19,11 +30,19 @@ public class Robot {
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-    public DcMotor slide;
-    public DcMotor turntable;
-    public Servo whiteClaw;
+    public DcMotor slideL;
+    public DcMotor slideR;
+
+
+    public Servo leftClaw;
+    public Servo rightClaw;
+
+    public Servo armL;
+
+    public Servo armR;
+
     public Telemetry telemetry;
-    public BNO055IMU imu;
+    //public BNO055IMU imu;
 
     //init and declare war
     public OpMode opmode;
@@ -32,14 +51,8 @@ public class Robot {
     public String startingPosition;
     public String controlMode = "Robot Centric";
 
-
-    //construct robot
-    public Robot() {
-
-    }
-
     //Initialize motors and servos
-    public void init(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
         this.opmode = opmode;
@@ -50,28 +63,27 @@ public class Robot {
         frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
-        slide = hardwareMap.get(DcMotor.class, "slide");
-        turntable = hardwareMap.get(DcMotor.class, "turntable");
-        whiteClaw = hardwareMap.get(Servo.class, "whiteClaw");
+        slideL = hardwareMap.get(DcMotor.class, "slideL");
+        slideR = hardwareMap.get(DcMotor.class, "slideR");
+        armL = hardwareMap.get(Servo.class, "armL");
+        armR = hardwareMap.get(Servo.class, "armR");
+        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
+        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
 
-        //this.frontLeftDrive = frontLeftDrive;
-        //this.frontRightDrive = frontRightDrive;
-        //this.backLeftDrive = backLeftDrive;
-        //this.backRightDrive = backRightDrive;
-        //this.slide = slide;
-        //this.turntable = turntable;
-        //this.whiteClaw = whiteClaw;
-
+        //add arms to map
+        /*
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-
+        */
         // This section sets the direction of all of the motors. Depending on the motor, this may change later in the program.
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
+        slideR.setDirection(DcMotor.Direction.FORWARD);
 
         // This tells the motors to chill when we're not powering them.
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -134,11 +146,13 @@ public class Robot {
             backRightDrive.setTargetPosition(ticks - backRightDrive.getCurrentPosition());
 
         } else if (direction == "Arm"){
-            slide.setTargetPosition(ticks + slide.getCurrentPosition());
+            slideL.setTargetPosition(ticks + slideL.getCurrentPosition());
+            slideR.setTargetPosition(ticks + slideR.getCurrentPosition());
 
-        } else if (direction == "Turntable"){
-            turntable.setTargetPosition(-ticks + turntable.getCurrentPosition());
-        }
+        } /*else if (direction == "Turntable"){
+            robot.open
+            armR.setTargetPosition(-ticks + armR.getCurrentPosition());
+        }*/
 
     }
 
@@ -157,14 +171,39 @@ public class Robot {
 
     }
 
-    public void openAndCloseClaw (double position){
-        whiteClaw.setPosition(position);
+    public void openAndCloseLeftClaw (double position){
+        leftClaw.setPosition(position);
+        //rightClaw.setPosition(position);
 
         if (position == 0){
             telemetry.addData("Claw", "Closed");
         } else if (position >= 0.3){
             telemetry.addData("Claw", "Open");
         }
+
+    }
+
+    public void openAndCloseRightClaw (double position) {
+        //leftClaw.setPosition(position);
+        rightClaw.setPosition(position);
+
+
+
+        if (position == 0) {
+            telemetry.addData("Claw", "Closed");
+        } else if (position >= 0.3) {
+            telemetry.addData("Claw", "Open");
+        }
+    }
+
+    public void rotateRightArm(double position) // Remeber these are opposite directions
+    {
+        armR.setPosition(position);
+    }
+
+    public void rotateLeftArm(double position) // Rememeber these are opposite directions
+    {
+        armL.setPosition(position);
     }
 
     public void encoderRunningMode(){
@@ -189,9 +228,12 @@ public class Robot {
         telemetry.addData("Motors", String.format("FR Power(%.2f) FR Location (%d) FR Target (%d)", frontRightDrive.getPower(), frontRightDrive.getCurrentPosition(), frontRightDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BL Power(%.2f) BL Location (%d) BL Target (%d)", backLeftDrive.getPower(), backLeftDrive.getCurrentPosition(), backLeftDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", backRightDrive.getPower(), backRightDrive.getCurrentPosition(), backRightDrive.getTargetPosition()));
-        telemetry.addData("Motors", String.format("Arm Power (%.2f) Arm Location (%d) Arm Target (%d)", slide.getPower(), slide.getCurrentPosition(), slide.getTargetPosition()));
-        telemetry.addData("Motors", String.format("Turntable (%.2f) Turntable Location (%d) Turntable Target (%d)", turntable.getPower(), turntable.getCurrentPosition(), turntable.getTargetPosition()));
-        telemetry.addData("Claw", whiteClaw.getPosition());
+        telemetry.addData("Motors", String.format("SlideL Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
+        telemetry.addData("Motors", String.format("SlideR Power (%.2f) Arm Location (%d) Arm Target (%d)", slideR.getPower(), slideR.getCurrentPosition(), slideR.getTargetPosition()));
+        telemetry.addData("ArmL", armL.getPosition());
+        telemetry.addData("ArmR", armR.getPosition());
+        telemetry.addData("ClawL", leftClaw.getPosition());
+        telemetry.addData("ClawR", rightClaw.getPosition());
         telemetry.update();
     }
 
@@ -200,20 +242,100 @@ public class Robot {
         return ((inches/12.25) * 537.6 / .5);
         //todo Reference that 1 inch ~= 50 ticks
     }
-
+// one side may be backwards due to the direction that the motor was faced
     public void moveArm(String direction){
         if (direction == "Up"){
-            slide.setPower(0.75);
-            slide.setDirection(DcMotor.Direction.REVERSE);
+            slideL.setPower(0.75);
+            slideL.setDirection(DcMotor.Direction.FORWARD);//inverted
+            slideR.setPower(0.75);
+            slideR.setDirection(DcMotor.Direction.REVERSE);
         } else if (direction == "Down"){
-            slide.setPower(0.25);
-            slide.setDirection(DcMotor.Direction.FORWARD);
+            slideL.setPower(0.25);
+            slideL.setDirection(DcMotor.Direction.REVERSE);//Inverted
+            slideR.setPower(0.25);
+            slideR.setDirection(DcMotor.Direction.FORWARD);
         }
     }
 
     public void holdArm(){
-        slide.setDirection(DcMotor.Direction.REVERSE);
-        slide.setPower(0.1);
+        slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
+        slideL.setPower(0.1);
+        slideR.setDirection(DcMotor.Direction.REVERSE);
+        slideR.setPower(0.1);
+    }
+
+
+    public void closeClaw()
+    {
+        openAndCloseRightClaw(0.58); //Moves right claw left GOOD DONE
+        openAndCloseLeftClaw(0.38); // //Moves left claw right
+    }
+
+    public void openClaw()
+    {
+        openAndCloseLeftClaw(0.5); //Moves left claw left
+        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE .3 was good
+    }
+
+    public void showersAndFlowers(){
+
+        AprilTagProcessor OSHAmobile;
+
+        OSHAmobile = new AprilTagProcessor.Builder()
+                .setTagLibrary(AprilTagGameDatabase.getCurrentGameTagLibrary())
+                .setDrawTagID(true)
+                .setDrawTagOutline(true)
+                .setDrawAxes(true)
+                .setDrawCubeProjection(true)
+                .build();
+    }
+
+    public void tensorFlowDetection(){
+
+        TfodProcessor safetyGlasses;
+
+        safetyGlasses = new TfodProcessor.Builder()
+                .setMaxNumRecognitions(10)
+                .setUseObjectTracker(true)
+                .setTrackerMaxOverlap((float) 0.2)
+                .setTrackerMinSize(16)
+                .build();
+    }
+
+    public void visionPortal(AprilTagProcessor aprilTagProcessor, TfodProcessor tfodProcessor){
+        VisionPortal Oracle;
+
+        /*
+        myVisionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Cam Cam"))
+                .addProcessor(aprilTagProcessor)
+                .setCameraResolution(new Size(640, 480))
+                .setStreamFormat(VisionPortal.StreamFormat.YUY2)
+                .enableCameraMonitoring(true)
+                .setAutoStopLiveView(true)
+                .build();
+         */
+
+        Oracle = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Cam Cam"), aprilTagProcessor, tfodProcessor);
+    }
+
+    public void retrieveAprilTags(AprilTagProcessor ATP){
+        List<AprilTagDetection> ATDS;         // list of all detections // current detection in for() loop
+        int SPOTnum;                           // ID code of current detection, in for() loop
+
+        // Get a list of AprilTag detections.
+        ATDS = ATP.getDetections();
+
+        // Cycle through through the list and process each AprilTag.
+        for (AprilTagDetection SPOT : ATDS) {
+
+            if (SPOT.metadata != null) {  // This check for non-null Metadata is not needed for reading only ID code.
+                SPOTnum = SPOT.id;
+
+                // Now take action based on this tag's ID code, or store info for later action.
+
+            }
+        }
     }
 
 
