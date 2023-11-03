@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -187,17 +188,26 @@ public class AutonomousPLUS extends LinearOpMode {
 
     public void moveArm(String direction, double power) {
         if (direction == "Up") {
-            robot.slide.setDirection(DcMotor.Direction.REVERSE);
-            robot.slide.setPower(0.75);
+            robot.slideL.setDirection(DcMotor.Direction.FORWARD);
+            robot.slideL.setPower(0.75);
+
+            robot.slideR.setDirection(DcMotor.Direction.REVERSE);
+            robot.slideR.setPower(0.75);
             sleep(sleepTime);
-            robot.slide.setPower(0.1);
+            robot.slideL.setPower(0.1);
+            robot.slideR.setPower(0.1);
             sleep(500);
         } else if (direction == "Down") {
-            robot.slide.setDirection(DcMotor.Direction.FORWARD);
-            robot.slide.setPower(0.5);
+            robot.slideL.setDirection(DcMotor.Direction.REVERSE);
+            robot.slideL.setPower(0.5);
+            robot.slideR.setDirection(DcMotor.Direction.FORWARD);
+            robot.slideR.setPower(0.5);
         }
     }
 
+
+/* commented bc errors and idk servos
+we wanted to test wheels and slides first
     public void moveTurntable(String direction, int distance) {
 
         if (direction == "Left") {
@@ -220,6 +230,8 @@ public class AutonomousPLUS extends LinearOpMode {
         }
         robot.turntable.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+    */
+
 
     public void armPID(){
 
@@ -228,28 +240,36 @@ public class AutonomousPLUS extends LinearOpMode {
         double Kd = 0.2;
 
         double reference = slidePos;
-        float encoderPosition = robot.slide.getCurrentPosition();
-        double integralSum = 0;
-        double lastError = 0;
+        float encoderPositionL = robot.slideL.getCurrentPosition();
+        float encoderPositionR = robot.slideR.getCurrentPosition();
+        double integralSumL = 0;
+        double integralSumR = 0;
+        double lastErrorL = 0;
+        double lastErrorR = 0;
 
         ElapsedTime timer = new ElapsedTime();
 
-        while (encoderPosition != slidePos) {
+        while (encoderPositionL != slidePos) {
 
             // calculate the error
-            double error = reference - encoderPosition;
+            double errorL = reference - encoderPositionL;
+            double errorR = reference - encoderPositionR;
 
             // rate of change of the error
-            double derivative = (error - lastError) / timer.seconds();
+            double derivativeL = (errorL - lastErrorL) / timer.seconds();
+            double derivativeR = (errorR - lastErrorR) / timer.seconds();
 
             // sum of all error over time
-            integralSum = integralSum + (error * timer.seconds());
+            integralSumL = integralSumL + (errorL * timer.seconds());
 
-            double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
+            double outL = (Kp * errorL) + (Ki * integralSumL) + (Kd * derivativeL);
+            double outR = (Kp * errorR) + (Ki * integralSumR) + (Kd * derivativeR);
 
-            robot.slide.setPower(out);
+            robot.slideL.setPower(outL);
+            robot.slideR.setPower(outR);
 
-            lastError = error;
+            lastErrorL = errorL;
+            lastErrorR = errorR;
 
             // reset the timer for next time
             timer.reset();
