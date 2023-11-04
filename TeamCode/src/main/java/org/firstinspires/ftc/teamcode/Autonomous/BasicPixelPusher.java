@@ -14,15 +14,15 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             waitForStart();
             robot.closeClaw();
             prepareNextAction(300);
-            robot.rotateRightArm(0.49);
+            moveArm("Up", .85);//
+            robot.rotateRightArm(0.2);
             prepareNextAction(300);
-            moveArm("Up", .75);// Down 3.5 before // perfec
-            moveRobotLeft(-90, 15);
-            moveRobotLeft(90, 15);
-            moveRobotForward(90, 15);
+            moveRobotRight(900, 15);
+            moveRobotLeft(900, 15);
+            moveRobotForward(900, 15);
             robot.openClaw();
-            moveRobotBackward(90, 15);
-            moveRobotRight(90, 15);
+            moveRobotBackward(900, 15);
+            moveRobotRight(900, 15);
             // code goes here
 
 
