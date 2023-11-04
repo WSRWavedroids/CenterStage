@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             waitForStart();
             robot.closeClaw();
             prepareNextAction(300);
-            robot.rotateRightArm(0.5);
+            robot.rotateRightArm(0.49);
             prepareNextAction(300);
             moveArm("Up", .75);// Down 3.5 before // perfec
             moveRobotLeft(-90, 15);
