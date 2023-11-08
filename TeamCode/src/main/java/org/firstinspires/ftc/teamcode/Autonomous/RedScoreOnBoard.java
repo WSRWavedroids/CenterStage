@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 
-    @Autonomous(group = "Stage", name = "Score on board")
-    public class ScoreOnBoard extends AutonomousPLUS {
+@Autonomous(group = "Stage", name = "Red score on board")
+    public class RedScoreOnBoard extends AutonomousPLUS {
         @Override
         public void runOpMode() {
 
