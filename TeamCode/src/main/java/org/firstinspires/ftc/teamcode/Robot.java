@@ -85,7 +85,7 @@ public class Robot {
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotor.Direction.REVERSE); //Was inverted as forward
         slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
         slideR.setDirection(DcMotor.Direction.FORWARD);
 
@@ -200,6 +200,22 @@ public class Robot {
         }
     }
 
+
+    public void rotateArmUp()
+    {         //Raise
+            rotateLeftArm(0.59); // was .3 but too shallow
+        //rotateLeftArm(0.3); // was .3 but too shallow
+
+    }
+
+    public void rotateArmDown()
+    {
+        //lower
+        rotateLeftArm(0.85);
+        //rotateRightArm(0.09);
+
+    }
+
     public void rotateRightArm(double position) // Remeber these are opposite directions
     {
         armR.setPosition(position);
@@ -207,7 +223,7 @@ public class Robot {
 
     public void rotateLeftArm(double position) // Rememeber these are opposite directions
     {
-        armR.setPosition(position);
+        armL.setPosition(position);
     }
 
     public void encoderRunningMode(){
@@ -263,9 +279,9 @@ public class Robot {
 
     public void holdArm(){
         slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
-        slideL.setPower(0.1);
+        slideL.setPower(0.05);
         slideR.setDirection(DcMotor.Direction.REVERSE);
-        slideR.setPower(0.1);
+        slideR.setPower(0.05);//used to be 0.1
     }
 
 

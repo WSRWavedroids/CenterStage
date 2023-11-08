@@ -30,8 +30,8 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import java.lang.Math;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -67,7 +67,6 @@ public class Basic_TeleOp extends OpMode {
     /*
      * Code to run ONCE when the driver hits INIT
      */
-    @Override
     public void init() {
 
         // Call the initialization protocol from the Robot class.
@@ -80,13 +79,11 @@ public class Basic_TeleOp extends OpMode {
     /*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
-    @Override
     public void init_loop() {telemetry.addData("HYPE", "ARE! YOU! READY?!?!?!?!");}
 
     /*
      * Code to run ONCE when the driver hits PLAY
      */
-    @Override
     public void start() {
         runtime.reset();
         telemetry.addData("HYPE", "Let's do this!!!");
@@ -95,7 +92,6 @@ public class Basic_TeleOp extends OpMode {
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
-    @Override
     public void loop() {
 
         singleJoystickDrive();
@@ -152,13 +148,15 @@ public class Basic_TeleOp extends OpMode {
 
         //Moves the turntable based on the x-coordinate of the right joystick
         //We need to switch out these motor functions for servo stuff... Idk the position we need
-        if (gamepad2.y){ // lower
+        if (gamepad2.y){ // up
             //robot.armL.setPosition(1);
-           robot.rotateRightArm(.3); // Down 3.5 before
+           //robot.rotateLeftArm(0.59); // good no change
+            robot.rotateArmUp();
 
-        } else if (gamepad2.x) { //Raise
-            robot.rotateRightArm(0.6); // Just Guesses 68 too steepo
+        } else if (gamepad2.x) { //lower
+            //robot.rotateLeftArm(0.85); // GOOD NO CHANGE
             //robot.rotateLeftArm(0.6);
+            robot.rotateArmDown();
         }
         /*else {
             robot.armR.setPosition(0);
@@ -181,7 +179,6 @@ public class Basic_TeleOp extends OpMode {
     /*
      * Code to run ONCE after the driver hits STOP
      */
-    @Override
     public void stop () { telemetry.addData("Status", "Robot Stopped"); }
 
 

@@ -164,7 +164,7 @@ public class AutonomousPLUS extends LinearOpMode {
             robot.powerSet(speed);
 
             while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput();
+                robot.tellMotorOutput(); //
             }
 
             robot.stopAllMotors();
@@ -180,7 +180,7 @@ public class AutonomousPLUS extends LinearOpMode {
         robot.encoderReset();
     }
 
-    public void moveArm(String direction, double power) {
+    public void moveLift(String direction, double power) {
         if (direction == "Up") {
             robot.slideL.setDirection(DcMotor.Direction.FORWARD);
             robot.slideL.setPower(0.75);
