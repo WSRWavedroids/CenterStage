@@ -203,7 +203,7 @@ public class Robot {
 
     public void rotateArmUp()
     {         //Raise
-            rotateLeftArm(0.59); // was .3 but too shallow
+            rotateLeftArm(0.60); // perfect
         //rotateLeftArm(0.3); // was .3 but too shallow
 
     }
