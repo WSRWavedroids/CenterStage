@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -41,6 +42,8 @@ public class Robot {
 
     public Servo armR;
 
+    public Camera CamCam;
+
     public Telemetry telemetry;
     //public BNO055IMU imu;
 
@@ -69,6 +72,7 @@ public class Robot {
         armR = hardwareMap.get(Servo.class, "armR");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        CamCam = hardwareMap.get(Camera.class, "CamCam");
 
         //add arms to map
         /*
