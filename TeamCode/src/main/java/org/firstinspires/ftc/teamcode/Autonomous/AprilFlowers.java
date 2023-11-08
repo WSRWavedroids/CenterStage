@@ -16,16 +16,18 @@ import java.util.List;
 @Autonomous(group = "Stage", name = "Vision Experiments")
 public class AprilFlowers extends AutonomousPLUS {
 
-    private static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
-    private static final int DESIRED_TAG_ID = -1;     // Choose the tag you want to approach or set to -1 for ANY tag.
-    private VisionPortal visionPortal;               // Used to manage the video source.
-    private AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
-    private AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
+    public static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
+    public static final int DESIRED_TAG_ID = -1;     // Choose the tag you want to approach or set to -1 for ANY tag.
+    public VisionPortal visionPortal;               // Used to manage the video source.
+    public AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
+    public AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
 
     @Override
     public void runOpMode() {
 
         super.runOpMode();
+
+        waitForStart();
 
         boolean targetFound     = false;    // Set to true when an AprilTag target is detected
 

@@ -42,7 +42,7 @@ public class Robot {
 
     public Servo armR;
 
-    public Camera CamCam;
+    public WebcamName CamCam;
 
     public Telemetry telemetry;
     //public BNO055IMU imu;
@@ -72,7 +72,7 @@ public class Robot {
         armR = hardwareMap.get(Servo.class, "armR");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        CamCam = hardwareMap.get(Camera.class, "CamCam");
+        CamCam = hardwareMap.get(WebcamName.class, "CamCam");
 
         //add arms to map
         /*
@@ -297,6 +297,8 @@ public class Robot {
         openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE .3 was good
     }
 
+  /*
+
     public void showersAndFlowers(){
 
         AprilTagProcessor OSHAmobile;
@@ -325,7 +327,7 @@ public class Robot {
     public void visionPortal(AprilTagProcessor aprilTagProcessor, TfodProcessor tfodProcessor){
         VisionPortal Oracle;
 
-        /*
+
         myVisionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Cam Cam"))
                 .addProcessor(aprilTagProcessor)
@@ -334,9 +336,8 @@ public class Robot {
                 .enableCameraMonitoring(true)
                 .setAutoStopLiveView(true)
                 .build();
-         */
 
-        Oracle = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Cam Cam"), aprilTagProcessor, tfodProcessor);
+
     }
 
     public void retrieveAprilTags(AprilTagProcessor ATP){
@@ -357,6 +358,10 @@ public class Robot {
             }
         }
     }
+
+
+   */
+
 
 
 }
