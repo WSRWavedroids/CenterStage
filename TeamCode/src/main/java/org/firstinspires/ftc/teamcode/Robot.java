@@ -196,6 +196,22 @@ public class Robot {
         }
     }
 
+
+    public void rotateArmUp()
+    {         //Raise
+            rotateLeftArm(0.59); // was .3 but too shallow
+        //rotateLeftArm(0.3); // was .3 but too shallow
+
+    }
+
+    public void rotateArmDown()
+    {
+        //lower
+        rotateLeftArm(0.85);
+        //rotateRightArm(0.09);
+
+    }
+
     public void rotateRightArm(double position) // Remeber these are opposite directions
     {
         armR.setPosition(position);
@@ -259,9 +275,9 @@ public class Robot {
 
     public void holdArm(){
         slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
-        slideL.setPower(0.1);
+        slideL.setPower(0.05);
         slideR.setDirection(DcMotor.Direction.REVERSE);
-        slideR.setPower(0.1);
+        slideR.setPower(0.05);//used to be 0.1
     }
 
 
