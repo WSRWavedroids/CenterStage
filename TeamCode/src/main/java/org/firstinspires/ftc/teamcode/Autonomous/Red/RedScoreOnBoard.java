@@ -26,16 +26,26 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
             moveRobotRight(1800, 2);
             moveRobotLeft(1610, 2); // was 100
-            speed = 0.2;//new
-            moveRobotForward(1000, 100); //900 was soo close
+            speed = 0.3;//new
+            moveRobotForward(1050, 100); //900 was soo close
             prepareNextAction(300);//new
             robot.openClaw();
             speed = 0.4;//new
             moveRobotBackward(900, 2);
             turnRobotRight(1070, 100);// 90 degree turn 1100 was a little t0o far
-            moveRobotLeft(1025, 100);//was 900
-            prepareNextAction(1000);// remove these when testing is done
-            robot.closeClaw();
+            moveRobotRight(150, 100);
+            moveRobotForward(1350, 800);//new
+
+            moveLift("Down", .22);//new
+            prepareNextAction(1000);//new
+            sleep(1000);
+            robot.closeClaw();//new
+            sleep(1000);
+            moveLift("Up", .44);//new
+            moveRobotBackward(900, 100);//new
+            moveRobotLeft(1160, 100);//was 900
+            //prepareNextAction(1000);// remove these when testing is done
+            //robot.closeClaw();
             prepareNextAction(500); //remove these when testing is done
             //sleepTime = 190;//prob needs adjusted
             //moveLift("Up", .55);//
