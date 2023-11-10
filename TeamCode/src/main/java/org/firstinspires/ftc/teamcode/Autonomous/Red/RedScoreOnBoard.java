@@ -1,6 +1,8 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.Red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 
 @Autonomous(group = "Stage", name = "Red score on board")
