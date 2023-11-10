@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             //Do this to pass inspection.
             waitForStart();
             robot.closeClaw();
-            prepareNextAction(56);
+            prepareNextAction(300);
             sleepTime = 170;
             moveLift("Up", .55);//
             prepareNextAction(300);
@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             moveRobotForward(1000, 2); //900 was soo close
             robot.openClaw();
             moveRobotBackward(900, 2);
-            moveRobotLeft(1950, 2);
+            moveRobotLeft(1925, 2);
             // code goes here
 
 
