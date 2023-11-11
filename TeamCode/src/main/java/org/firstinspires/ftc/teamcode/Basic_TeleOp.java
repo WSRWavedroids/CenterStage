@@ -148,11 +148,11 @@ public class Basic_TeleOp extends OpMode {
         }
 
         boolean readyToSuspend = false;
-        if(gamepad1.a)
+        if(gamepad1.y)
         {
             robot.hookMotor.setPower(0.85);
         }
-        else if(gamepad1.b)
+        else if(gamepad1.x)
         {
             if (readyToSuspend == false)
             {
@@ -166,11 +166,11 @@ public class Basic_TeleOp extends OpMode {
 
 
         }
-        else if (gamepad1.y)
+        else if (gamepad1.b)
         {
             robot.hookServo.setPosition(1);
         }
-        else if (gamepad1.x)
+        else if (gamepad1.a)
         {
             robot.hookServo.setPosition(0);
         }

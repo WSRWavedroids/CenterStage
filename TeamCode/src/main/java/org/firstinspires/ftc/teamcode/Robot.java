@@ -320,7 +320,7 @@ public class Robot {
 
     public void SuspendRobot(){
         //hookMotor.setDirection(DcMotor.Direction.REVERSE);//Inverted
-        hookMotor.setPower(-0.5); //if no work then resume setdirection
+        hookMotor.setPower(0.5); //if no work then resume setdirection
     }
 
 
