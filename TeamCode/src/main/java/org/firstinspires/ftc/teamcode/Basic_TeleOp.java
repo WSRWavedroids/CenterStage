@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.lang.Math;
 
@@ -145,6 +146,42 @@ public class Basic_TeleOp extends OpMode {
         } else {
             robot.holdArm();
         }
+
+        boolean readyToSuspend = false;
+        if(gamepad1.a)
+        {
+            robot.hookMotor.setPower(0.85);
+        }
+        else if(gamepad1.b)
+        {
+            if (readyToSuspend == false)
+            {
+                readyToSuspend = true;
+            }
+            else if (readyToSuspend == true)
+            {
+                readyToSuspend = false;
+            }
+
+
+
+        }
+        else if (gamepad1.y)
+        {
+            robot.hookServo.setPosition(1);
+        }
+        else if (gamepad1.x)
+        {
+            robot.hookServo.setPosition(0);
+        }
+
+        if (readyToSuspend ==  true)
+        {
+            robot.SuspendRobot();
+        }
+
+
+
 
         //Moves the turntable based on the x-coordinate of the right joystick
         //We need to switch out these motor functions for servo stuff... Idk the position we need

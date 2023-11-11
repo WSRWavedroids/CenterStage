@@ -26,32 +26,33 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
             moveRobotRight(1800, 2);
             moveRobotLeft(1610, 2); // was 100
-            speed = 0.3;//new
-            moveRobotForward(1050, 100); //900 was soo close
-            prepareNextAction(300);//new
+            speed = 0.5;//new
+            moveRobotForward(1050, 50); //900 was soo close
+            prepareNextAction(100);//new
             robot.openClaw();
-            speed = 0.4;//new
+            speed = 0.5;//new
             moveRobotBackward(900, 2);
-            turnRobotRight(1070, 100);// 90 degree turn 1100 was a little t0o far
-            moveRobotRight(150, 100);
-            moveRobotForward(1350, 800);//new
+            turnRobotRight(1070, 2);// 90 degree turn 1100 was a little t0o far
+            moveRobotRight(250, 2);
+            moveRobotForward(1450, 50);//new
 
             moveLift("Down", .22);//new
-            prepareNextAction(1000);//new
-            sleep(1000);
+            prepareNextAction(500);//new
+            sleep(500);
             robot.closeClaw();//new
-            sleep(1000);
+            sleep(500);
             moveLift("Up", .44);//new
-            moveRobotBackward(900, 100);//new
-            moveRobotLeft(1160, 100);//was 900
+            moveRobotBackward(900, 2);//new
+            moveRobotLeft(1160, 2);//was 900
             //prepareNextAction(1000);// remove these when testing is done
             //robot.closeClaw();
-            prepareNextAction(500); //remove these when testing is done
+            //prepareNextAction(500); //remove these when testing is done
             //sleepTime = 190;//prob needs adjusted
             //moveLift("Up", .55);//
             robot.rotateArmUp();
-            prepareNextAction(1000);
-            moveRobotForward(1265, 300);// 1375 was too far
+            prepareNextAction(200);
+            speed = 0.4;
+            moveRobotForward(965, 300);// 1375 was too far
             robot.openClaw();
             prepareNextAction(300);
             moveLift("Down", .55);//

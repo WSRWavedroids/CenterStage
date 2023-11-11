@@ -24,10 +24,11 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
             moveRobotRight(1800, 2);
             moveRobotLeft(1650, 2); // was 100
-            moveRobotForward(1000, 2); //900 was soo close
+            moveRobotForward(1080, 2); //900 was soo close
             robot.openClaw();
             moveRobotBackward(900, 2);
-            moveRobotRight(1925, 2);
+            moveRobotRight(1780, 2);
+            moveRobotLeft(150, 2);
 
             // code goes here
 

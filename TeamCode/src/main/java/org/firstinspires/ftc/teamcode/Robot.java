@@ -33,10 +33,13 @@ public class Robot {
     public DcMotor backRightDrive;
     public DcMotor slideL;
     public DcMotor slideR;
+    public DcMotor hookMotor;
 
 
     public Servo leftClaw;
     public Servo rightClaw;
+
+    public Servo hookServo;
 
     public Servo armL;
 
@@ -72,7 +75,9 @@ public class Robot {
         armR = hardwareMap.get(Servo.class, "armR");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        hookServo = hardwareMap.get(Servo.class, "hookServo");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
+        hookMotor = hardwareMap.get(DcMotor.class, "hookMotor");
 
         //add arms to map
         /*
@@ -88,13 +93,15 @@ public class Robot {
         backRightDrive.setDirection(DcMotor.Direction.REVERSE); //Was inverted as forward
         slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
         slideR.setDirection(DcMotor.Direction.FORWARD);
+        hookMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // This tells the motors to chill when we're not powering them.
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        hookMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //This is new..
         telemetry.addData("Status", "Initialized");
 
     }
@@ -153,7 +160,16 @@ public class Robot {
             slideL.setTargetPosition(ticks + slideL.getCurrentPosition());
             slideR.setTargetPosition(ticks + slideR.getCurrentPosition());
 
-        } /*else if (direction == "Turntable"){
+        }
+        else if (direction == "Hook")//new remove if no work
+        {
+            hookMotor.setTargetPosition(ticks + hookMotor.getCurrentPosition());
+        }
+
+
+
+
+        /*else if (direction == "Turntable"){
             robot.open
             armR.setTargetPosition(-ticks + armR.getCurrentPosition());
         }*/
@@ -250,6 +266,7 @@ public class Robot {
         telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", backRightDrive.getPower(), backRightDrive.getCurrentPosition(), backRightDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("SlideL Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
         telemetry.addData("Motors", String.format("SlideR Power (%.2f) Arm Location (%d) Arm Target (%d)", slideR.getPower(), slideR.getCurrentPosition(), slideR.getTargetPosition()));
+        telemetry.addData("Motors", String.format("Hook Motor Power (%.2f) Arm Location (%d) Arm Target (%d)", hookMotor.getPower(), hookMotor.getCurrentPosition(), hookMotor.getTargetPosition()));
         telemetry.addData("ArmL", armL.getPosition());
         telemetry.addData("ArmR", armR.getPosition());
         telemetry.addData("ClawL", leftClaw.getPosition());
@@ -277,11 +294,33 @@ public class Robot {
         }
     }
 
+
+
+    public void raiseHook(String direction)
+    {
+        if (direction == "HookGoUp")
+        {
+            hookMotor.setPower(.8);
+            hookMotor.setDirection(DcMotor.Direction.FORWARD);
+        }
+        else if (direction == "HookGoDown")
+        {
+            hookMotor.setPower(0.25);
+            hookMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+    }
+
     public void holdArm(){
         slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
         slideL.setPower(0.05);
         slideR.setDirection(DcMotor.Direction.REVERSE);
         slideR.setPower(0.05);//used to be 0.1
+    }
+
+
+    public void SuspendRobot(){
+        //hookMotor.setDirection(DcMotor.Direction.REVERSE);//Inverted
+        hookMotor.setPower(-0.5); //if no work then resume setdirection
     }
 
 
