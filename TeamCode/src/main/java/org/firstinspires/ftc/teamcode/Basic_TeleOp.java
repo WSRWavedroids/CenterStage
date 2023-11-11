@@ -147,26 +147,49 @@ public class Basic_TeleOp extends OpMode {
             robot.holdArm();
         }
 
+
+        //A bunch of messy last minute code
         boolean readyToSuspend = false;
-        if(gamepad1.y)
+        if(gamepad1.y) // might need a
         {
             robot.hookMotor.setPower(0.85);
         }
+
+        if(gamepad1.back)
+        {
+            robot.hookMotor.setPower(-0.2);
+        }
+
+        /*
+        while (gamepad1.y)
+        {
+            robot.hookMotor.setPower(0.85);
+        }
+        */
+
+
+        if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
+        {
+            robot.hookMotor.setPower(0);
+        }
+
         else if(gamepad1.x)
         {
-            if (readyToSuspend == false)
+            if (readyToSuspend == false) //enable hold
             {
+                robot.hookMotor.setPower(0.4);
                 readyToSuspend = true;
             }
-            else if (readyToSuspend == true)
+            else if (readyToSuspend == true) //disable hold
             {
+                robot.hookMotor.setPower(0);
                 readyToSuspend = false;
             }
 
 
 
         }
-        else if (gamepad1.b)
+         if (gamepad1.b)
         {
             robot.hookServo.setPosition(1);
         }
