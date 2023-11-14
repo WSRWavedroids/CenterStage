@@ -52,7 +52,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             robot.rotateArmUp();
             prepareNextAction(200);
             speed = 0.4;
-            moveRobotForward(965, 300);// 1375 was too far
+            moveRobotForward(800, 300);// 1375 was too far
             robot.openClaw();
             prepareNextAction(300);
             moveLift("Down", .55);//
