@@ -30,13 +30,15 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.lang.Math;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.Robot.Arm;
+import org.firstinspires.ftc.teamcode.Robot.Claw;
+import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
+import org.firstinspires.ftc.teamcode.Robot.Hook;
+import org.firstinspires.ftc.teamcode.Robot.Lift;
+import org.firstinspires.ftc.teamcode.Robot.Robot;
 
 
 /**
@@ -63,6 +65,11 @@ public class Basic_TeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
     public Robot robot = null;
+    public Arm arm = new Arm();
+    public Lift lift = new Lift();
+    public Hook hook = new Hook();
+    public Claw claw = new Claw();
+    public Drivetrain DT = new Drivetrain();
 
 
     /*
@@ -100,7 +107,7 @@ public class Basic_TeleOp extends OpMode {
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        robot.tellMotorOutput();
+        robot.standardTelemetryOutput();
 
         float armStickY = this.gamepad2.left_stick_y;
         float turntableStickX = this.gamepad2.right_stick_x;
@@ -139,12 +146,12 @@ public class Basic_TeleOp extends OpMode {
 
         if (gamepad2.left_stick_y < -0.5){
             robot.slideL.setPower(-armStickY * 0.75);
-            robot.slideR.setPower(-armStickY * 0.75);
+            robot.slideRAndOdoPodR.setPower(-armStickY * 0.75);
         } else if (gamepad2.left_stick_y > 0.5){
             robot.slideL.setPower(-armStickY * 0.75);
-            robot.slideR.setPower(-armStickY * 0.75);
+            robot.slideRAndOdoPodR.setPower(-armStickY * 0.75);
         } else {
-            robot.holdArm();
+            arm.holdArm();
         }
 
 
@@ -168,19 +175,19 @@ public class Basic_TeleOp extends OpMode {
         */
 
 
-        if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
+        if (!gamepad1.y && !readyToSuspend && !gamepad1.back )
         {
             robot.hookMotor.setPower(0);
         }
 
         else if(gamepad1.x)
         {
-            if (readyToSuspend == false) //enable hold
+            if (!readyToSuspend) //enable hold
             {
                 robot.hookMotor.setPower(0.4);
                 readyToSuspend = true;
             }
-            else if (readyToSuspend == true) //disable hold
+            else if (readyToSuspend) //disable hold
             {
                 robot.hookMotor.setPower(0);
                 readyToSuspend = false;
@@ -198,41 +205,23 @@ public class Basic_TeleOp extends OpMode {
             robot.hookServo.setPosition(0);
         }
 
-        if (readyToSuspend ==  true)
+        if (readyToSuspend)
         {
-            robot.SuspendRobot();
+            hook.SuspendRobot();
         }
-
-
-
 
         //Moves the turntable based on the x-coordinate of the right joystick
         //We need to switch out these motor functions for servo stuff... Idk the position we need
         if (gamepad2.y){ // up
             //robot.armL.setPosition(1);
            //robot.rotateLeftArm(0.59); // good no change
-            robot.rotateArmUp();
+            arm.rotateArmUp();
 
         } else if (gamepad2.x) { //lower
             //robot.rotateLeftArm(0.85); // GOOD NO CHANGE
             //robot.rotateLeftArm(0.6);
-            robot.rotateArmDown();
+            arm.rotateArmDown();
         }
-        /*else {
-            robot.armR.setPosition(0);
-            robot.armL.setPosition(0);
-        }
-        */
-
-
-        //other possible code is this without this
-        if (this.gamepad2.b) { // open
-            robot.openClaw();
-        } else if (this.gamepad2.a) {//close
-            robot.closeClaw();
-        }
-
-
 
     }
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Robot;
 
 import android.annotation.SuppressLint;
 
@@ -13,7 +13,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -32,30 +34,36 @@ public class Robot {
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
     public DcMotor slideL;
-    public DcMotor slideR;
+    public DcMotor slideRAndOdoPodR;
     public DcMotor hookMotor;
+    public DcMotor OdoPodL;
+    public DcMotor OdoPodC;
 
 
     public Servo leftClaw;
     public Servo rightClaw;
-
     public Servo hookServo;
-
     public Servo armL;
-
     public Servo armR;
 
     public WebcamName CamCam;
 
     public Telemetry telemetry;
-    //public BNO055IMU imu;
+    public BNO055IMU imu;
 
     //init and declare war
     public OpMode opmode;
     public HardwareMap hardwareMap;
-    public static double parkingZone;
     public String startingPosition;
     public String controlMode = "Robot Centric";
+    public double drivetrainSpeed = 0.75;
+
+    //These are for odometry
+    double lastLeftPos;
+    double lastRightPos;
+    double lastCenterPos;
+    public double actualX;
+    public double actualY;
 
     //Initialize motors and servos
     public Robot(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
@@ -70,7 +78,10 @@ public class Robot {
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
         slideL = hardwareMap.get(DcMotor.class, "slideL");
-        slideR = hardwareMap.get(DcMotor.class, "slideR");
+        slideRAndOdoPodR = hardwareMap.get(DcMotor.class, "slideR");
+        OdoPodL = hardwareMap.get(DcMotor.class, "OdoPodL");
+        OdoPodC = hardwareMap.get(DcMotor.class, "OdoPodC");
+
         armL = hardwareMap.get(Servo.class, "armL");
         armR = hardwareMap.get(Servo.class, "armR");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
@@ -79,20 +90,18 @@ public class Robot {
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
         hookMotor = hardwareMap.get(DcMotor.class, "hookMotor");
 
-        //add arms to map
-        /*
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-        */
+
         // This section sets the direction of all of the motors. Depending on the motor, this may change later in the program.
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE); //Was inverted as forward
         slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
-        slideR.setDirection(DcMotor.Direction.FORWARD);
+        slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
         hookMotor.setDirection(DcMotor.Direction.FORWARD);
 
         // This tells the motors to chill when we're not powering them.
@@ -104,18 +113,6 @@ public class Robot {
         //This is new..
         telemetry.addData("Status", "Initialized");
 
-    }
-
-
-    public boolean isWheelsBusy(){
-        return backLeftDrive.isBusy() || frontLeftDrive.isBusy() || frontRightDrive.isBusy() || backRightDrive.isBusy();
-    }
-
-    public void stopAllMotors() {
-        frontLeftDrive.setPower(0);
-        frontRightDrive.setPower(0);
-        backLeftDrive.setPower(0);
-        backRightDrive.setPower(0);
     }
 
     public void setTargets(String direction, int ticks) {
@@ -158,7 +155,7 @@ public class Robot {
 
         } else if (direction == "Arm"){
             slideL.setTargetPosition(ticks + slideL.getCurrentPosition());
-            slideR.setTargetPosition(ticks + slideR.getCurrentPosition());
+            slideRAndOdoPodR.setTargetPosition(ticks + slideRAndOdoPodR.getCurrentPosition());
 
         }
         else if (direction == "Hook")//new remove if no work
@@ -166,107 +163,20 @@ public class Robot {
             hookMotor.setTargetPosition(ticks + hookMotor.getCurrentPosition());
         }
 
-
-
-
-        /*else if (direction == "Turntable"){
-            robot.open
-            armR.setTargetPosition(-ticks + armR.getCurrentPosition());
-        }*/
-
-    }
-
-    public void positionRunningMode(){
-        frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    public void powerSet(double speed) {
-        frontLeftDrive.setPower(speed);
-        frontRightDrive.setPower(speed);
-        backLeftDrive.setPower(speed);
-        backRightDrive.setPower(speed);
-
-    }
-
-    public void openAndCloseLeftClaw (double position){
-        leftClaw.setPosition(position);
-        //rightClaw.setPosition(position);
-
-        if (position == 0){
-            telemetry.addData("Claw", "Closed");
-        } else if (position >= 0.3){
-            telemetry.addData("Claw", "Open");
-        }
-
-    }
-
-    public void openAndCloseRightClaw (double position) {
-        //leftClaw.setPosition(position);
-        rightClaw.setPosition(position);
-
-
-
-        if (position == 0) {
-            telemetry.addData("Claw", "Closed");
-        } else if (position >= 0.3) {
-            telemetry.addData("Claw", "Open");
-        }
-    }
-
-
-    public void rotateArmUp()
-    {         //Raise
-            rotateLeftArm(0.62); // perfect... The lower the value the higher it goes
-        //rotateLeftArm(0.3); // was .3 but too shallow
-
-    }
-
-    public void rotateArmDown()
-    {
-        //lower
-        rotateLeftArm(0.87);
-        //rotateRightArm(0.09);
-
-    }
-
-    public void rotateRightArm(double position) // Remeber these are opposite directions
-    {
-        armR.setPosition(position);
-    }
-
-    public void rotateLeftArm(double position) // Rememeber these are opposite directions
-    {
-        armL.setPosition(position);
-    }
-
-    public void encoderRunningMode(){
-        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-    }
-
-    public void encoderReset(){
-        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     @SuppressLint("DefaultLocale")
-    public void tellMotorOutput(){
+    public void standardTelemetryOutput(){
         telemetry.addData("Control Mode", controlMode);
         telemetry.addData("Motors", String.format("FL Power(%.2f) FL Location (%d) FL Target (%d)", frontLeftDrive.getPower(), frontLeftDrive.getCurrentPosition(), frontLeftDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("FR Power(%.2f) FR Location (%d) FR Target (%d)", frontRightDrive.getPower(), frontRightDrive.getCurrentPosition(), frontRightDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BL Power(%.2f) BL Location (%d) BL Target (%d)", backLeftDrive.getPower(), backLeftDrive.getCurrentPosition(), backLeftDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", backRightDrive.getPower(), backRightDrive.getCurrentPosition(), backRightDrive.getTargetPosition()));
-        telemetry.addData("Motors", String.format("SlideL Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
-        telemetry.addData("Motors", String.format("SlideR Power (%.2f) Arm Location (%d) Arm Target (%d)", slideR.getPower(), slideR.getCurrentPosition(), slideR.getTargetPosition()));
+        telemetry.addData("Motors", String.format("Slide Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
         telemetry.addData("Motors", String.format("Hook Motor Power (%.2f) Arm Location (%d) Arm Target (%d)", hookMotor.getPower(), hookMotor.getCurrentPosition(), hookMotor.getTargetPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", OdoPodL.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", slideRAndOdoPodR.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", OdoPodC.getCurrentPosition()));
         telemetry.addData("ArmL", armL.getPosition());
         telemetry.addData("ArmR", armR.getPosition());
         telemetry.addData("ClawL", leftClaw.getPosition());
@@ -279,62 +189,43 @@ public class Robot {
         return ((inches/12.25) * 537.6 / .5);
         //todo Reference that 1 inch ~= 50 ticks
     }
-// one side may be backwards due to the direction that the motor was faced
-    public void moveArm(String direction){
-        if (direction == "Up"){
-            slideL.setPower(0.75);
-            slideL.setDirection(DcMotor.Direction.FORWARD);//inverted
-            slideR.setPower(0.75);
-            slideR.setDirection(DcMotor.Direction.REVERSE);
-        } else if (direction == "Down"){
-            slideL.setPower(0.25);
-            slideL.setDirection(DcMotor.Direction.REVERSE);//Inverted
-            slideR.setPower(0.25);
-            slideR.setDirection(DcMotor.Direction.FORWARD);
-        }
+
+
+    public void findDisplacement(){
+        double deltaLeft;
+        double deltaRight;
+        double deltaCenter;
+        double deltaX;
+        double deltaY;
+        double phi;
+        double deltaMiddle;
+        double deltaPerpendicular;
+        double heading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double trackWidth = 12.25; //inches between centers of side odometry pods
+        double centerPodToCenter = 7.5; //inches between center of center pod and center of robot
+
+        //Calculate changes from the last time we measured
+        deltaLeft = OdoPodL.getCurrentPosition() - lastLeftPos;
+        deltaRight = slideRAndOdoPodR.getCurrentPosition() - lastRightPos;
+        deltaCenter = OdoPodC.getCurrentPosition() - lastCenterPos;
+
+        phi = (deltaLeft - deltaRight) / trackWidth;
+        deltaMiddle = (deltaLeft + deltaRight) / 2;
+        deltaPerpendicular = deltaCenter - centerPodToCenter * phi;
+
+        deltaX = deltaMiddle * Math.cos(heading) - deltaPerpendicular * Math.sin(heading);
+        deltaY = deltaMiddle * Math.sin(heading) + deltaPerpendicular * Math.cos(heading);
+
+        actualX += deltaX;
+        actualY += deltaY;
+        heading += phi;
+
+        lastLeftPos = OdoPodL.getCurrentPosition();
+        lastRightPos = slideRAndOdoPodR.getCurrentPosition();
+        lastCenterPos = OdoPodC.getCurrentPosition();
     }
 
 
-
-    public void raiseHook(String direction)
-    {
-        if (direction == "HookGoUp")
-        {
-            hookMotor.setPower(.8);
-            hookMotor.setDirection(DcMotor.Direction.FORWARD);
-        }
-        else if (direction == "HookGoDown")
-        {
-            hookMotor.setPower(0.25);
-            hookMotor.setDirection(DcMotor.Direction.REVERSE);
-        }
-    }
-
-    public void holdArm(){
-        slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
-        slideL.setPower(0.05);
-        slideR.setDirection(DcMotor.Direction.REVERSE);
-        slideR.setPower(0.05);//used to be 0.1
-    }
-
-
-    public void SuspendRobot(){
-        //hookMotor.setDirection(DcMotor.Direction.REVERSE);//Inverted
-        hookMotor.setPower(0.5); //if no work then resume setdirection
-    }
-
-
-    public void closeClaw()
-    {
-        openAndCloseRightClaw(0.58); //Moves right claw left GOOD DONE
-        openAndCloseLeftClaw(0.38); // //Moves left claw right
-    }
-
-    public void openClaw()
-    {
-        openAndCloseLeftClaw(0.5); //Moves left claw left
-        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE .3 was good
-    }
 
   /*
 

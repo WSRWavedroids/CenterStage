@@ -29,15 +29,19 @@ package org.firstinspires.ftc.teamcode.Autonomous;
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Robot;
-//import org.firstinspires.ftc.teamcode.Autonomous.AprilTags.MayFlowers;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.Robot.Robot;
+import org.firstinspires.ftc.teamcode.Robot.Arm;
+import org.firstinspires.ftc.teamcode.Robot.Lift;
+import org.firstinspires.ftc.teamcode.Robot.Hook;
+import org.firstinspires.ftc.teamcode.Robot.Claw;
+import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
 
 /**
  * This is the autonomous mode. It moves the robot without us having to touch the controller.
@@ -50,7 +54,6 @@ public class AutonomousPLUS extends LinearOpMode {
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
 
-
     public double speed = 0.4;
     public int sleepTime;
     public boolean inMarker;
@@ -59,6 +62,11 @@ public class AutonomousPLUS extends LinearOpMode {
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!
     public Robot robot = null;
+    public Lift lift = new Lift();
+    public Hook hook = new Hook();
+    public Claw claw = new Claw();
+    public Drivetrain DT = new Drivetrain();
+
 
     @Override
     public void runOpMode() {
@@ -69,35 +77,35 @@ public class AutonomousPLUS extends LinearOpMode {
     public void moveRobotForward(int ticks, long pause) {
         if (opModeIsActive()) {
             robot.setTargets("Backward", ticks);
-            robot.positionRunningMode();
+            DT.positionRunningMode();
         }
-        robot.powerSet(speed);
+        DT.powerSet(speed);
 
-        while (opModeIsActive() && robot.isWheelsBusy()) {
-            robot.tellMotorOutput();
+        while (opModeIsActive() && DT.isWheelsBusy()) {
+            robot.standardTelemetryOutput();
         }
 
-        robot.stopAllMotors();
-        robot.encoderRunningMode();
-        robot.stopAllMotors();
+        DT.stopDrivetrainMotors();
+        DT.encoderRunningMode();
+        DT.stopDrivetrainMotors();
         sleep(pause);
-        robot.encoderReset();
+        DT.encoderReset();
     }
 
     public void moveRobotBackward(int ticks, long pause) {
         if (opModeIsActive()) {
             robot.setTargets("Forward", ticks);
-            robot.positionRunningMode();
-            robot.powerSet(speed);
+            DT.positionRunningMode();
+            DT.powerSet(speed);
 
-            while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput();
+            while (opModeIsActive() && DT.isWheelsBusy()) {
+                robot.standardTelemetryOutput();
             }
 
-            robot.stopAllMotors();
-            robot.encoderRunningMode();
+            DT.stopDrivetrainMotors();
+            DT.encoderRunningMode();
             sleep(pause);
-            robot.encoderReset();
+            DT.encoderReset();
         }
 
     }
@@ -106,17 +114,17 @@ public class AutonomousPLUS extends LinearOpMode {
 
         if (opModeIsActive()) {
             robot.setTargets("Right", ticks);
-            robot.positionRunningMode();
-            robot.powerSet(speed);
+            DT.positionRunningMode();
+            DT.powerSet(speed);
 
-            while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput();
+            while (opModeIsActive() && DT.isWheelsBusy()) {
+                robot.standardTelemetryOutput();
             }
 
-            robot.stopAllMotors();
-            robot.encoderRunningMode();
+            DT.stopDrivetrainMotors();
+            DT.encoderRunningMode();
             sleep(pause);
-            robot.encoderReset();
+            DT.encoderReset();
         }
     }
 
@@ -124,17 +132,17 @@ public class AutonomousPLUS extends LinearOpMode {
 
         if (opModeIsActive()) {
             robot.setTargets("Left", ticks);
-            robot.positionRunningMode();
-            robot.powerSet(speed);
+            DT.positionRunningMode();
+            DT.powerSet(speed);
 
-            while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput();
+            while (opModeIsActive() && DT.isWheelsBusy()) {
+                robot.standardTelemetryOutput();
             }
 
-            robot.stopAllMotors();
-            robot.encoderRunningMode();
+            DT.stopDrivetrainMotors();
+            DT.encoderRunningMode();
             sleep(pause);
-            robot.encoderReset();
+            DT.encoderReset();
         }
     }
 
@@ -142,17 +150,17 @@ public class AutonomousPLUS extends LinearOpMode {
 
         if (opModeIsActive()) {
             robot.setTargets("Turn Right", ticks);
-            robot.positionRunningMode();
-            robot.powerSet(speed);
+            DT.positionRunningMode();
+            DT.powerSet(speed);
 
-            while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput();
+            while (opModeIsActive() && DT.isWheelsBusy()) {
+                robot.standardTelemetryOutput();
             }
 
-            robot.stopAllMotors();
-            robot.encoderRunningMode();
+            DT.stopDrivetrainMotors();
+            DT.encoderRunningMode();
             sleep(pause);
-            robot.encoderReset();
+            DT.encoderReset();
         }
     }
 
@@ -160,72 +168,25 @@ public class AutonomousPLUS extends LinearOpMode {
 
         if (opModeIsActive()) {
             robot.setTargets("Turn Left", ticks);
-            robot.positionRunningMode();
-            robot.powerSet(speed);
+            DT.positionRunningMode();
+            DT.powerSet(speed);
 
-            while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput(); //
+            while (opModeIsActive() && DT.isWheelsBusy()) {
+                robot.standardTelemetryOutput();
             }
 
-            robot.stopAllMotors();
-            robot.encoderRunningMode();
+            DT.stopDrivetrainMotors();
+            DT.encoderRunningMode();
             sleep(pause);
-            robot.encoderReset();
+            DT.encoderReset();
 
         }
     }
 
     public void prepareNextAction(long pause) {
         sleep(pause);
-        robot.encoderReset();
+        DT.encoderReset();
     }
-
-    public void moveLift(String direction, double power) {
-        if (direction == "Up") {
-            robot.slideL.setDirection(DcMotor.Direction.FORWARD);
-            robot.slideL.setPower(0.75);
-
-            robot.slideR.setDirection(DcMotor.Direction.REVERSE);
-            robot.slideR.setPower(0.75);
-            sleep(sleepTime);
-            robot.slideL.setPower(0.1);
-            robot.slideR.setPower(0.1);
-            sleep(500);
-        } else if (direction == "Down") {
-            robot.slideL.setDirection(DcMotor.Direction.REVERSE);
-            robot.slideL.setPower(0.5);
-            robot.slideR.setDirection(DcMotor.Direction.FORWARD);
-            robot.slideR.setPower(0.5);
-        }
-    }
-
-
-/* commented bc errors and idk servos
-we wanted to test wheels and slides first
-    public void moveTurntable(String direction, int distance) {
-
-        if (direction == "Left") {
-            robot.turntable.setDirection(DcMotor.Direction.FORWARD); //Check on this...
-
-        } else if (direction == "Right") {
-            robot.turntable.setDirection(DcMotor.Direction.REVERSE); //Check on this...
-        }
-
-        if (opModeIsActive()) {
-            robot.setTargets("Turntable", distance);
-            robot.turntable.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.powerSet(0.45);
-
-            while (opModeIsActive() && robot.turntable.isBusy()) {
-                robot.tellMotorOutput();
-            }
-
-            robot.turntable.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
-        robot.turntable.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-    */
-
 
     public void armPID(){
 
@@ -235,7 +196,7 @@ we wanted to test wheels and slides first
 
         double reference = slidePos;
         float encoderPositionL = robot.slideL.getCurrentPosition();
-        float encoderPositionR = robot.slideR.getCurrentPosition();
+        float encoderPositionR = robot.slideRAndOdoPodR.getCurrentPosition();
         double integralSumL = 0;
         double integralSumR = 0;
         double lastErrorL = 0;
@@ -260,7 +221,7 @@ we wanted to test wheels and slides first
             double outR = (Kp * errorR) + (Ki * integralSumR) + (Kd * derivativeR);
 
             robot.slideL.setPower(outL);
-            robot.slideR.setPower(outR);
+            robot.slideRAndOdoPodR.setPower(outR);
 
             lastErrorL = errorL;
             lastErrorR = errorR;
@@ -269,5 +230,143 @@ we wanted to test wheels and slides first
             timer.reset();
 
         }
+    }
+
+    public void StrafeFromOdometry(double xTarget, double yTarget){
+
+        //1. Find the difference between the target and the actual position (and find the actual position)
+
+        double deltaX = robot.OdoPodL.getCurrentPosition() - xTarget;
+        double deltaY = robot.slideRAndOdoPodR.getCurrentPosition() - yTarget;
+
+        //2. Translate that to motor power
+
+        if(deltaY == 0) {
+
+            if (deltaX > 0) {
+                //Just right
+                robot.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+                DT.powerSet(robot.drivetrainSpeed);
+
+            } else if (deltaX < 0) {
+                //Just left
+                robot.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+                DT.powerSet(robot.drivetrainSpeed);
+            }
+
+        } else if (deltaY > 0){
+            //We're going up
+
+            if (deltaX > 0) {
+                //Up+right
+                robot.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.backRightDrive.setPower(robot.drivetrainSpeed);
+                robot.frontLeftDrive.setPower(robot.drivetrainSpeed);
+
+            } else if (deltaX < 0) {
+                //Up+left
+                robot.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.backLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.frontRightDrive.setPower(robot.drivetrainSpeed);
+            }
+
+        } else if (deltaY < 0){
+
+            if (deltaX > 0) {
+                //Down+right
+                robot.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.backLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.frontRightDrive.setPower(robot.drivetrainSpeed);
+            } else if (deltaX < 0) {
+                //Down+left
+                robot.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.backRightDrive.setPower(robot.drivetrainSpeed);
+                robot.frontLeftDrive.setPower(robot.drivetrainSpeed);
+            }
+        }
+
+        if(deltaY > 0){
+            //Just up
+            robot.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+            DT.powerSet(robot.drivetrainSpeed);
+
+        }else if(deltaY < 0){
+            //Just down
+            robot.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+            DT.powerSet(robot.drivetrainSpeed);
+
+        }
+
+        //3. Check the targets against the odometry pod position
+
+        while (DT.isWheelsBusy()){
+            robot.findDisplacement();
+            if(robot.actualX == xTarget && robot.actualY == yTarget){
+                break;
+            }
+        }
+
+        //4. Once it hits that point, stop driving
+
+        DT.powerSet(0);
+
+    }
+
+    public void TurnFromOdometry(double Angle, String direction){
+
+        double startAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double currentAngle;
+
+        if (direction == "Left"){
+
+            robot.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+            DT.powerSet(robot.drivetrainSpeed);
+
+        } else if (direction == "Right"){
+
+            robot.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            robot.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            robot.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+
+            DT.powerSet(robot.drivetrainSpeed);
+
+        } else {
+            telemetry.addData("Error", "Direction is not called correctly");
+        }
+
+        while (DT.isWheelsBusy()){
+            currentAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+            if(currentAngle == Angle){
+                break;
+            }
+        }
+
+        DT.powerSet(0);
+
     }
 }
