@@ -45,7 +45,7 @@ public class Arm extends LinearOpMode {
     public void rotateArmUp()
     {         //Raise
         rotateLeftArm(0.62); // perfect... The lower the value the higher it goes
-        //rotateLeftArm(0.3); // was .3 but too shallow
+        //rotateLeftArm(0.38); // was .3 but too shallow
 
     }
 
@@ -53,7 +53,7 @@ public class Arm extends LinearOpMode {
     {
         //lower
         rotateLeftArm(0.87);
-        //rotateRightArm(0.09);
+        //rotateRightArm(0.13);
 
     }
 
