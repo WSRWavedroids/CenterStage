@@ -167,6 +167,11 @@ public class Basic_TeleOp extends OpMode {
         }
         */
 
+        if(gamepad2.dpad_down)
+        {
+            robot.firePlane(100);
+        }
+
 
         if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
         {
@@ -202,6 +207,8 @@ public class Basic_TeleOp extends OpMode {
         {
             robot.SuspendRobot();
         }
+
+
 
 
 
