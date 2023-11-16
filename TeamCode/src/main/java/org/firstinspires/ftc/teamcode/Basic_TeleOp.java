@@ -167,9 +167,9 @@ public class Basic_TeleOp extends OpMode {
         }
         */
 
-        if(gamepad2.dpad_down)
+        if(gamepad2.dpad_up)
         {
-            robot.firePlane(100);
+            robot.firePlane(150); //100 was short
         }
 
 

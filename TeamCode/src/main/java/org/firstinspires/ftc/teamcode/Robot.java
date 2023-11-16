@@ -320,11 +320,16 @@ public class Robot {
     {
         long beginning = System.currentTimeMillis();
          long end = beginning + motorTime;
-        while (end > System.currentTimeMillis()){
-           droneMotor.setPower(1);
-        }
+         boolean planeAlreadyLaunched = false;
+        while (end > System.currentTimeMillis() && planeAlreadyLaunched == false){
 
+
+            droneMotor.setPower(1);
+            planeAlreadyLaunched = true;
+
+        }
             droneMotor.setPower(0);
+
 
 
         //timer
