@@ -38,6 +38,7 @@ public class Robot {
     public DcMotor hookMotor;
     public DcMotor OdoPodL;
     public DcMotor OdoPodC;
+    public DcMotor droneMotor;
 
 
     public Servo leftClaw;
@@ -89,6 +90,7 @@ public class Robot {
         hookServo = hardwareMap.get(Servo.class, "hookServo");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
         hookMotor = hardwareMap.get(DcMotor.class, "hookMotor");
+        droneMotor = hardwareMap.get(DcMotor.class, "droneMotor");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;

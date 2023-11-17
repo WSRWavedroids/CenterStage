@@ -62,7 +62,6 @@ public class AutonomousPLUS extends LinearOpMode {
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!
     public Robot robot = null;
-    public Lift lift = new Lift();
     public Hook hook = new Hook();
     public Claw claw = new Claw();
     public Drivetrain DT = new Drivetrain();
