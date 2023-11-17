@@ -37,7 +37,6 @@ import org.firstinspires.ftc.teamcode.Robot.Arm;
 import org.firstinspires.ftc.teamcode.Robot.Claw;
 import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
 import org.firstinspires.ftc.teamcode.Robot.Hook;
-import org.firstinspires.ftc.teamcode.Robot.Launcher;
 import org.firstinspires.ftc.teamcode.Robot.Lift;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 
@@ -71,7 +70,6 @@ public class Basic_TeleOp extends OpMode {
     public Hook hook = new Hook();
     public Claw claw = new Claw();
     public Drivetrain DT = new Drivetrain();
-    public Launcher launcher = new Launcher();
 
 
     /*
@@ -156,10 +154,6 @@ public class Basic_TeleOp extends OpMode {
             arm.holdArm();
         }
 
-        if(gamepad2.dpad_up)
-        {
-            launcher.firePlane(150); //100 was short
-        }
 
         //A bunch of messy last minute code
         boolean readyToSuspend = false;
