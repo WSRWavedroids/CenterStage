@@ -193,7 +193,7 @@ public class AutonomousPLUS extends LinearOpMode {
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
-        double xTarget = robot.OdoPodL.getCurrentPosition() + deltaX;
+        double xTarget = robot.droneAndOdoPodL.getCurrentPosition() + deltaX;
         double yTarget = robot.slideRAndOdoPodR.getCurrentPosition() + deltaY;
 
         //2. Translate that to motor power
@@ -290,7 +290,7 @@ public class AutonomousPLUS extends LinearOpMode {
 
     public void TurnFromOdometry(double Angle, String direction, long pause){
 
-        double startAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double startAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
         double currentAngle;
 
         if (direction == "Left"){
@@ -316,8 +316,8 @@ public class AutonomousPLUS extends LinearOpMode {
         }
 
         while (DT.isWheelsBusy()){
-            currentAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
-            if(currentAngle == Angle){
+            currentAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+            if(currentAngle == startAngle + Angle){
                 break;
             }
         }

@@ -18,11 +18,11 @@ public class Launcher extends LinearOpMode{
         boolean planeAlreadyLaunched = false;
         while (end > System.currentTimeMillis() && planeAlreadyLaunched == false){
 
-            robot.droneMotor.setPower(1);
+            robot.droneAndOdoPodL.setPower(1);
             planeAlreadyLaunched = true;
 
         }
-        robot.droneMotor.setPower(0);
+        robot.droneAndOdoPodL.setPower(0);
 
 
 

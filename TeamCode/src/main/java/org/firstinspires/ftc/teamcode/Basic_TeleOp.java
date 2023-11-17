@@ -159,12 +159,12 @@ public class Basic_TeleOp extends OpMode {
         boolean readyToSuspend = false;
         if(gamepad1.y) // might need a
         {
-            robot.hookMotor.setPower(0.85);
+            robot.hookAndOdoPodC.setPower(0.85);
         }
 
         if(gamepad1.back)
         {
-            robot.hookMotor.setPower(-0.2);
+            robot.hookAndOdoPodC.setPower(-0.2);
         }
 
         /*
@@ -177,19 +177,19 @@ public class Basic_TeleOp extends OpMode {
 
         if (!gamepad1.y && !readyToSuspend && !gamepad1.back )
         {
-            robot.hookMotor.setPower(0);
+            robot.hookAndOdoPodC.setPower(0);
         }
 
         else if(gamepad1.x)
         {
             if (!readyToSuspend) //enable hold
             {
-                robot.hookMotor.setPower(0.4);
+                robot.hookAndOdoPodC.setPower(0.4);
                 readyToSuspend = true;
             }
             else if (readyToSuspend) //disable hold
             {
-                robot.hookMotor.setPower(0);
+                robot.hookAndOdoPodC.setPower(0);
                 readyToSuspend = false;
             }
 

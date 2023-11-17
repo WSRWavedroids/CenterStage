@@ -13,20 +13,20 @@ public class Hook extends LinearOpMode {
 
     public void SuspendRobot(){
         //hookMotor.setDirection(DcMotor.Direction.REVERSE);//Inverted
-        robot.hookMotor.setPower(0.5); //if no work then resume setdirection
+        robot.hookAndOdoPodC.setPower(0.5); //if no work then resume setdirection
     }
 
     public void raiseHook(String direction)
     {
         if (direction == "HookGoUp")
         {
-            robot.hookMotor.setPower(.8);
-            robot.hookMotor.setDirection(DcMotor.Direction.FORWARD);
+            robot.hookAndOdoPodC.setPower(.8);
+            robot.hookAndOdoPodC.setDirection(DcMotor.Direction.FORWARD);
         }
         else if (direction == "HookGoDown")
         {
-            robot.hookMotor.setPower(0.25);
-            robot.hookMotor.setDirection(DcMotor.Direction.REVERSE);
+            robot.hookAndOdoPodC.setPower(0.25);
+            robot.hookAndOdoPodC.setDirection(DcMotor.Direction.REVERSE);
         }
     }
 
