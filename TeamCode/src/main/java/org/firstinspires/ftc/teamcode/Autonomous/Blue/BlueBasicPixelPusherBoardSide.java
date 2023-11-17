@@ -30,17 +30,24 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
             sleepTime = 120;
             lift.moveLift("Up", .55);//
             prepareNextAction(300);
-            moveRobotForward(150, 2);
+            StrafeFromOdometry(0,150,2);
+            //moveRobotForward(150, 2);
 
             //robot.rotateRightArm(0.2);
 
-            moveRobotLeft(1800, 2);//Flipped
-            moveRobotRight(1650, 2); // was 100
-            moveRobotForward(1080, 2); //900 was soo close
+            StrafeFromOdometry(-1800,0,2);
+            //moveRobotLeft(1800, 2);//Flipped
+            StrafeFromOdometry(1650,0,2);
+            //moveRobotRight(1650, 2); // was 100
+            StrafeFromOdometry(0,1080,2);
+            //moveRobotForward(1080, 2); //900 was soo close
             claw.openClaw();
-            moveRobotBackward(900, 2);
-            moveRobotLeft(1780, 2);
-            moveRobotRight(150, 2);
+            StrafeFromOdometry(0,-900,2);
+            //moveRobotBackward(900, 2);
+            StrafeFromOdometry(-1780,0,2);
+            //moveRobotLeft(1780, 2);
+            StrafeFromOdometry(0,150,2);
+            //moveRobotRight(150, 2);
 
             // code goes here
 

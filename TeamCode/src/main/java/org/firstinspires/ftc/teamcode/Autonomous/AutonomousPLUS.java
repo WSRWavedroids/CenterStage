@@ -187,56 +187,14 @@ public class AutonomousPLUS extends LinearOpMode {
         DT.encoderReset();
     }
 
-    public void armPID(){
 
-        double Kp = 5;
-        double Ki = 0;
-        double Kd = 0.2;
 
-        double reference = slidePos;
-        float encoderPositionL = robot.slideL.getCurrentPosition();
-        float encoderPositionR = robot.slideRAndOdoPodR.getCurrentPosition();
-        double integralSumL = 0;
-        double integralSumR = 0;
-        double lastErrorL = 0;
-        double lastErrorR = 0;
-
-        ElapsedTime timer = new ElapsedTime();
-
-        while (encoderPositionL != slidePos) {
-
-            // calculate the error
-            double errorL = reference - encoderPositionL;
-            double errorR = reference - encoderPositionR;
-
-            // rate of change of the error
-            double derivativeL = (errorL - lastErrorL) / timer.seconds();
-            double derivativeR = (errorR - lastErrorR) / timer.seconds();
-
-            // sum of all error over time
-            integralSumL = integralSumL + (errorL * timer.seconds());
-
-            double outL = (Kp * errorL) + (Ki * integralSumL) + (Kd * derivativeL);
-            double outR = (Kp * errorR) + (Ki * integralSumR) + (Kd * derivativeR);
-
-            robot.slideL.setPower(outL);
-            robot.slideRAndOdoPodR.setPower(outR);
-
-            lastErrorL = errorL;
-            lastErrorR = errorR;
-
-            // reset the timer for next time
-            timer.reset();
-
-        }
-    }
-
-    public void StrafeFromOdometry(double xTarget, double yTarget){
+    public void StrafeFromOdometry(double deltaX, double deltaY, long pause){
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
-        double deltaX = robot.OdoPodL.getCurrentPosition() - xTarget;
-        double deltaY = robot.slideRAndOdoPodR.getCurrentPosition() - yTarget;
+        double xTarget = robot.OdoPodL.getCurrentPosition() + deltaX;
+        double yTarget = robot.slideRAndOdoPodR.getCurrentPosition() + deltaY;
 
         //2. Translate that to motor power
 
@@ -317,7 +275,6 @@ public class AutonomousPLUS extends LinearOpMode {
         }
 
         //3. Check the targets against the odometry pod position
-
         while (DT.isWheelsBusy()){
             robot.findDisplacement();
             if(robot.actualX == xTarget && robot.actualY == yTarget){
@@ -326,12 +283,12 @@ public class AutonomousPLUS extends LinearOpMode {
         }
 
         //4. Once it hits that point, stop driving
-
         DT.powerSet(0);
+        sleep(pause);
 
     }
 
-    public void TurnFromOdometry(double Angle, String direction){
+    public void TurnFromOdometry(double Angle, String direction, long pause){
 
         double startAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
         double currentAngle;
@@ -366,6 +323,7 @@ public class AutonomousPLUS extends LinearOpMode {
         }
 
         DT.powerSet(0);
+        sleep(pause);
 
     }
 }
