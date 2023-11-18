@@ -22,12 +22,12 @@ public class RedBasicPixelPusherFar extends AutonomousPLUS {
         moveRobotForward(1195, 2); //1175 was soo close
         robot.openClaw();
         moveRobotBackward(300, 2);
-        moveRobotLeft(800, 2);
+        moveRobotLeft(750, 2);
         moveRobotForward(1350, 2);//1200 was too short
         sleepTime = 120;
         moveLift("Down", .55);//
-        turnRobotRight(100, 100);
-        moveRobotForward(4500, 2);
+        turnRobotRight(1070, 100);
+        moveRobotForward(4600, 2);
         //robot.openClaw();
         //moveRobotBackward(150, 2);
         //moveRobotRight(3600, 2);

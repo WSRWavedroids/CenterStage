@@ -24,12 +24,12 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             moveRobotForward(1195, 2); //1175 was soo close
             robot.openClaw();
             moveRobotBackward(300, 2);
-            moveRobotRight(800, 2);
+            moveRobotRight(750, 2);
             moveRobotForward(1350, 2);//1200 was too short
             sleepTime = 120;
             moveLift("Down", .55);//
             turnRobotLeft(1070, 100);
-            moveRobotForward(4500, 2);
+            moveRobotForward(4600, 2);
             //robot.openClaw();
             //moveRobotBackward(150, 2);
             //moveRobotRight(3600, 2);

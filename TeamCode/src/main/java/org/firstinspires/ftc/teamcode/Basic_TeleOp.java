@@ -167,6 +167,11 @@ public class Basic_TeleOp extends OpMode {
         }
         */
 
+        if(gamepad2.dpad_up)
+        {
+            robot.firePlane(650); //650 was short
+        }
+
 
         if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
         {
@@ -191,7 +196,7 @@ public class Basic_TeleOp extends OpMode {
         }
          if (gamepad1.b)
         {
-            robot.hookServo.setPosition(1);
+            robot.hookServo.setPosition(.5);
         }
         else if (gamepad1.a)
         {
@@ -202,6 +207,8 @@ public class Basic_TeleOp extends OpMode {
         {
             robot.SuspendRobot();
         }
+
+
 
 
 

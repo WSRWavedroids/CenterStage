@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
@@ -34,6 +35,8 @@ public class Robot {
     public DcMotor slideL;
     public DcMotor slideR;
     public DcMotor hookMotor;
+
+    public DcMotor droneMotor;
 
 
     public Servo leftClaw;
@@ -70,14 +73,15 @@ public class Robot {
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
         slideL = hardwareMap.get(DcMotor.class, "slideL");
-        slideR = hardwareMap.get(DcMotor.class, "slideRAndOdoPodR");
+        slideR = hardwareMap.get(DcMotor.class, "slideR");
         armL = hardwareMap.get(Servo.class, "armL");
         armR = hardwareMap.get(Servo.class, "armR");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
         hookServo = hardwareMap.get(Servo.class, "hookServo");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
-        hookMotor = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
+        hookMotor = hardwareMap.get(DcMotor.class, "hookMotor");
+        droneMotor = hardwareMap.get(DcMotor.class, "droneMotor");
 
         //add arms to map
         /*
@@ -94,13 +98,14 @@ public class Robot {
         slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
         slideR.setDirection(DcMotor.Direction.FORWARD);
         hookMotor.setDirection(DcMotor.Direction.FORWARD);
-
+        droneMotor.setDirection(DcMotor.Direction.REVERSE);
         // This tells the motors to chill when we're not powering them.
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         hookMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        droneMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //This is new..
         telemetry.addData("Status", "Initialized");
 
@@ -308,6 +313,28 @@ public class Robot {
             hookMotor.setPower(0.25);
             hookMotor.setDirection(DcMotor.Direction.REVERSE);
         }
+    }
+
+    ElapsedTime timer = new ElapsedTime();//may be bad
+    public void firePlane(long motorTime)
+    {
+        long beginning = System.currentTimeMillis();
+         long end = beginning + motorTime;
+         boolean planeAlreadyLaunched = false;
+        while (end > System.currentTimeMillis() && planeAlreadyLaunched == false){
+
+
+            droneMotor.setPower(2);
+
+
+        }
+        planeAlreadyLaunched = true;
+            droneMotor.setPower(0);
+
+
+
+        //timer
+
     }
 
     public void holdArm(){
