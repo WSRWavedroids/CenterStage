@@ -2,31 +2,32 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
+//import com.qualcomm.robotcore.util.ElapsedTime;
+//import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
+import java.util.Objects;
 
 public class Lift extends LinearOpMode {
 
     public Robot robot = null;
-    public AutonomousPLUS AP = new AutonomousPLUS();
+    //public AutonomousPLUS AP = new AutonomousPLUS();
 
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry, this);
     }
 
-    public void moveLift(String direction, double power) {
-        if (direction == "Up") {
+    public void moveLift(String direction, long wait) {
+        if (Objects.equals(direction, "Up")) {
             robot.slideL.setDirection(DcMotor.Direction.FORWARD);
             robot.slideL.setPower(0.75);
 
             robot.slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
             robot.slideRAndOdoPodR.setPower(0.75);
-            sleep(AP.sleepTime);
+            sleep(wait);
             robot.slideL.setPower(0.1);
             robot.slideRAndOdoPodR.setPower(0.1);
             sleep(500);
-        } else if (direction == "Down") {
+        } else if (Objects.equals(direction, "Down")) {
             robot.slideL.setDirection(DcMotor.Direction.REVERSE);
             robot.slideL.setPower(0.5);
             robot.slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
@@ -34,6 +35,7 @@ public class Lift extends LinearOpMode {
         }
     }
 
+    /*
     public void armPID(){
 
         double Kp = 5;
@@ -77,5 +79,7 @@ public class Lift extends LinearOpMode {
 
         }
     }
+
+     */
 
 }

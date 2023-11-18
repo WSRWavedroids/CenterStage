@@ -32,12 +32,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.lang.Math;
+import java.util.Objects;
 
 import org.firstinspires.ftc.teamcode.Robot.Arm;
-import org.firstinspires.ftc.teamcode.Robot.Claw;
-import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
 import org.firstinspires.ftc.teamcode.Robot.Hook;
-import org.firstinspires.ftc.teamcode.Robot.Lift;
+import org.firstinspires.ftc.teamcode.Robot.Launcher;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 
 
@@ -48,12 +47,12 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
  * When an selection is made from the menu, the corresponding OpMode
  * class is selected on the Robot Controller and executed.
  * This particular one is called "Lean Mean TeleOp Machine". I had a little too much fun with naming this.
- *
+ * *******
  * This OpMode controls the functions of the robot during the driver-controlled period.
- *
+ * *******
  * If the "@Disabled" line is not commented out, the program will not show up on the driver hub.
  * If you ever have problems with the program not showing up on the driver hub, it's probably because of that.
- *
+ * *******
  * Throughout this program, there are comments explaining what everything does because previous programmers
  * did a horrible job of doing that.
  */
@@ -62,14 +61,14 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 public class Basic_TeleOp extends OpMode {
 
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
+
     public Robot robot = null;
     public Arm arm = new Arm();
-    public Lift lift = new Lift();
     public Hook hook = new Hook();
-    public Claw claw = new Claw();
-    public Drivetrain DT = new Drivetrain();
+    public Launcher launcher = new Launcher();
+    public boolean readyToSuspend = false;
 
 
     /*
@@ -106,19 +105,18 @@ public class Basic_TeleOp extends OpMode {
 
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Status", "Run Time: " + runtime);
         robot.standardTelemetryOutput();
 
         float armStickY = this.gamepad2.left_stick_y;
-        float turntableStickX = this.gamepad2.right_stick_x;
 
         // This section checks what buttons on the Dpad are being pressed and changes the speed accordingly.
 
         if (gamepad1.back) {
-            if (robot.controlMode == "Robot Centric"){
+            if (Objects.equals(robot.controlMode, "Robot Centric")){
                 robot.controlMode = "Field Centric";
                 telemetry.addData("Control Mode", "Field Centric Controls");
-            } else if (robot.controlMode == "Field Centric"){
+            } else if (Objects.equals(robot.controlMode, "Field Centric")){
                 robot.controlMode = "Robot Centric";
                 telemetry.addData("Control Mode", "Robot Centric Controls");
             }
@@ -156,7 +154,7 @@ public class Basic_TeleOp extends OpMode {
 
 
         //A bunch of messy last minute code
-        boolean readyToSuspend = false;
+
         if(gamepad1.y) // might need a
         {
             robot.hookAndOdoPodC.setPower(0.85);
@@ -167,15 +165,12 @@ public class Basic_TeleOp extends OpMode {
             robot.hookAndOdoPodC.setPower(-0.2);
         }
 
-        /*
-        while (gamepad1.y)
+        if(gamepad2.dpad_up)
         {
-            robot.hookMotor.setPower(0.85);
+            launcher.firePlane(650); //650 was short
         }
-        */
 
-
-        if (!gamepad1.y && !readyToSuspend && !gamepad1.back )
+        if (!gamepad1.y && !readyToSuspend && !gamepad1.back)
         {
             robot.hookAndOdoPodC.setPower(0);
         }
@@ -187,13 +182,11 @@ public class Basic_TeleOp extends OpMode {
                 robot.hookAndOdoPodC.setPower(0.4);
                 readyToSuspend = true;
             }
-            else if (readyToSuspend) //disable hold
+            else
             {
                 robot.hookAndOdoPodC.setPower(0);
                 readyToSuspend = false;
             }
-
-
 
         }
          if (gamepad1.b)
@@ -210,16 +203,10 @@ public class Basic_TeleOp extends OpMode {
             hook.SuspendRobot();
         }
 
-        //Moves the turntable based on the x-coordinate of the right joystick
-        //We need to switch out these motor functions for servo stuff... Idk the position we need
         if (gamepad2.y){ // up
-            //robot.armL.setPosition(1);
-           //robot.rotateLeftArm(0.59); // good no change
             arm.rotateArmUp();
 
         } else if (gamepad2.x) { //lower
-            //robot.rotateLeftArm(0.85); // GOOD NO CHANGE
-            //robot.rotateLeftArm(0.6);
             arm.rotateArmDown();
         }
 
@@ -256,31 +243,12 @@ public class Basic_TeleOp extends OpMode {
         float leftY = this.gamepad1.left_stick_y;
         float leftX = -this.gamepad1.left_stick_x;
 
-        double leftStickAngle = Math.atan2(leftY, leftX);
-        double leftStickMagnitude = Math.sqrt(leftX * 2.0 + leftY * 2.0);
-        //double robotAngle = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle;
-
-        if (leftStickMagnitude > 1){
-            leftStickMagnitude = 1;
-        }
-
         float[] motorPowers = new float[4];
 
-        if (robot.controlMode == "Robot Centric") {
-
-            motorPowers[0] = (leftY + leftX + rightX);
-            motorPowers[1] = (leftY - leftX - rightX);
-            motorPowers[2] = (leftY - leftX + rightX);
-            motorPowers[3] = (leftY + leftX - rightX);
-
-        } else if (robot.controlMode == "Field Centric") {
-            /*
-            motorPowers[0] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
-            motorPowers[1] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
-            motorPowers[2] = (float) (Math.sin(leftStickAngle - 45 - robotAngle) * leftStickMagnitude + rightX);
-            motorPowers[3] = (float) (Math.sin(leftStickAngle + 45 - robotAngle) * leftStickMagnitude + rightX);
-            */
-        }
+        motorPowers[0] = (leftY + leftX + rightX);
+        motorPowers[1] = (leftY - leftX - rightX);
+        motorPowers[2] = (leftY - leftX + rightX);
+        motorPowers[3] = (leftY + leftX - rightX);
 
         float max = getLargestAbsVal(motorPowers);
         if (max < 1) {

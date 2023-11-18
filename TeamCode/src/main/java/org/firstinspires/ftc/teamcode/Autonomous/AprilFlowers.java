@@ -1,19 +1,14 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
-
-
-
 
 @Autonomous(group = "Stage", name = "Vision Experiments")
 public class AprilFlowers extends AutonomousPLUS {
@@ -23,6 +18,7 @@ public class AprilFlowers extends AutonomousPLUS {
     public VisionPortal visionPortal;               // Used to manage the video source.
     public AprilTagProcessor aprilTag;              // Used for managing the AprilTag detection process.
     public AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
+    boolean targetFound     = false;    // Set to true when an AprilTag target is detected
 
     @Override
     public void runOpMode() {
@@ -30,8 +26,6 @@ public class AprilFlowers extends AutonomousPLUS {
         super.runOpMode();
 
         waitForStart();
-
-        boolean targetFound     = false;    // Set to true when an AprilTag target is detected
 
         while (opModeIsActive()) {
             targetFound = false;

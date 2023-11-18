@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+//import java.util.Objects;
 
 public class Arm extends LinearOpMode {
     public Robot robot = null;
@@ -18,13 +19,14 @@ public class Arm extends LinearOpMode {
         robot.slideRAndOdoPodR.setPower(0.05);//used to be 0.1
     }
 
+    /*
     public void moveArm(String direction){
-        if (direction == "Up"){
+        if (Objects.equals(direction, "Up")){
             robot.slideL.setPower(0.75);
             robot.slideL.setDirection(DcMotor.Direction.FORWARD);//inverted
             robot.slideRAndOdoPodR.setPower(0.75);
             robot.slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
-        } else if (direction == "Down"){
+        } else if (Objects.equals(direction, "Down")){
             robot.slideL.setPower(0.25);
             robot.slideL.setDirection(DcMotor.Direction.REVERSE);//Inverted
             robot.slideRAndOdoPodR.setPower(0.25);
@@ -32,12 +34,15 @@ public class Arm extends LinearOpMode {
         }
     }
 
-    public void rotateRightArm(double position) // Remeber these are opposite directions
+
+    public void rotateRightArm(double position) // Remember these are opposite directions
     {
         robot.armR.setPosition(position);
     }
 
-    public void rotateLeftArm(double position) // Rememeber these are opposite directions
+     */
+
+    public void rotateLeftArm(double position) // Remember these are opposite directions
     {
         robot.armL.setPosition(position);
     }

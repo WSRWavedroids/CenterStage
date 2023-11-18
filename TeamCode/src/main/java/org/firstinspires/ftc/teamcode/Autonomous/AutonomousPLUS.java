@@ -29,19 +29,15 @@ package org.firstinspires.ftc.teamcode.Autonomous;
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
-import org.firstinspires.ftc.teamcode.Robot.Arm;
-import org.firstinspires.ftc.teamcode.Robot.Lift;
-import org.firstinspires.ftc.teamcode.Robot.Hook;
-import org.firstinspires.ftc.teamcode.Robot.Claw;
 import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
+
+import java.util.Objects;
 
 /**
  * This is the autonomous mode. It moves the robot without us having to touch the controller.
@@ -52,142 +48,22 @@ import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
 public class AutonomousPLUS extends LinearOpMode {
 
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
-    private ElapsedTime runtime = new ElapsedTime();
-
     public double speed = 0.4;
-    public int sleepTime;
-    public boolean inMarker;
-    public double power;
-    public double slidePos;
+    //public double slidePos;
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!
     public Robot robot = null;
-    public Hook hook = new Hook();
-    public Claw claw = new Claw();
     public Drivetrain DT = new Drivetrain();
-
 
     @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry, this);
     }
 
-    //I think the setTargets Function is broken. Motors don't stop at the right place
-    public void moveRobotForward(int ticks, long pause) {
-        if (opModeIsActive()) {
-            robot.setTargets("Backward", ticks);
-            DT.positionRunningMode();
-        }
-        DT.powerSet(speed);
-
-        while (opModeIsActive() && DT.isWheelsBusy()) {
-            robot.standardTelemetryOutput();
-        }
-
-        DT.stopDrivetrainMotors();
-        DT.encoderRunningMode();
-        DT.stopDrivetrainMotors();
-        sleep(pause);
-        DT.encoderReset();
-    }
-
-    public void moveRobotBackward(int ticks, long pause) {
-        if (opModeIsActive()) {
-            robot.setTargets("Forward", ticks);
-            DT.positionRunningMode();
-            DT.powerSet(speed);
-
-            while (opModeIsActive() && DT.isWheelsBusy()) {
-                robot.standardTelemetryOutput();
-            }
-
-            DT.stopDrivetrainMotors();
-            DT.encoderRunningMode();
-            sleep(pause);
-            DT.encoderReset();
-        }
-
-    }
-
-    public void moveRobotLeft(int ticks, long pause) {
-
-        if (opModeIsActive()) {
-            robot.setTargets("Right", ticks);
-            DT.positionRunningMode();
-            DT.powerSet(speed);
-
-            while (opModeIsActive() && DT.isWheelsBusy()) {
-                robot.standardTelemetryOutput();
-            }
-
-            DT.stopDrivetrainMotors();
-            DT.encoderRunningMode();
-            sleep(pause);
-            DT.encoderReset();
-        }
-    }
-
-    public void moveRobotRight(int ticks, long pause) {
-
-        if (opModeIsActive()) {
-            robot.setTargets("Left", ticks);
-            DT.positionRunningMode();
-            DT.powerSet(speed);
-
-            while (opModeIsActive() && DT.isWheelsBusy()) {
-                robot.standardTelemetryOutput();
-            }
-
-            DT.stopDrivetrainMotors();
-            DT.encoderRunningMode();
-            sleep(pause);
-            DT.encoderReset();
-        }
-    }
-
-    public void turnRobotRight(int ticks, long pause) {
-
-        if (opModeIsActive()) {
-            robot.setTargets("Turn Right", ticks);
-            DT.positionRunningMode();
-            DT.powerSet(speed);
-
-            while (opModeIsActive() && DT.isWheelsBusy()) {
-                robot.standardTelemetryOutput();
-            }
-
-            DT.stopDrivetrainMotors();
-            DT.encoderRunningMode();
-            sleep(pause);
-            DT.encoderReset();
-        }
-    }
-
-    public void turnRobotLeft(int ticks, long pause) {
-
-        if (opModeIsActive()) {
-            robot.setTargets("Turn Left", ticks);
-            DT.positionRunningMode();
-            DT.powerSet(speed);
-
-            while (opModeIsActive() && DT.isWheelsBusy()) {
-                robot.standardTelemetryOutput();
-            }
-
-            DT.stopDrivetrainMotors();
-            DT.encoderRunningMode();
-            sleep(pause);
-            DT.encoderReset();
-
-        }
-    }
-
     public void prepareNextAction(long pause) {
         sleep(pause);
         DT.encoderReset();
     }
-
-
 
     public void StrafeFromOdometry(double deltaX, double deltaY, long pause){
 
@@ -293,7 +169,7 @@ public class AutonomousPLUS extends LinearOpMode {
         double startAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
         double currentAngle;
 
-        if (direction == "Left"){
+        if (Objects.equals(direction, "Left")){
 
             robot.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
             robot.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -302,7 +178,7 @@ public class AutonomousPLUS extends LinearOpMode {
 
             DT.powerSet(robot.drivetrainSpeed);
 
-        } else if (direction == "Right"){
+        } else if (Objects.equals(direction, "Right")){
 
             robot.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
             robot.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);

@@ -2,13 +2,16 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import android.annotation.SuppressLint;
 
+import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.sun.tools.javac.comp.Todo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.android.util.Size;
@@ -17,6 +20,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -36,10 +40,7 @@ public class Robot {
     public DcMotor backRightDrive;
     public DcMotor slideL;
     public DcMotor slideRAndOdoPodR;
-    public DcMotor hookMotor;
-    //public DcMotor OdoPodL;
-    public DcMotor OdoPodC;
-
+    public DcMotor hookAndOdoPodC;
     public DcMotor droneAndOdoPodL;
 
     public Servo leftClaw;
@@ -81,9 +82,7 @@ public class Robot {
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
         slideL = hardwareMap.get(DcMotor.class, "slideL");
         slideRAndOdoPodR = hardwareMap.get(DcMotor.class, "slideR");
-        //OdoPodL = hardwareMap.get(DcMotor.class, "OdoPodL");
-        OdoPodC = hardwareMap.get(DcMotor.class, "OdoPodC");
-        droneAndOdoPodL = hardwareMap.get(DcMotor.class, "droneMotor and or PodL");
+        hookAndOdoPodC = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
 
         armL = hardwareMap.get(Servo.class, "armL");
         armR = hardwareMap.get(Servo.class, "armR");
@@ -91,12 +90,25 @@ public class Robot {
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
         hookServo = hardwareMap.get(Servo.class, "hookServo");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
-        hookMotor = hardwareMap.get(DcMotor.class, "hookMotor");
+        droneAndOdoPodL = hardwareMap.get(DcMotor.class, "droneAndOdoPodL");
 
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
+        imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters myIMUparameters = new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                        new Orientation(
+                                AxesReference.INTRINSIC,
+                                AxesOrder.XYZ,
+                                AngleUnit.DEGREES,
+                                45,
+                                0,
+                                90,
+                                0  // acquisitionTime, not used
+                                //TODO: Check these values
+                        )
+                )
+        );
+
+        imu.initialize(myIMUparameters);
 
         // This section sets the direction of all of the motors. Depending on the motor, this may change later in the program.
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -105,15 +117,14 @@ public class Robot {
         backRightDrive.setDirection(DcMotor.Direction.REVERSE); //Was inverted as forward
         slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
         slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
-        hookMotor.setDirection(DcMotor.Direction.FORWARD);
-        droneAndOdoPodL.setDirection(DcMotor.Direction.REVERSE);
+        hookAndOdoPodC.setDirection(DcMotor.Direction.FORWARD);
+
         // This tells the motors to chill when we're not powering them.
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        hookMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        droneAndOdoPodL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        hookAndOdoPodC.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //This is new..
         telemetry.addData("Status", "Initialized");
 
@@ -162,10 +173,6 @@ public class Robot {
             slideRAndOdoPodR.setTargetPosition(ticks + slideRAndOdoPodR.getCurrentPosition());
 
         }
-        else if (direction == "Hook")//new remove if no work
-        {
-            hookMotor.setTargetPosition(ticks + hookMotor.getCurrentPosition());
-        }
 
     }
 
@@ -177,11 +184,10 @@ public class Robot {
         telemetry.addData("Motors", String.format("BL Power(%.2f) BL Location (%d) BL Target (%d)", backLeftDrive.getPower(), backLeftDrive.getCurrentPosition(), backLeftDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", backRightDrive.getPower(), backRightDrive.getCurrentPosition(), backRightDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("Slide Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
-        telemetry.addData("Motors", String.format("Hook Motor Power (%.2f) Arm Location (%d) Arm Target (%d)", hookMotor.getPower(), hookMotor.getCurrentPosition(), hookMotor.getTargetPosition()));
-        //telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", OdoPodL.getCurrentPosition()));
+        telemetry.addData("Motors", String.format("Hook Motor Power (%.2f) Arm Location (%d) Arm Target (%d)", hookAndOdoPodC.getPower()));
+        telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", droneAndOdoPodL.getCurrentPosition()));
         telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", slideRAndOdoPodR.getCurrentPosition()));
-        telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", slideRAndOdoPodR.getCurrentPosition()));
-        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", OdoPodC.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", hookAndOdoPodC.getCurrentPosition()));
         telemetry.addData("ArmL", armL.getPosition());
         telemetry.addData("ArmR", armR.getPosition());
         telemetry.addData("ClawL", leftClaw.getPosition());
@@ -205,14 +211,14 @@ public class Robot {
         double phi;
         double deltaMiddle;
         double deltaPerpendicular;
-        double heading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double heading = imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
         double trackWidth = 12.25; //inches between centers of side odometry pods
         double centerPodToCenter = 7.5; //inches between center of center pod and center of robot
 
         //Calculate changes from the last time we measured
         deltaLeft = droneAndOdoPodL.getCurrentPosition() - lastLeftPos;
         deltaRight = slideRAndOdoPodR.getCurrentPosition() - lastRightPos;
-        deltaCenter = OdoPodC.getCurrentPosition() - lastCenterPos;
+        deltaCenter = hookAndOdoPodC.getCurrentPosition() - lastCenterPos;
 
         phi = (deltaLeft - deltaRight) / trackWidth;
         deltaMiddle = (deltaLeft + deltaRight) / 2;
@@ -227,76 +233,7 @@ public class Robot {
 
         lastLeftPos = droneAndOdoPodL.getCurrentPosition();
         lastRightPos = slideRAndOdoPodR.getCurrentPosition();
-        lastCenterPos = OdoPodC.getCurrentPosition();
+        lastCenterPos = hookAndOdoPodC.getCurrentPosition();
     }
-
-
-
-  /*
-
-    public void showersAndFlowers(){
-
-        AprilTagProcessor OSHAmobile;
-
-        OSHAmobile = new AprilTagProcessor.Builder()
-                .setTagLibrary(AprilTagGameDatabase.getCurrentGameTagLibrary())
-                .setDrawTagID(true)
-                .setDrawTagOutline(true)
-                .setDrawAxes(true)
-                .setDrawCubeProjection(true)
-                .build();
-    }
-
-    public void tensorFlowDetection(){
-
-        TfodProcessor safetyGlasses;
-
-        safetyGlasses = new TfodProcessor.Builder()
-                .setMaxNumRecognitions(10)
-                .setUseObjectTracker(true)
-                .setTrackerMaxOverlap((float) 0.2)
-                .setTrackerMinSize(16)
-                .build();
-    }
-
-    public void visionPortal(AprilTagProcessor aprilTagProcessor, TfodProcessor tfodProcessor){
-        VisionPortal Oracle;
-
-
-        myVisionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Cam Cam"))
-                .addProcessor(aprilTagProcessor)
-                .setCameraResolution(new Size(640, 480))
-                .setStreamFormat(VisionPortal.StreamFormat.YUY2)
-                .enableCameraMonitoring(true)
-                .setAutoStopLiveView(true)
-                .build();
-
-
-    }
-
-    public void retrieveAprilTags(AprilTagProcessor ATP){
-        List<AprilTagDetection> ATDS;         // list of all detections // current detection in for() loop
-        int SPOTnum;                           // ID code of current detection, in for() loop
-
-        // Get a list of AprilTag detections.
-        ATDS = ATP.getDetections();
-
-        // Cycle through through the list and process each AprilTag.
-        for (AprilTagDetection SPOT : ATDS) {
-
-            if (SPOT.metadata != null) {  // This check for non-null Metadata is not needed for reading only ID code.
-                SPOTnum = SPOT.id;
-
-                // Now take action based on this tag's ID code, or store info for later action.
-
-            }
-        }
-    }
-
-
-   */
-
-
 
 }
