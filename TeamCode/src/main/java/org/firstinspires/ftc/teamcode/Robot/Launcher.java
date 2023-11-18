@@ -6,6 +6,7 @@ public class Launcher extends LinearOpMode{
 
     public Robot robot = null;
     boolean planeAlreadyLaunched = false;
+    @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry, this);
     }

@@ -7,6 +7,7 @@ public class Hook extends LinearOpMode {
 
     public Robot robot = null;
 
+    @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry, this);
     }

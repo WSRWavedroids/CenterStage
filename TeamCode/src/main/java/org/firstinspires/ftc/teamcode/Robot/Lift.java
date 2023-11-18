@@ -12,6 +12,7 @@ public class Lift extends LinearOpMode {
     public Robot robot = null;
     //public AutonomousPLUS AP = new AutonomousPLUS();
 
+    @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry, this);
     }

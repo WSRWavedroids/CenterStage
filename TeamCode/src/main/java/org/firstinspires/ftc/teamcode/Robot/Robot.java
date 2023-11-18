@@ -74,7 +74,7 @@ public class Robot {
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
         slideL = hardwareMap.get(DcMotor.class, "slideL");
-        slideRAndOdoPodR = hardwareMap.get(DcMotor.class, "slideR");
+        slideRAndOdoPodR = hardwareMap.get(DcMotor.class, "slideRAndOdoPodR");
         hookAndOdoPodC = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
         droneAndOdoPodL = hardwareMap.get(DcMotor.class, "droneAndOdoPodL");
 
