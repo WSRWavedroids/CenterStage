@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 /**
  * This file is our iterative (Non-Linear) "OpMode" for TeleOp.
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
@@ -12,12 +11,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * When an selection is made from the menu, the corresponding OpMode
  * class is selected on the Robot Controller and executed.
  * This particular one is called "Lean Mean TeleOp Machine". I had a little too much fun with naming this.
- *
+ * *****
  * This OpMode controls the functions of the robot during the driver-controlled period.
- *
+ * *****
  * If the "@Disabled" line is not commented out, the program will not show up on the driver hub.
  * If you ever have problems with the program not showing up on the driver hub, it's probably because of that.
- *
+ * *****
  * Throughout this program, there are comments explaining what everything does because previous programmers
  * did a horrible job of doing that.
  */
@@ -26,7 +25,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class FunBotTeleOp extends OpMode {
 
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
     public FunBot FunBot = new FunBot();
 
@@ -70,7 +69,7 @@ public class FunBotTeleOp extends OpMode {
 
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Status", "Run Time: " + runtime);
         //FunBot.tellMotorOutput();
 
 

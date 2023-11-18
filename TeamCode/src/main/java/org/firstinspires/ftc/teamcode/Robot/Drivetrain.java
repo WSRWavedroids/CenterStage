@@ -29,6 +29,4 @@ public class Drivetrain extends LinearOpMode{
         robot.backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-
-
 }

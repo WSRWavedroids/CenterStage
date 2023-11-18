@@ -32,7 +32,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.lang.Math;
-import java.util.Objects;
 
 import org.firstinspires.ftc.teamcode.Robot.Arm;
 import org.firstinspires.ftc.teamcode.Robot.Hook;
@@ -111,16 +110,6 @@ public class Basic_TeleOp extends OpMode {
         float armStickY = this.gamepad2.left_stick_y;
 
         // This section checks what buttons on the Dpad are being pressed and changes the speed accordingly.
-
-        if (gamepad1.back) {
-            if (Objects.equals(robot.controlMode, "Robot Centric")){
-                robot.controlMode = "Field Centric";
-                telemetry.addData("Control Mode", "Field Centric Controls");
-            } else if (Objects.equals(robot.controlMode, "Field Centric")){
-                robot.controlMode = "Robot Centric";
-                telemetry.addData("Control Mode", "Robot Centric Controls");
-            }
-        }
 
         if (gamepad1.dpad_up) {
             speed = 1;
