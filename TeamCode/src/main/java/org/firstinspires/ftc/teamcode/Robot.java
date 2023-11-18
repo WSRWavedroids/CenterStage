@@ -73,15 +73,15 @@ public class Robot {
         backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
         slideL = hardwareMap.get(DcMotor.class, "slideL");
-        slideR = hardwareMap.get(DcMotor.class, "slideR");
+        slideR = hardwareMap.get(DcMotor.class, "slideRAndOdoPodR");
         armL = hardwareMap.get(Servo.class, "armL");
         armR = hardwareMap.get(Servo.class, "armR");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
         hookServo = hardwareMap.get(Servo.class, "hookServo");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
-        hookMotor = hardwareMap.get(DcMotor.class, "hookMotor");
-        droneMotor = hardwareMap.get(DcMotor.class, "droneMotor");
+        hookMotor = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
+        droneMotor = hardwareMap.get(DcMotor.class, "droneAndOdoPodL");
 
         //add arms to map
         /*
