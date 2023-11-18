@@ -169,7 +169,7 @@ public class Basic_TeleOp extends OpMode {
 
         if(gamepad2.dpad_up)
         {
-            robot.firePlane(650); //650 was short
+            robot.firePlane(400); //650 was short
         }
 
 

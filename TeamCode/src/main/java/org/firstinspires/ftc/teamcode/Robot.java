@@ -324,7 +324,7 @@ public class Robot {
         while (end > System.currentTimeMillis() && planeAlreadyLaunched == false){
 
 
-            droneMotor.setPower(2);
+            droneMotor.setPower(2);//still fireing a little far
 
 
         }
