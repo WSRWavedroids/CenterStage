@@ -64,11 +64,10 @@ public class Basic_TeleOp extends OpMode {
     private double speed = 0.75;
 
     public Robot robot = null;
-    public Arm arm = new Arm();
-    public Hook hook = new Hook();
-    public Launcher launcher = new Launcher();
+    public Arm arm;
+    public Hook hook;
+    public Launcher launcher;
     public boolean readyToSuspend = false;
-
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -76,7 +75,7 @@ public class Basic_TeleOp extends OpMode {
     public void init() {
 
         // Call the initialization protocol from the Robot class.
-        robot = new Robot(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -131,27 +130,22 @@ public class Basic_TeleOp extends OpMode {
             telemetry.addData("Speed", "Normal Boi");
         }
 
-        if (gamepad2.left_stick_y < -0.5){
-            robot.slideL.setPower(-armStickY * 0.75);
-            robot.slideRAndOdoPodR.setPower(-armStickY * 0.75);
-        } else if (gamepad2.left_stick_y > 0.5){
-            robot.slideL.setPower(-armStickY * 0.75);
-            robot.slideRAndOdoPodR.setPower(-armStickY * 0.75);
+        if (gamepad2.left_stick_y < -0.5 || gamepad2.left_stick_y > 0.5){
+            robot.lift.raiseAndLowerLift(-armStickY);
         } else {
-            arm.holdArm();
+            robot.lift.holdLift();
         }
 
 
         //A bunch of messy last minute code
-
         if(gamepad1.y) // might need a
         {
-            robot.hookAndOdoPodC.setPower(0.85);
+            robot.hook.hookAndOdoPodC.setPower(0.85);
         }
 
         if(gamepad1.back)
         {
-            robot.hookAndOdoPodC.setPower(-0.2);
+            robot.hook.hookAndOdoPodC.setPower(-0.2);
         }
 
         if(gamepad2.dpad_up)
@@ -161,30 +155,30 @@ public class Basic_TeleOp extends OpMode {
 
         if (!gamepad1.y && !readyToSuspend && !gamepad1.back)
         {
-            robot.hookAndOdoPodC.setPower(0);
+            robot.hook.hookAndOdoPodC.setPower(0);
         }
 
         else if(gamepad1.x)
         {
             if (!readyToSuspend) //enable hold
             {
-                robot.hookAndOdoPodC.setPower(0.4);
+                robot.hook.hookAndOdoPodC.setPower(0.4);
                 readyToSuspend = true;
             }
             else
             {
-                robot.hookAndOdoPodC.setPower(0);
+                robot.hook.hookAndOdoPodC.setPower(0);
                 readyToSuspend = false;
             }
 
         }
          if (gamepad1.b)
         {
-            robot.hookServo.setPosition(1);
+            robot.hook.hookServo.setPosition(1);
         }
         else if (gamepad1.a)
         {
-            robot.hookServo.setPosition(0);
+            robot.hook.hookServo.setPosition(0);
         }
 
         if (readyToSuspend)
@@ -218,10 +212,10 @@ public class Basic_TeleOp extends OpMode {
         if (motorPowers.length != 4) {
             return;
         }
-        robot.frontLeftDrive.setPower(-motorPowers[0]);
-        robot.frontRightDrive.setPower(-motorPowers[1]);               
-        robot.backLeftDrive.setPower(-motorPowers[2]);
-        robot.backRightDrive.setPower(-motorPowers[3]);
+        robot.DT.frontLeftDrive.setPower(-motorPowers[0]);
+        robot.DT.frontRightDrive.setPower(-motorPowers[1]);
+        robot.DT.backLeftDrive.setPower(-motorPowers[2]);
+        robot.DT.backRightDrive.setPower(-motorPowers[3]);
     }
 
     private void singleJoystickDrive () {

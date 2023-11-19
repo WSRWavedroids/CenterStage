@@ -2,23 +2,31 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 //import java.util.Objects;
 
-public class Arm extends LinearOpMode {
+public class Arm {
     public Robot robot = null;
+    public HardwareMap hardwareMap;
+    public Telemetry telemetry;
 
-    @Override
+    public final Servo armL;
+    public final Servo armR;
+
+    public Arm(Servo armL, Servo armR) {
+        this.armL = armL;
+        this.armR = armR;
+    }
+
+
     public void runOpMode() {
-        robot = new Robot(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry);
     }
 
-    public void holdArm(){
-        robot.slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
-        robot.slideL.setPower(0.05);
-        robot.slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
-        robot.slideRAndOdoPodR.setPower(0.05);//used to be 0.1
-    }
 
     /*
     public void moveArm(String direction){
@@ -45,7 +53,7 @@ public class Arm extends LinearOpMode {
 
     public void rotateLeftArm(double position) // Remember these are opposite directions
     {
-        robot.armL.setPosition(position);
+        armL.setPosition(position);
     }
 
     public void rotateArmUp()

@@ -12,8 +12,7 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
     public class BluePixelPusherFarSide extends AutonomousPLUS {
 
     public Robot robot = null;
-    public Lift lift = new Lift();
-    public Claw claw = new Claw();
+
         @Override
         public void runOpMode() {
 
@@ -21,17 +20,17 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 
             //Do this to pass inspection.
             waitForStart();
-            claw.closeClaw();
+            robot.claw.closeClaw();
             prepareNextAction(300);
-            lift.moveLift("Up",120);
+            robot.lift.moveLift("Up",120);
             prepareNextAction(300);
             StrafeFromOdometry(150,0,2);
             StrafeFromOdometry(0,1195,2);
-            claw.openClaw();
+            robot.claw.openClaw();
             StrafeFromOdometry(0,-300,2);
             StrafeFromOdometry(800,0,2);
             StrafeFromOdometry(0,1350,2);
-            lift.moveLift("Down",120);
+            robot.lift.moveLift("Down",120);
             TurnFromOdometry(90,"Left", 100);
             StrafeFromOdometry(0,4500,2);
 

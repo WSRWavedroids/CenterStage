@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -16,22 +17,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import java.util.concurrent.TimeUnit;
+
 public class Robot {
 
-    public DcMotor frontLeftDrive;
-    public DcMotor frontRightDrive;
-    public DcMotor backLeftDrive;
-    public DcMotor backRightDrive;
-    public DcMotor slideL;
-    public DcMotor slideRAndOdoPodR;
-    public DcMotor hookAndOdoPodC;
-    public DcMotor droneAndOdoPodL;
+    public Drivetrain DT;
+    public Lift lift;
+    public Launcher launcher;
 
-    public Servo leftClaw;
-    public Servo rightClaw;
-    public Servo hookServo;
-    public Servo armL;
-    public Servo armR;
+    public Claw claw;
+    public Hook hook;
+    public Arm arm;
 
     public WebcamName CamCam;
 
@@ -60,30 +56,26 @@ public class Robot {
     public double heading;
     double trackWidth = 12.25; //inches between centers of side odometry pods
     double centerPodToCenter = 7.5; //inches between center of center pod and center of robot
+    private final ElapsedTime runtime = new ElapsedTime();
+    public long targetTime;
+    public boolean timeToMoveOn;
+    public long timerLength;
 
     //Initialize motors and servos
-    public Robot(HardwareMap hardwareMap, Telemetry telemetry, OpMode opmode){
+    public Robot(HardwareMap hardwareMap, Telemetry telemetry){
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
-        this.opmode = opmode;
 
         // This section turns the names of the pieces of hardware into variables that we can program with.
         // Make sure that the device name is the exact same thing you typed in on the configuration on the driver hub.
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
-        slideL = hardwareMap.get(DcMotor.class, "slideL");
-        slideRAndOdoPodR = hardwareMap.get(DcMotor.class, "slideRAndOdoPodR");
-        hookAndOdoPodC = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
-        droneAndOdoPodL = hardwareMap.get(DcMotor.class, "droneAndOdoPodL");
-
-        armL = hardwareMap.get(Servo.class, "armL");
-        armR = hardwareMap.get(Servo.class, "armR");
-        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
-        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        hookServo = hardwareMap.get(Servo.class, "hookServo");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
+
+        claw = new Claw(hardwareMap.get(Servo.class, "leftClaw"), hardwareMap.get(Servo.class, "rightClaw"), telemetry);
+        DT = new Drivetrain(hardwareMap.get(DcMotor.class, "frontRightDrive"), hardwareMap.get(DcMotor.class, "frontLeftDrive"), hardwareMap.get(DcMotor.class, "backRightDrive"), hardwareMap.get(DcMotor.class, "backLeftDrive"), telemetry);
+        launcher = new Launcher(hardwareMap.get(DcMotor.class, "droneAndOdoPodL"));
+        hook = new Hook(hardwareMap.get(Servo.class,"hookServo"),hardwareMap.get(DcMotor.class,"hookAndOdoPodC"));
+        lift = new Lift(hardwareMap.get(DcMotor.class, "slideL"),hardwareMap.get(DcMotor.class, "slideRAndOdoPodR"));
+        arm = new Arm(hardwareMap.get(Servo.class, "armL"),hardwareMap.get(Servo.class, "armR"));
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters myIMUparameters = new IMU.Parameters(
@@ -103,24 +95,9 @@ public class Robot {
 
         imu.initialize(myIMUparameters);
 
-        // This section sets the direction of all of the motors. Depending on the motor, this may change later in the program.
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE); //Was inverted as forward
-        slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
-        slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
-        hookAndOdoPodC.setDirection(DcMotor.Direction.FORWARD);
+        DT.setDefaultBehaviors();
+        lift.setDefaultBehaviors();
 
-        // This tells the motors to chill when we're not powering them.
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        hookAndOdoPodC.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slideL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        slideRAndOdoPodR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        droneAndOdoPodL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //This is new..
         telemetry.addData("Status", "Initialized");
 
@@ -130,28 +107,28 @@ public class Robot {
 
     @SuppressLint("DefaultLocale")
     public void standardTelemetryOutput(){
-        telemetry.addData("Motors", String.format("FL Power(%.2f) FL Location (%d) FL Target (%d)", frontLeftDrive.getPower(), frontLeftDrive.getCurrentPosition(), frontLeftDrive.getTargetPosition()));
-        telemetry.addData("Motors", String.format("FR Power(%.2f) FR Location (%d) FR Target (%d)", frontRightDrive.getPower(), frontRightDrive.getCurrentPosition(), frontRightDrive.getTargetPosition()));
-        telemetry.addData("Motors", String.format("BL Power(%.2f) BL Location (%d) BL Target (%d)", backLeftDrive.getPower(), backLeftDrive.getCurrentPosition(), backLeftDrive.getTargetPosition()));
-        telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", backRightDrive.getPower(), backRightDrive.getCurrentPosition(), backRightDrive.getTargetPosition()));
-        telemetry.addData("Motors", String.format("Slide Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
-        telemetry.addData("Motors", String.format("Hook Motor Power (%.2f)", hookAndOdoPodC.getPower()));
-        telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", droneAndOdoPodL.getCurrentPosition()));
-        telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", slideRAndOdoPodR.getCurrentPosition()));
-        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", hookAndOdoPodC.getCurrentPosition()));
-        telemetry.addData("ArmL", armL.getPosition());
-        telemetry.addData("ArmR", armR.getPosition());
-        telemetry.addData("ClawL", leftClaw.getPosition());
-        telemetry.addData("ClawR", rightClaw.getPosition());
+        telemetry.addData("Motors", String.format("FL Power(%.2f) FL Location (%d) FL Target (%d)", DT.frontLeftDrive.getPower(), DT.frontLeftDrive.getCurrentPosition(), DT.frontLeftDrive.getTargetPosition()));
+        telemetry.addData("Motors", String.format("FR Power(%.2f) FR Location (%d) FR Target (%d)", DT.frontRightDrive.getPower(), DT.frontRightDrive.getCurrentPosition(), DT.frontRightDrive.getTargetPosition()));
+        telemetry.addData("Motors", String.format("BL Power(%.2f) BL Location (%d) BL Target (%d)", DT.backLeftDrive.getPower(), DT.backLeftDrive.getCurrentPosition(), DT.backLeftDrive.getTargetPosition()));
+        telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", DT.backRightDrive.getPower(), DT.backRightDrive.getCurrentPosition(), DT.backRightDrive.getTargetPosition()));
+        telemetry.addData("Motors", String.format("Slide Power (%.2f) Arm Location (%d) Arm Target (%d)", lift.slideL.getPower(), lift.slideL.getCurrentPosition(), lift.slideL.getTargetPosition()));
+        telemetry.addData("Motors", String.format("Hook Motor Power (%.2f)", hook.hookAndOdoPodC.getPower()));
+        telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", launcher.droneAndOdoPodL.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", lift.slideRAndOdoPodR.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", hook.hookAndOdoPodC.getCurrentPosition()));
+        telemetry.addData("ArmL", arm.armL.getPosition());
+        telemetry.addData("ArmR", arm.armR.getPosition());
+        telemetry.addData("ClawL", claw.leftClaw.getPosition());
+        telemetry.addData("ClawR", claw.rightClaw.getPosition());
         telemetry.update();
     }
 
     public void findDisplacement(){
 
         //Calculate changes from the last time we measured
-        deltaLeft = droneAndOdoPodL.getCurrentPosition() - lastLeftPos;
-        deltaRight = slideRAndOdoPodR.getCurrentPosition() - lastRightPos;
-        deltaCenter = hookAndOdoPodC.getCurrentPosition() - lastCenterPos;
+        deltaLeft = launcher.droneAndOdoPodL.getCurrentPosition() - lastLeftPos;
+        deltaRight = lift.slideRAndOdoPodR.getCurrentPosition() - lastRightPos;
+        deltaCenter = hook.hookAndOdoPodC.getCurrentPosition() - lastCenterPos;
 
         phi = (deltaLeft - deltaRight) / trackWidth;
         deltaMiddle = (deltaLeft + deltaRight) / 2;
@@ -164,9 +141,23 @@ public class Robot {
         actualY += deltaY;
         heading += phi;
 
-        lastLeftPos = droneAndOdoPodL.getCurrentPosition();
-        lastRightPos = slideRAndOdoPodR.getCurrentPosition();
-        lastCenterPos = hookAndOdoPodC.getCurrentPosition();
+        lastLeftPos = launcher.droneAndOdoPodL.getCurrentPosition();
+        lastRightPos = lift.slideRAndOdoPodR.getCurrentPosition();
+        lastCenterPos = hook.hookAndOdoPodC.getCurrentPosition();
+    }
+
+    public long setJankyHomemadeTimer(long seconds){
+        targetTime = runtime.time(TimeUnit.SECONDS) + seconds;
+        return targetTime;
+    }
+
+    public void runJankyHomemadeTimer(){
+        if (targetTime == runtime.time(TimeUnit.SECONDS)){
+            telemetry.addData("Boop","Boop boop boop boop");
+            timeToMoveOn = true;
+        } else {
+            timeToMoveOn = false;
+        }
     }
 
 }

@@ -12,8 +12,7 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
     public class BlueBasicPixelPusherBoardSide extends AutonomousPLUS {
 
     public Robot robot = null;
-    public Lift lift = new Lift();
-    public Claw claw = new Claw();
+
         @Override
         public void runOpMode() {
 
@@ -21,9 +20,9 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 
             //Do this to pass inspection.
             waitForStart();
-            claw.closeClaw();
+            robot.claw.closeClaw();
             prepareNextAction(300);
-            lift.moveLift("Up",120);
+            robot.lift.moveLift("Up",120);
             prepareNextAction(300);
             StrafeFromOdometry(0,150,2);
 
@@ -32,7 +31,7 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
             StrafeFromOdometry(-1800,0,2);
             StrafeFromOdometry(1650,0,2);
             StrafeFromOdometry(0,1080,2);
-            claw.openClaw();
+            robot.claw.openClaw();
             StrafeFromOdometry(0,-900,2);
             StrafeFromOdometry(-1780,0,2);
             StrafeFromOdometry(0,150,2);

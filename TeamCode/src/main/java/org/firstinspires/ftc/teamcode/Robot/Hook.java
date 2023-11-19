@@ -1,20 +1,36 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 //import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class Hook extends LinearOpMode {
+public class Hook {
+
+    public final Servo hookServo;
+    public final DcMotor hookAndOdoPodC;
 
     public Robot robot = null;
+    public HardwareMap hardwareMap;
+    public Telemetry telemetry;
 
-    @Override
+    public Hook(Servo hookServo, DcMotor hookAndOdoPodC) {
+        this.hookServo = hookServo;
+        this.hookAndOdoPodC = hookAndOdoPodC;
+    }
+
     public void runOpMode() {
-        robot = new Robot(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry);
     }
 
     public void SuspendRobot(){
+        hookAndOdoPodC.setDirection(DcMotor.Direction.FORWARD);
+        hookAndOdoPodC.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //hookMotor.setDirection(DcMotor.Direction.REVERSE);//Inverted
-        robot.hookAndOdoPodC.setPower(0.5); //if no work then resume set direction
+        hookAndOdoPodC.setPower(0.5); //if no work then resume set direction
     }
 
     /*

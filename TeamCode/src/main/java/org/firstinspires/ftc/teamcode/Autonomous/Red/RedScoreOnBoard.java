@@ -12,10 +12,7 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 @Autonomous(group = "Stage", name = "Red score on board")
     public class RedScoreOnBoard extends AutonomousPLUS {
     public Robot robot = null;
-    public Lift lift = new Lift();
-    public Claw claw = new Claw();
 
-    public Arm arm = new Arm();
         @Override
         public void runOpMode() {
 
@@ -23,9 +20,9 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 
             //Do this to pass inspection.
             waitForStart();
-            claw.closeClaw();
+            robot.claw.closeClaw();
             prepareNextAction(300);
-            lift.moveLift("Up",175);//
+            robot.lift.moveLift("Up",175);//
             prepareNextAction(300);
 
             StrafeFromOdometry(0,150,2);
@@ -35,30 +32,30 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
             speed = 0.5;//new
             StrafeFromOdometry(0,1050,50);
             prepareNextAction(100);//new
-            claw.openClaw();
+            robot.claw.openClaw();
             speed = 0.5;//new
             StrafeFromOdometry(0,-900,2);
             TurnFromOdometry(90,"Right",2);
             StrafeFromOdometry(250,0,2);
             StrafeFromOdometry(0,1450,50);
 
-            lift. moveLift("Down",175);//new
+            robot.lift. moveLift("Down",175);//new
             prepareNextAction(500);//new
             sleep(500);
-            claw.closeClaw();//new
+            robot.claw.closeClaw();//new
             sleep(500);
-            lift.moveLift("Up",175);//new
+            robot.lift.moveLift("Up",175);//new
             StrafeFromOdometry(0,-900,2);
             StrafeFromOdometry(-1160,0,2);
-            arm.rotateArmUp();
+            robot.arm.rotateArmUp();
             prepareNextAction(200);
             speed = 0.4;
             StrafeFromOdometry(0,965,300);
-            claw.openClaw();
+            robot.claw.openClaw();
             prepareNextAction(300);
-            lift.moveLift("Down",175);//
+            robot.lift.moveLift("Down",175);//
 
-            claw.openClaw();
+            robot.claw.openClaw();
             prepareNextAction(1000);
 
         }

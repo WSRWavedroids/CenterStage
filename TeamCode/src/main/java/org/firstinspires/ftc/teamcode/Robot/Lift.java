@@ -1,39 +1,68 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 //import com.qualcomm.robotcore.util.ElapsedTime;
 //import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
-
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.Objects;
 
-public class Lift extends LinearOpMode {
+public class Lift {
 
+    public final DcMotor slideL;
+    public final DcMotor slideRAndOdoPodR;
     public Robot robot = null;
-    //public AutonomousPLUS AP = new AutonomousPLUS();
+    public HardwareMap hardwareMap;
+    public Telemetry telemetry;
 
-    @Override
+    public Lift(DcMotor slideL, DcMotor slideRAndOdoPodR) {
+        this.slideL = slideL;
+        this.slideRAndOdoPodR = slideRAndOdoPodR;
+    }
+
     public void runOpMode() {
-        robot = new Robot(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry);
     }
 
     public void moveLift(String direction, long wait) {
         if (Objects.equals(direction, "Up")) {
-            robot.slideL.setDirection(DcMotor.Direction.FORWARD);
-            robot.slideL.setPower(0.75);
+            slideL.setDirection(DcMotor.Direction.FORWARD);
+            slideL.setPower(0.75);
 
-            robot.slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
-            robot.slideRAndOdoPodR.setPower(0.75);
-            sleep(wait);
-            robot.slideL.setPower(0.1);
-            robot.slideRAndOdoPodR.setPower(0.1);
-            sleep(500);
+            slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
+            slideRAndOdoPodR.setPower(0.75);
+            robot.setJankyHomemadeTimer(wait);
+            robot.runJankyHomemadeTimer();
+            slideL.setPower(0.1);
+            slideRAndOdoPodR.setPower(0.1);
+            robot.setJankyHomemadeTimer(500);
+            robot.runJankyHomemadeTimer();
         } else if (Objects.equals(direction, "Down")) {
-            robot.slideL.setDirection(DcMotor.Direction.REVERSE);
-            robot.slideL.setPower(0.5);
-            robot.slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
-            robot.slideRAndOdoPodR.setPower(0.5);
+            slideL.setDirection(DcMotor.Direction.REVERSE);
+            slideL.setPower(0.5);
+            slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
+            slideRAndOdoPodR.setPower(0.5);
         }
+    }
+
+    public void setDefaultBehaviors(){
+        slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
+        slideRAndOdoPodR.setDirection(DcMotor.Direction.FORWARD);
+
+        slideL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideRAndOdoPodR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void holdLift(){
+        slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
+        slideL.setPower(0.05);
+        slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
+        slideRAndOdoPodR.setPower(0.05);//used to be 0.1
+    }
+
+    public void raiseAndLowerLift(double armStickY){
+        slideL.setPower(-armStickY * 0.75);
+        slideRAndOdoPodR.setPower(-armStickY * 0.75);
     }
 
     /*
@@ -69,8 +98,8 @@ public class Lift extends LinearOpMode {
             double outL = (Kp * errorL) + (Ki * integralSumL) + (Kd * derivativeL);
             double outR = (Kp * errorR) + (Ki * integralSumR) + (Kd * derivativeR);
 
-            robot.slideL.setPower(outL);
-            robot.slideRAndOdoPodR.setPower(outR);
+            slideL.setPower(outL);
+            slideRAndOdoPodR.setPower(outR);
 
             lastErrorL = errorL;
             lastErrorR = errorR;

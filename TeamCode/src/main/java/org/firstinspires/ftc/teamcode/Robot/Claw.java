@@ -1,47 +1,64 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
-public class Claw extends LinearOpMode {
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+public class Claw {
+
+    private static final double RIGHT_CLAW_OPEN_POSITION = 0.5;
+    private static final double RIGHT_CLAW_CLOSED_POSITION = 0.58;
+    private static final double LEFT_CLAW_OPEN_POSITION = 0.5;
+    private static final double LEFT_CLAW_CLOSED_POSITION = 0.38;
+
+    public final Servo rightClaw;
+    public final Servo leftClaw;
+    public HardwareMap hardwareMap;
+    public final Telemetry telemetry;
 
     public Robot robot = null;
 
-    @Override
+    public Claw(Servo rightClaw, Servo leftClaw, Telemetry telemetry) {
+        this.rightClaw = rightClaw;
+        this.leftClaw = leftClaw;
+        this.telemetry = telemetry;
+    }
+
     public void runOpMode() {
-        robot = new Robot(hardwareMap, telemetry, this);
+        robot = new Robot(hardwareMap, telemetry);
     }
 
-    public void closeClaw()
-    {
-        openAndCloseRightClaw(0.58); //Moves right claw left GOOD DONE
-        openAndCloseLeftClaw(0.38); // //Moves left claw right
+    public void openClaw() {
+        openLeftClaw();
+        openRightClaw();
     }
 
-    public void openClaw()
-    {
-        openAndCloseLeftClaw(0.5); //Moves left claw left
-        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE .3 was good
+    public void closeClaw() {
+        closeLeftClaw();
+        closeRightClaw();
     }
 
-    public void openAndCloseLeftClaw (double position){
-        robot.leftClaw.setPosition(position);
-
-        if (position == 0){
-            telemetry.addData("Left Claw", "Closed");
-        } else if (position >= 0.3){
-            telemetry.addData("Left Claw", "Open");
-        }
-
+    // I would only keep these if the expectation is that you are closing left and right claws independently.
+    public void closeLeftClaw() {
+        leftClaw.setPosition(LEFT_CLAW_CLOSED_POSITION);
+        telemetry.addData("Left Claw", "Closed");
     }
 
-    public void openAndCloseRightClaw (double position) {
-        robot.rightClaw.setPosition(position);
+    public void closeRightClaw() {
+        rightClaw.setPosition(RIGHT_CLAW_CLOSED_POSITION);
+        telemetry.addData("Right Claw", "Closed");
+    }
 
-        if (position == 0) {
-            telemetry.addData("Right Claw", "Closed");
-        } else if (position >= 0.3) {
-            telemetry.addData("Right Claw", "Open");
-        }
+    public void openLeftClaw() {
+        leftClaw.setPosition(LEFT_CLAW_OPEN_POSITION);
+        telemetry.addData("Left Claw", "Open");
+    }
+
+    public void openRightClaw() {
+        rightClaw.setPosition(RIGHT_CLAW_OPEN_POSITION);
+        telemetry.addData("Right Claw", "Open");
     }
 
 }
