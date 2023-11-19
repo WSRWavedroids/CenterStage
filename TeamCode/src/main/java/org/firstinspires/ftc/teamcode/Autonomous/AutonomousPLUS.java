@@ -34,7 +34,12 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.Robot.Claw;
+import org.firstinspires.ftc.teamcode.Robot.Hook;
+import org.firstinspires.ftc.teamcode.Robot.Launcher;
+import org.firstinspires.ftc.teamcode.Robot.Lift;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
+import org.firstinspires.ftc.teamcode.Robot.Arm;
 import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
 
 import java.util.Objects;
@@ -53,23 +58,35 @@ public class AutonomousPLUS extends LinearOpMode {
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!
     public Robot robot = null;
+    public Claw claw;
+    public Lift lift;
+    public Launcher launcher;
+    public Arm arm;
+    public Hook hook;
+    public Drivetrain DT;
 
     @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry);
+        claw = new Claw(robot.claw.rightClaw, robot.claw.leftClaw, robot.telemetry);
+        lift = new Lift(robot.lift.slideL, robot.lift.slideRAndOdoPodR);
+        launcher = new Launcher(robot.launcher.droneAndOdoPodL);
+        arm = new Arm(robot.arm.armL,robot.arm.armR);
+        hook = new Hook(robot.hook.hookServo, robot.hook.hookAndOdoPodC);
+        DT = new Drivetrain(robot.DT.frontRightDrive, robot.DT.frontLeftDrive, robot.DT.backRightDrive,robot.DT.backLeftDrive, telemetry);
     }
 
     public void prepareNextAction(long pause) {
-        sleep(pause);
-        robot.DT.encoderReset();
+        robot.setJankyHomemadeTimer(pause);
+        robot.runJankyHomemadeTimer();
     }
 
     public void StrafeFromOdometry(double deltaX, double deltaY, long pause){
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
-        double xTarget = robot.launcher.droneAndOdoPodL.getCurrentPosition() + deltaX;
-        double yTarget = robot.lift.slideRAndOdoPodR.getCurrentPosition() + deltaY;
+        double xTarget = launcher.droneAndOdoPodL.getCurrentPosition() + deltaX;
+        double yTarget = lift.slideRAndOdoPodR.getCurrentPosition() + deltaY;
 
         //2. Translate that to motor power
 
@@ -77,21 +94,21 @@ public class AutonomousPLUS extends LinearOpMode {
 
             if (deltaX > 0) {
                 //Just right
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
-                robot.DT.powerSet(robot.drivetrainSpeed);
+                DT.powerSet(robot.drivetrainSpeed);
 
             } else if (deltaX < 0) {
                 //Just left
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-                robot.DT.powerSet(robot.drivetrainSpeed);
+                DT.powerSet(robot.drivetrainSpeed);
             }
 
         } else if (deltaY > 0){
@@ -99,58 +116,56 @@ public class AutonomousPLUS extends LinearOpMode {
 
             if (deltaX > 0) {
                 //Up+right
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
+                DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.backRightDrive.setPower(robot.drivetrainSpeed);
+                DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
 
             } else if (deltaX < 0) {
                 //Up+left
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
+                DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                DT.backLeftDrive.setPower(robot.drivetrainSpeed);
+                DT.frontRightDrive.setPower(robot.drivetrainSpeed);
             }
 
         } else if (deltaY < 0){
 
             if (deltaX > 0) {
                 //Down+right
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
+                DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.backLeftDrive.setPower(robot.drivetrainSpeed);
+                DT.frontRightDrive.setPower(robot.drivetrainSpeed);
             } else if (deltaX < 0) {
                 //Down+left
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
+                DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                DT.backRightDrive.setPower(robot.drivetrainSpeed);
+                DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
             }
-        }
-
-        if(deltaY > 0){
+        } if (deltaY > 0){
             //Just up
-            robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-            robot.DT.powerSet(robot.drivetrainSpeed);
+            DT.powerSet(robot.drivetrainSpeed);
 
-        }else if(deltaY < 0){
+        } else if (deltaY < 0){
             //Just down
-            robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            robot.DT.powerSet(robot.drivetrainSpeed);
+            DT.powerSet(robot.drivetrainSpeed);
 
         }
 
         //3. Check the targets against the odometry pod position
-        while (robot.DT.isWheelsBusy()){
+        while (DT.isWheelsBusy()){
             robot.findDisplacement();
             if(robot.actualX == xTarget && robot.actualY == yTarget){
                 break;
@@ -170,34 +185,34 @@ public class AutonomousPLUS extends LinearOpMode {
 
         if (Objects.equals(direction, "Left")){
 
-            robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-            robot.DT.powerSet(robot.drivetrainSpeed);
+            DT.powerSet(robot.drivetrainSpeed);
 
         } else if (Objects.equals(direction, "Right")){
 
-            robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+            DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+            DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            robot.DT.powerSet(robot.drivetrainSpeed);
+            DT.powerSet(robot.drivetrainSpeed);
 
         } else {
             telemetry.addData("Error", "Direction is not called correctly");
         }
 
-        while (robot.DT.isWheelsBusy()){
+        while (DT.isWheelsBusy()){
             currentAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
             if(currentAngle == startAngle + Angle){
                 break;
             }
         }
 
-        robot.DT.powerSet(0);
+        DT.powerSet(0);
         sleep(pause);
 
     }

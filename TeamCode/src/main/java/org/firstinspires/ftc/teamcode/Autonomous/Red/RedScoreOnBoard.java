@@ -20,9 +20,9 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
 
             //Do this to pass inspection.
             waitForStart();
-            robot.claw.closeClaw();
+            claw.closeClaw();
             prepareNextAction(300);
-            robot.lift.moveLift("Up",175);//
+            lift.moveLift("Up",175);//
             prepareNextAction(300);
 
             StrafeFromOdometry(0,150,2);
@@ -32,30 +32,30 @@ import org.firstinspires.ftc.teamcode.Robot.Robot;
             speed = 0.5;//new
             StrafeFromOdometry(0,1050,50);
             prepareNextAction(100);//new
-            robot.claw.openClaw();
+            claw.openClaw();
             speed = 0.5;//new
             StrafeFromOdometry(0,-900,2);
             TurnFromOdometry(90,"Right",2);
             StrafeFromOdometry(250,0,2);
             StrafeFromOdometry(0,1450,50);
 
-            robot.lift. moveLift("Down",175);//new
+            lift. moveLift("Down",175);//new
             prepareNextAction(500);//new
             sleep(500);
-            robot.claw.closeClaw();//new
+            claw.closeClaw();//new
             sleep(500);
-            robot.lift.moveLift("Up",175);//new
+            lift.moveLift("Up",175);//new
             StrafeFromOdometry(0,-900,2);
             StrafeFromOdometry(-1160,0,2);
-            robot.arm.rotateArmUp();
+            arm.rotateArmUp();
             prepareNextAction(200);
             speed = 0.4;
             StrafeFromOdometry(0,965,300);
-            robot.claw.openClaw();
+            claw.openClaw();
             prepareNextAction(300);
-            robot.lift.moveLift("Down",175);//
+            lift.moveLift("Down",175);//
 
-            robot.claw.openClaw();
+            claw.openClaw();
             prepareNextAction(1000);
 
         }

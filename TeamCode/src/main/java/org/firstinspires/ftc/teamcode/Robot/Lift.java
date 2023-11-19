@@ -11,17 +11,13 @@ public class Lift {
 
     public final DcMotor slideL;
     public final DcMotor slideRAndOdoPodR;
-    public Robot robot = null;
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
+    public Robot robot = new Robot(hardwareMap, telemetry);
 
     public Lift(DcMotor slideL, DcMotor slideRAndOdoPodR) {
         this.slideL = slideL;
         this.slideRAndOdoPodR = slideRAndOdoPodR;
-    }
-
-    public void runOpMode() {
-        robot = new Robot(hardwareMap, telemetry);
     }
 
     public void moveLift(String direction, long wait) {

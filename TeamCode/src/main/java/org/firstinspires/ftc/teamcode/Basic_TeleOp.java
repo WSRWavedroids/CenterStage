@@ -174,7 +174,7 @@ public class Basic_TeleOp extends OpMode {
         }
          if (gamepad1.b)
         {
-            robot.hook.hookServo.setPosition(1);
+            robot.hook.hookServo.setPosition(0.8);
         }
         else if (gamepad1.a)
         {
