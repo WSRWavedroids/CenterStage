@@ -183,14 +183,14 @@ public class Basic_TeleOp extends OpMode {
 
         if (readyToSuspend)
         {
-            hook.SuspendRobot();
+            robot.hook.SuspendRobot();
         }
 
         if (gamepad2.y){ // up
-            arm.rotateArmUp();
+            robot.arm.rotateArmUp();
 
         } else if (gamepad2.x) { //lower
-            arm.rotateArmDown();
+            robot.arm.rotateArmDown();
         }
 
     }
