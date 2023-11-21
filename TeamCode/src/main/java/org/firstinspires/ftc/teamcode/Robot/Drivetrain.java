@@ -73,7 +73,7 @@ public class Drivetrain {
         backRightDrive.setPower(-motorPowers[3]);
     }
 
-    public void moveMecanumDrive (float forwardPower, float strafePower, float turnPower) {
+    public void moveFromManualControl (float forwardPower, float strafePower, float turnPower) {
         // We don't really know how this function works, but it makes the wheels drive, so we don't question it.
         // Don't mess with this function unless you REALLY know what you're doing.
 

@@ -99,7 +99,7 @@ public class Basic_TeleOp extends OpMode {
      */
     public void loop() {
 
-        robot.DT.moveMecanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad2.right_stick_x);
+        robot.DT.moveFromManualControl(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad2.right_stick_x);
 
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.

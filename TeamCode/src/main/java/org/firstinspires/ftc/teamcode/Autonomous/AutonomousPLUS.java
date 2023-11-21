@@ -73,7 +73,6 @@ public class AutonomousPLUS extends LinearOpMode {
         launcher = new Launcher(robot.launcher.droneAndOdoPodL);
         arm = new Arm(robot.arm.armL,robot.arm.armR);
         hook = new Hook(robot.hook.hookServo, robot.hook.hookAndOdoPodC);
-        //robot.DT = new Drivetrain(robot.robot.DT.frontRightDrive, robot.robot.DT.frontLeftDrive, robot.robot.DT.backRightDrive,robot.robot.DT.backLeftDrive, telemetry);
     }
 
     public void prepareNextAction(long pause) {
@@ -94,7 +93,7 @@ public class AutonomousPLUS extends LinearOpMode {
 
             if (deltaX > 0) {
                 //Just right
-                robot.DT.moveMecanumDrive(xTarget, yTarget, 0);
+                robot.DT.moveFromManualControl(xTarget, yTarget, 0);
 
             } else if (deltaX < 0) {
                 //Just left
