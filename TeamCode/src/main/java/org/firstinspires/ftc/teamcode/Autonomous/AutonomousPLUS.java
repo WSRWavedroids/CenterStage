@@ -76,8 +76,8 @@ public class AutonomousPLUS extends LinearOpMode {
     }
 
     public void prepareNextAction(long pause) {
-        robot.setJankyHomemadeTimer(pause);
-        robot.runJankyHomemadeTimer();
+        robot.lift.setJankyHomemadeTimer(pause);
+        robot.lift.runJankyHomemadeTimer();
     }
 
     public void StrafeFromOdometry(float deltaX, float deltaY, long pause){
@@ -88,7 +88,8 @@ public class AutonomousPLUS extends LinearOpMode {
         float yTarget = robot.actualY + deltaY;
 
         //2. Translate that to motor power
-
+        robot.DT.moveFromManualControl(xTarget, yTarget, 0);
+        /*
         if(deltaY == 0) {
 
             if (deltaX > 0) {
@@ -155,9 +156,10 @@ public class AutonomousPLUS extends LinearOpMode {
                 robot.DT.powerSet(robot.drivetrainSpeed);
             }
         }
+        */
 
         //3. Check the targets against the odometry pod position
-        while (!(robot.actualX >= xTarget && robot.actualY == yTarget) && opModeIsActive()){
+        while (!(robot.actualX == xTarget && robot.actualY == yTarget) && opModeIsActive()){
             robot.findDisplacement();
         }
 
@@ -170,33 +172,30 @@ public class AutonomousPLUS extends LinearOpMode {
     public void TurnFromOdometry(double Angle, String direction, long pause){
 
         double startAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
-        double currentAngle;
+        double targetAngle = startAngle + Angle;
+        double currentAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
 
         if (Objects.equals(direction, "Left")){
 
-            robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-
-            robot.DT.powerSet(robot.drivetrainSpeed);
+            robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
+            robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
+            robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
+            robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
 
         } else if (Objects.equals(direction, "Right")){
 
-            robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-            robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-            robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-
-            robot.DT.powerSet(robot.drivetrainSpeed);
+            robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
+            robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
+            robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
+            robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
         } else {
             telemetry.addData("Error", "Direction is not called correctly");
         }
 
-        while (robot.DT.isWheelsBusy()){
+        while (currentAngle != targetAngle && opModeIsActive()){
             currentAngle = robot.imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
-            if(currentAngle == startAngle + Angle){
+            if(currentAngle == targetAngle){
                 break;
             }
         }

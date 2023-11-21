@@ -56,10 +56,7 @@ public class Robot {
     public double heading;
     double trackWidth = 12.25; //inches between centers of side odometry pods
     double centerPodToCenter = 7.5; //inches between center of center pod and center of robot
-    private final ElapsedTime runtime = new ElapsedTime();
-    public long targetTime;
-    public boolean timeToMoveOn;
-    public long timerLength;
+
 
     //Initialize motors and servos
     public Robot(HardwareMap hardwareMap, Telemetry telemetry){
@@ -146,18 +143,6 @@ public class Robot {
         lastCenterPos = hook.hookAndOdoPodC.getCurrentPosition();
     }
 
-    public long setJankyHomemadeTimer(long seconds){
-        targetTime = runtime.time(TimeUnit.SECONDS) + seconds;
-        return targetTime;
-    }
 
-    public void runJankyHomemadeTimer(){
-        if (targetTime == runtime.time(TimeUnit.SECONDS)){
-            telemetry.addData("Boop","Boop boop boop boop");
-            timeToMoveOn = true;
-        } else {
-            timeToMoveOn = false;
-        }
-    }
 
 }

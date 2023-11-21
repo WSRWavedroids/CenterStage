@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 //import com.qualcomm.robotcore.util.ElapsedTime;
 //import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class Lift {
 
@@ -13,6 +15,10 @@ public class Lift {
     public final DcMotor slideRAndOdoPodR;
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
+    private final ElapsedTime runtime = new ElapsedTime();
+    public long targetTime;
+    public boolean timeToMoveOn;
+    public long timerLength;
     //public Robot robot = new Robot(hardwareMap, telemetry);
 
     public Lift(DcMotor slideL, DcMotor slideRAndOdoPodR) {
@@ -59,6 +65,20 @@ public class Lift {
     public void raiseAndLowerLift(double armStickY){
         slideL.setPower(-armStickY * 0.75);
         slideRAndOdoPodR.setPower(-armStickY * 0.75);
+    }
+
+    public long setJankyHomemadeTimer(long seconds){
+        targetTime = runtime.time(TimeUnit.SECONDS) + seconds;
+        return targetTime;
+    }
+
+    public void runJankyHomemadeTimer(){
+        if (targetTime == runtime.time(TimeUnit.SECONDS)){
+            telemetry.addData("Boop","Boop boop boop boop");
+            timeToMoveOn = true;
+        } else {
+            timeToMoveOn = false;
+        }
     }
 
     /*
