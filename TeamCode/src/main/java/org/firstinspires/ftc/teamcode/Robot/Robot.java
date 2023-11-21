@@ -43,8 +43,8 @@ public class Robot {
     double lastLeftPos;
     double lastRightPos;
     double lastCenterPos;
-    public double actualX;
-    public double actualY;
+    public float actualX;
+    public float actualY;
     double deltaLeft;
     double deltaRight;
     double deltaCenter;

@@ -99,7 +99,7 @@ public class Basic_TeleOp extends OpMode {
      */
     public void loop() {
 
-        singleJoystickDrive();
+        robot.DT.moveMecanumDrive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad2.right_stick_x);
 
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
@@ -150,7 +150,7 @@ public class Basic_TeleOp extends OpMode {
 
         if(gamepad2.dpad_up)
         {
-            launcher.firePlane(650); //650 was short
+            robot.launcher.firePlane(650); //650 was short
         }
 
         if (!gamepad1.y && !readyToSuspend && !gamepad1.back)
@@ -205,64 +205,6 @@ public class Basic_TeleOp extends OpMode {
      * The holding cell for all of the random functions we call above.
      */
 
-    public void setIndividualPowers ( float[] motorPowers){
-        // This function creates an array so that the function below works.
-        // Don't mess with this function unless you know what you're doing.
 
-        if (motorPowers.length != 4) {
-            return;
-        }
-        robot.DT.frontLeftDrive.setPower(-motorPowers[0]);
-        robot.DT.frontRightDrive.setPower(-motorPowers[1]);
-        robot.DT.backLeftDrive.setPower(-motorPowers[2]);
-        robot.DT.backRightDrive.setPower(-motorPowers[3]);
-    }
-
-    private void singleJoystickDrive () {
-        // We don't really know how this function works, but it makes the wheels drive, so we don't question it.
-        // Don't mess with this function unless you REALLY know what you're doing.
-
-        float rightX = -this.gamepad1.right_stick_x;
-        float leftY = this.gamepad1.left_stick_y;
-        float leftX = -this.gamepad1.left_stick_x;
-
-        float[] motorPowers = new float[4];
-
-        motorPowers[0] = (leftY + leftX + rightX);
-        motorPowers[1] = (leftY - leftX - rightX);
-        motorPowers[2] = (leftY - leftX + rightX);
-        motorPowers[3] = (leftY + leftX - rightX);
-
-        float max = getLargestAbsVal(motorPowers);
-        if (max < 1) {
-            max = 1;
-        }
-
-        for (int i = 0; i < motorPowers.length; i++) {
-            motorPowers[i] *= (speed / max);
-
-            float abs = Math.abs(motorPowers[i]);
-            if (abs < 0.05) {
-                motorPowers[i] = 0.0f;
-            }
-            if (abs > 1.0) {
-                motorPowers[i] /= abs;
-            }
-        }
-
-        setIndividualPowers(motorPowers);
-
-    }
-
-    private float getLargestAbsVal ( float[] values){
-        // This function does some math!
-        float max = 0;
-        for (float val : values) {
-            if (Math.abs(val) > max) {
-                max = Math.abs(val);
-            }
-        }
-        return max;
-    }
 
 }

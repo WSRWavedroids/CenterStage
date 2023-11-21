@@ -60,4 +60,64 @@ public class Drivetrain {
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
+    public void setIndividualPowers ( float[] motorPowers){
+        // This function creates an array so that the function below works.
+        // Don't mess with this function unless you know what you're doing.
+
+        if (motorPowers.length != 4) {
+            return;
+        }
+        frontLeftDrive.setPower(-motorPowers[0]);
+        frontRightDrive.setPower(-motorPowers[1]);
+        backLeftDrive.setPower(-motorPowers[2]);
+        backRightDrive.setPower(-motorPowers[3]);
+    }
+
+    public void moveMecanumDrive (float forwardPower, float strafePower, float turnPower) {
+        // We don't really know how this function works, but it makes the wheels drive, so we don't question it.
+        // Don't mess with this function unless you REALLY know what you're doing.
+
+        float rightX = turnPower;
+        float leftY = forwardPower;
+        float leftX = strafePower;
+
+        float[] motorPowers = new float[4];
+
+        motorPowers[0] = (leftY + leftX + rightX);
+        motorPowers[1] = (leftY - leftX - rightX);
+        motorPowers[2] = (leftY - leftX + rightX);
+        motorPowers[3] = (leftY + leftX - rightX);
+
+        float max = getLargestAbsVal(motorPowers);
+        if (max < 1) {
+            max = 1;
+        }
+
+        for (int i = 0; i < motorPowers.length; i++) {
+            motorPowers[i] *= (0.75 / max);
+
+            float abs = Math.abs(motorPowers[i]);
+            if (abs < 0.05) {
+                motorPowers[i] = 0.0f;
+            }
+            if (abs > 1.0) {
+                motorPowers[i] /= abs;
+            }
+        }
+
+        setIndividualPowers(motorPowers);
+
+    }
+
+    private float getLargestAbsVal ( float[] values){
+        // This function does some math!
+        float max = 0;
+        for (float val : values) {
+            if (Math.abs(val) > max) {
+                max = Math.abs(val);
+            }
+        }
+        return max;
+    }
+
 }

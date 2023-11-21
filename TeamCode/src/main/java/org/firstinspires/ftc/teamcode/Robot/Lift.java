@@ -13,7 +13,7 @@ public class Lift {
     public final DcMotor slideRAndOdoPodR;
     public HardwareMap hardwareMap;
     public Telemetry telemetry;
-    public Robot robot = new Robot(hardwareMap, telemetry);
+    //public Robot robot = new Robot(hardwareMap, telemetry);
 
     public Lift(DcMotor slideL, DcMotor slideRAndOdoPodR) {
         this.slideL = slideL;
@@ -27,12 +27,12 @@ public class Lift {
 
             slideRAndOdoPodR.setDirection(DcMotor.Direction.REVERSE);
             slideRAndOdoPodR.setPower(0.75);
-            robot.setJankyHomemadeTimer(wait);
-            robot.runJankyHomemadeTimer();
+            //robot.setJankyHomemadeTimer(wait);
+            //robot.runJankyHomemadeTimer();
             slideL.setPower(0.1);
             slideRAndOdoPodR.setPower(0.1);
-            robot.setJankyHomemadeTimer(500);
-            robot.runJankyHomemadeTimer();
+            //robot.setJankyHomemadeTimer(500);
+            //robot.runJankyHomemadeTimer();
         } else if (Objects.equals(direction, "Down")) {
             slideL.setDirection(DcMotor.Direction.REVERSE);
             slideL.setPower(0.5);
