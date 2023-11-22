@@ -28,6 +28,7 @@ public class Robot {
     public Claw claw;
     public Hook hook;
     public Arm arm;
+    public Lights lights;
 
     public WebcamName CamCam;
 
@@ -73,6 +74,7 @@ public class Robot {
         hook = new Hook(hardwareMap.get(Servo.class,"hookServo"),hardwareMap.get(DcMotor.class,"hookAndOdoPodC"));
         lift = new Lift(hardwareMap.get(DcMotor.class, "slideL"),hardwareMap.get(DcMotor.class, "slideRAndOdoPodR"));
         arm = new Arm(hardwareMap.get(Servo.class, "armL"),hardwareMap.get(Servo.class, "armR"));
+        lights = new Lights(hardwareMap.get(Servo.class,"lights"));
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters myIMUparameters = new IMU.Parameters(

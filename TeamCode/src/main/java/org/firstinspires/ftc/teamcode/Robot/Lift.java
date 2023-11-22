@@ -13,13 +13,9 @@ public class Lift {
 
     public final DcMotor slideL;
     public final DcMotor slideRAndOdoPodR;
-    public HardwareMap hardwareMap;
-    public Telemetry telemetry;
     private final ElapsedTime runtime = new ElapsedTime();
     public long targetTime;
     public boolean timeToMoveOn;
-    public long timerLength;
-    //public Robot robot = new Robot(hardwareMap, telemetry);
 
     public Lift(DcMotor slideL, DcMotor slideRAndOdoPodR) {
         this.slideL = slideL;
@@ -74,7 +70,7 @@ public class Lift {
 
     public void runJankyHomemadeTimer(){
         if (targetTime == runtime.time(TimeUnit.SECONDS)){
-            telemetry.addData("Boop","Boop boop boop boop");
+            //telemetry.addData("Boop","Boop boop boop boop");
             timeToMoveOn = true;
         } else {
             timeToMoveOn = false;

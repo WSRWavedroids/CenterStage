@@ -22,12 +22,6 @@ public class Arm {
         this.armR = armR;
     }
 
-
-    public void runOpMode() {
-        robot = new Robot(hardwareMap, telemetry);
-    }
-
-
     /*
     public void moveArm(String direction){
         if (Objects.equals(direction, "Up")){

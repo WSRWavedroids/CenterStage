@@ -136,7 +136,6 @@ public class Basic_TeleOp extends OpMode {
             robot.lift.holdLift();
         }
 
-
         //A bunch of messy last minute code
         if(gamepad1.y) // might need a
         {
