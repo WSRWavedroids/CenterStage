@@ -34,4 +34,8 @@ public class Lights {
         //Pattern: Sinelon, Party Palette
         lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.SINELON_PARTY_PALETTE);
     }
+
+    public void closedClaw(){
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.CONFETTI);
+    }
 }

@@ -30,22 +30,11 @@ public class Drivetrain {
         robot = new Robot(hardwareMap, telemetry);
     }
 
-    public boolean isWheelsBusy(){
-        return backLeftDrive.isBusy() || frontLeftDrive.isBusy() || frontRightDrive.isBusy() || backRightDrive.isBusy();
-    }
-
     public void powerSet(double speed) {
         frontLeftDrive.setPower(speed);
         frontRightDrive.setPower(speed);
         backLeftDrive.setPower(speed);
         backRightDrive.setPower(speed);
-    }
-
-    public void encoderReset(){
-        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setDefaultBehaviors(){

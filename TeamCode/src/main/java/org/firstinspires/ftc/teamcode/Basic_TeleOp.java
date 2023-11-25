@@ -28,6 +28,7 @@
  */
 
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -76,6 +77,7 @@ public class Basic_TeleOp extends OpMode {
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+        robot.lights.startUpSetting();
     }
 
     /*
@@ -92,6 +94,7 @@ public class Basic_TeleOp extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.addData("HYPE", "Let's do this!!!");
+        robot.lights.funSetting();
     }
 
     /*
@@ -105,7 +108,6 @@ public class Basic_TeleOp extends OpMode {
         // It's mostly used for troubleshooting.
         telemetry.addData("Status", "Run Time: " + runtime);
         robot.standardTelemetryOutput();
-        robot.lights.funSetting();
 
         float armStickY = this.gamepad2.left_stick_y;
 
@@ -192,6 +194,15 @@ public class Basic_TeleOp extends OpMode {
         } else if (gamepad2.x) { //lower
             robot.arm.rotateArmDown();
         }
+
+
+        if (this.gamepad2.b) { // open
+            robot.claw.openClaw();
+        } else if (this.gamepad2.a) {//close
+            robot.claw.closeClaw();
+            robot.lights.closedClaw();
+        }
+
 
     }
 
