@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import android.annotation.SuppressLint;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -74,7 +75,7 @@ public class Robot {
         hook = new Hook(hardwareMap.get(Servo.class,"hookServo"),hardwareMap.get(DcMotor.class,"hookAndOdoPodC"));
         lift = new Lift(hardwareMap.get(DcMotor.class, "slideL"),hardwareMap.get(DcMotor.class, "slideRAndOdoPodR"));
         arm = new Arm(hardwareMap.get(Servo.class, "armL"),hardwareMap.get(Servo.class, "armR"));
-        lights = new Lights(hardwareMap.get(Servo.class,"lights"));
+        lights = new Lights(hardwareMap.get(RevBlinkinLedDriver.class,"lights"));
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters myIMUparameters = new IMU.Parameters(
@@ -143,6 +144,12 @@ public class Robot {
         lastLeftPos = launcher.droneAndOdoPodL.getCurrentPosition();
         lastRightPos = lift.slideRAndOdoPodR.getCurrentPosition();
         lastCenterPos = hook.hookAndOdoPodC.getCurrentPosition();
+    }
+
+    public void odoPodReset(){
+        launcher.droneAndOdoPodL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.slideRAndOdoPodR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hook.hookAndOdoPodC.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
 

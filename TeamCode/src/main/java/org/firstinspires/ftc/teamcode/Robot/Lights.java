@@ -1,36 +1,37 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.Servo;
 public class Lights {
 
-    public final Servo lights;
+    public final RevBlinkinLedDriver lights;
 
-    public Lights(Servo lights) {
+    public Lights(RevBlinkinLedDriver lights) {
         this.lights = lights;
     }
 
     public void startUpSetting(){
         //Pattern: Rainbow with Glitter
-        lights.setPosition(-0.89);
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RAINBOW_WITH_GLITTER);
     }
 
     public void initSetting(){
         //Pattern: Color Waves, Ocean Palette
-        lights.setPosition(-0.41);
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.COLOR_WAVES_OCEAN_PALETTE);
     }
 
     public void defaultSetting(){
         //Pattern: End to End Blend, Color 1 to Color 2
-        lights.setPosition(0.45);
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.CP1_2_END_TO_END_BLEND_1_TO_2);
     }
 
     public void errorSetting(){
         //Pattern: Breath, Red
-        lights.setPosition(-0.17);
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.BREATH_RED);
     }
 
     public void funSetting(){
         //Pattern: Sinelon, Party Palette
-        lights.setPosition(-0.77);
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.SINELON_PARTY_PALETTE);
     }
 }

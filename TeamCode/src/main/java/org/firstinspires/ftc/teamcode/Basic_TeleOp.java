@@ -64,9 +64,6 @@ public class Basic_TeleOp extends OpMode {
     private double speed = 0.75;
 
     public Robot robot = null;
-    public Arm arm;
-    public Hook hook;
-    public Launcher launcher;
     public boolean readyToSuspend = false;
 
     /*
@@ -84,7 +81,10 @@ public class Basic_TeleOp extends OpMode {
     /*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
-    public void init_loop() {telemetry.addData("HYPE", "ARE! YOU! READY?!?!?!?!");}
+    public void init_loop() {
+        telemetry.addData("HYPE", "ARE! YOU! READY?!?!?!?!");
+        robot.lights.initSetting();
+    }
 
     /*
      * Code to run ONCE when the driver hits PLAY
@@ -105,6 +105,7 @@ public class Basic_TeleOp extends OpMode {
         // It's mostly used for troubleshooting.
         telemetry.addData("Status", "Run Time: " + runtime);
         robot.standardTelemetryOutput();
+        robot.lights.funSetting();
 
         float armStickY = this.gamepad2.left_stick_y;
 
@@ -198,12 +199,5 @@ public class Basic_TeleOp extends OpMode {
      * Code to run ONCE after the driver hits STOP
      */
     public void stop () { telemetry.addData("Status", "Robot Stopped"); }
-
-
-    /*
-     * The holding cell for all of the random functions we call above.
-     */
-
-
 
 }

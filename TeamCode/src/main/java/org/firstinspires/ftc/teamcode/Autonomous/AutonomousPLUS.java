@@ -73,6 +73,8 @@ public class AutonomousPLUS extends LinearOpMode {
         launcher = new Launcher(robot.launcher.droneAndOdoPodL);
         arm = new Arm(robot.arm.armL,robot.arm.armR);
         hook = new Hook(robot.hook.hookServo, robot.hook.hookAndOdoPodC);
+
+        robot.DT.setAutoBehaviors();
     }
 
     public void prepareNextAction(long pause) {
@@ -82,28 +84,34 @@ public class AutonomousPLUS extends LinearOpMode {
 
     public void StrafeFromOdometry(float deltaX, float deltaY, long pause){
 
+        robot.findDisplacement();
+
+        //robot.odoPodReset();
+
         //1. Find the difference between the target and the actual position (and find the actual position)
 
         float xTarget = robot.actualX + deltaX;
         float yTarget = robot.actualY + deltaY;
 
         //2. Translate that to motor power
-        robot.DT.moveFromManualControl(xTarget, yTarget, 0);
-        /*
+        //robot.DT.moveFromManualControl(xTarget, yTarget, 0);
+
         if(deltaY == 0) {
 
             if (deltaX > 0) {
                 //Just right
-                robot.DT.moveFromManualControl(xTarget, yTarget, 0);
+                robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
             } else if (deltaX < 0) {
                 //Just left
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
 
-                robot.DT.powerSet(robot.drivetrainSpeed);
             }
 
         } else if (deltaY > 0){
@@ -111,56 +119,49 @@ public class AutonomousPLUS extends LinearOpMode {
 
             if (deltaX > 0) {
                 //Up+right
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
                 robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
 
             } else if (deltaX < 0) {
                 //Up+left
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
                 robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
+
             } else if (deltaX == 0){
                 //Just up
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
 
-                robot.DT.powerSet(robot.drivetrainSpeed);
             }
 
         } else if (deltaY < 0){
 
             if (deltaX > 0) {
                 //Down+right
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
+
             } else if (deltaX < 0) {
                 //Down+left
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
+                robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
+
             } else if (deltaX == 0){
                 //Just down
-                robot.DT.backLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.backRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontLeftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                robot.DT.frontRightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
+                robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
-                robot.DT.powerSet(robot.drivetrainSpeed);
             }
         }
-        */
 
         //3. Check the targets against the odometry pod position
         while (!(robot.actualX == xTarget && robot.actualY == yTarget) && opModeIsActive()){
             robot.findDisplacement();
+            robot.standardTelemetryOutput();
         }
 
         //4. Once it hits that point, stop driving
