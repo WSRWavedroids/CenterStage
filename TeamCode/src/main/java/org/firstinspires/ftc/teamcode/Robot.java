@@ -94,7 +94,7 @@ public class Robot {
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE); //Was inverted as forward
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD); //Was inverted as forward
         slideL.setDirection(DcMotor.Direction.REVERSE);//inverted
         slideR.setDirection(DcMotor.Direction.FORWARD);
         hookMotor.setDirection(DcMotor.Direction.FORWARD);
