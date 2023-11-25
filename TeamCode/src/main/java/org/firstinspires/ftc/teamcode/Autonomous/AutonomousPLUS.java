@@ -86,7 +86,7 @@ public class AutonomousPLUS extends LinearOpMode {
 
         robot.findDisplacement();
 
-        //robot.odoPodReset();
+        robot.odoPodReset();
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
