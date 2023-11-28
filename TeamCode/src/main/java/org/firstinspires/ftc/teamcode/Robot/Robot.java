@@ -84,9 +84,9 @@ public class Robot {
                                 AxesReference.INTRINSIC,
                                 AxesOrder.XYZ,
                                 AngleUnit.DEGREES,
-                                45,
-                                0,
                                 90,
+                                0,
+                                45,
                                 0  // acquisitionTime, not used
                                 //TODO: Check these values
                         )
