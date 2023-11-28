@@ -84,9 +84,9 @@ public class Robot {
                                 AxesReference.INTRINSIC,
                                 AxesOrder.XYZ,
                                 AngleUnit.DEGREES,
+                                45,
                                 90,
                                 0,
-                                45,
                                 0  // acquisitionTime, not used
                                 //TODO: Check these values
                         )
@@ -116,6 +116,7 @@ public class Robot {
         telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", launcher.droneAndOdoPodL.getCurrentPosition()));
         telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", lift.slideRAndOdoPodR.getCurrentPosition()));
         telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", hook.hookAndOdoPodC.getCurrentPosition()));
+
         telemetry.addData("ArmL", arm.armL.getPosition());
         telemetry.addData("ArmR", arm.armR.getPosition());
         telemetry.addData("ClawL", claw.leftClaw.getPosition());

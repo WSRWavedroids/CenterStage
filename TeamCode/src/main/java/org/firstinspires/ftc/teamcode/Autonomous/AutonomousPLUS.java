@@ -84,28 +84,28 @@ public class AutonomousPLUS extends LinearOpMode {
 
     public void StrafeFromOdometry(float deltaX, float deltaY, long pause){
 
-        robot.findDisplacement();
+        //robot.findDisplacement();
 
         robot.odoPodReset();
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
-        float xTarget = robot.actualX + deltaX;
-        float yTarget = robot.actualY + deltaY;
+        float xTarget = launcher.droneAndOdoPodL.getCurrentPosition() + deltaX;
+        float yTarget = lift.slideRAndOdoPodR.getCurrentPosition() + deltaY;
 
         //2. Translate that to motor power
         //robot.DT.moveFromManualControl(xTarget, yTarget, 0);
 
-        if(deltaY == 0) {
+        if(deltaX == 0) {
 
-            if (deltaX > 0) {
+            if (deltaY > 0) {
                 //Just right
                 robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
-            } else if (deltaX < 0) {
+            } else if (deltaY < 0) {
                 //Just left
                 robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
@@ -114,20 +114,20 @@ public class AutonomousPLUS extends LinearOpMode {
 
             }
 
-        } else if (deltaY > 0){
+        } else if (deltaX > 0){
             //We're going up
 
-            if (deltaX > 0) {
+            if (deltaY > 0) {
                 //Up+right
                 robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
 
-            } else if (deltaX < 0) {
+            } else if (deltaY < 0) {
                 //Up+left
                 robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
 
-            } else if (deltaX == 0){
+            } else if (deltaY == 0){
                 //Just up
                 robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
@@ -136,19 +136,19 @@ public class AutonomousPLUS extends LinearOpMode {
 
             }
 
-        } else if (deltaY < 0){
+        } else if (deltaX < 0){
 
-            if (deltaX > 0) {
+            if (deltaY > 0) {
                 //Down+right
                 robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
-            } else if (deltaX < 0) {
+            } else if (deltaY < 0) {
                 //Down+left
                 robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
 
-            } else if (deltaX == 0){
+            } else if (deltaY == 0){
                 //Just down
                 robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
@@ -159,9 +159,11 @@ public class AutonomousPLUS extends LinearOpMode {
         }
 
         //3. Check the targets against the odometry pod position
-        while (!(robot.actualX == xTarget && robot.actualY == yTarget) && opModeIsActive()){
+        while (!(launcher.droneAndOdoPodL.getCurrentPosition() == xTarget && lift.slideRAndOdoPodR.getCurrentPosition() == yTarget) && opModeIsActive()){
             robot.findDisplacement();
-            robot.standardTelemetryOutput();
+            telemetry.addData("Odometry", String.valueOf(xTarget), String.valueOf(yTarget));
+            telemetry.update();
+            //robot.standardTelemetryOutput();
         }
 
         //4. Once it hits that point, stop driving

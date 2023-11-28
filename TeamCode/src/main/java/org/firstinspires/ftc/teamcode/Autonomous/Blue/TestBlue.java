@@ -14,7 +14,7 @@ public class TestBlue extends AutonomousPLUS {
 
         //Do this to pass inspection.
         waitForStart();
-        StrafeFromOdometry(0,150,2);
+        StrafeFromOdometry(0,1,2);
 
     }
 }
