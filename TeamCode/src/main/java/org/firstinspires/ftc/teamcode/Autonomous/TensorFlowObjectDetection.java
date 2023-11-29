@@ -50,7 +50,7 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
+@TeleOp(name = "Concept: TensorFlow Object Detection", group = "Stage")
 
 public class TensorFlowObjectDetection extends LinearOpMode {
 
@@ -86,13 +86,13 @@ public class TensorFlowObjectDetection extends LinearOpMode {
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
+
         waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
                 telemetryTfod();
-
                 // Push telemetry to the Driver Station.
                 telemetry.update();
 
@@ -194,8 +194,35 @@ public class TensorFlowObjectDetection extends LinearOpMode {
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
+
+
+             String Position;
+            if (x >= 300 && x <= 400 && y >= 290 && y <= 400)
+            {
+                //Left Zone
+                Position = "Left Zone";
+                telemetry.addData("Pixel in", Position);
+            }
+            else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
+            {
+                //Middle zone
+                Position = "Center";
+                telemetry.addData("Pixel in", Position);
+            }
+            else if (x >= 1130 && x <= 1300  && y >= 210  && y <=  330)
+            {
+                //Right zone
+                Position = "Right Zone";
+                telemetry.addData("Pixel in", Position);
+            } else {
+                telemetry.addData("It not work :(", x);
+                telemetry.addData("It boken", y);
+            }
+
+
         }   // end for() loop
 
     }   // end method telemetryTfod()
+
 
 }   // end class

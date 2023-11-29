@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -49,7 +49,7 @@ import java.util.List;
  */
 @TeleOp(name = "Concept: TensorFlow Object Detection Easy", group = "Concept")
 @Disabled
-public class ConceptTensorFlowObjectDetectionEasy extends LinearOpMode {
+public class ConceptTensorFlowObjectDetectionEasy extends AutonomousPLUS {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -110,7 +110,7 @@ public class ConceptTensorFlowObjectDetectionEasy extends LinearOpMode {
         // Create the vision portal the easy way.
         if (USE_WEBCAM) {
             visionPortal = VisionPortal.easyCreateWithDefaults(
-                hardwareMap.get(WebcamName.class, "Webcam 1"), tfod);
+                hardwareMap.get(WebcamName.class, "CamCam"), tfod);
         } else {
             visionPortal = VisionPortal.easyCreateWithDefaults(
                 BuiltinCameraDirection.BACK, tfod);
