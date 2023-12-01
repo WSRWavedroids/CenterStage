@@ -197,26 +197,32 @@ public class TensorFlowObjectDetection extends LinearOpMode {
 
 
              String Position;
-            if (x >= 300 && x <= 400 && y >= 290 && y <= 400)
+            if (x >= 300 && x <= 400 && y >= 100 && y <= 200)
             {
                 //Left Zone
                 Position = "Left Zone";
                 telemetry.addData("Pixel in", Position);
             }
-            else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
+            /*else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
             {
                 //Middle zone
                 Position = "Center";
                 telemetry.addData("Pixel in", Position);
-            }
+            }*/
             else if (x >= 1130 && x <= 1300  && y >= 210  && y <=  330)
             {
                 //Right zone
                 Position = "Right Zone";
                 telemetry.addData("Pixel in", Position);
-            } else {
+            } /*else {
                 telemetry.addData("It not work :(", x);
                 telemetry.addData("It boken", y);
+            }*/
+            else
+            {
+                //Middle zone
+                Position = "Center";
+                telemetry.addData("Pixel in", Position);
             }
 
 
