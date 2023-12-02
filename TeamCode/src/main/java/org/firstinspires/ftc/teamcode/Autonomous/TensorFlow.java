@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
@@ -50,9 +51,10 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
+@Disabled
 @TeleOp(name = "Concept: TensorFlow Object Detection", group = "Stage")
 
-public class TensorFlowObjectDetection extends LinearOpMode {
+public class TensorFlow extends AutonomousPLUS {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -87,7 +89,6 @@ public class TensorFlowObjectDetection extends LinearOpMode {
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
 
-        waitForStart();
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
@@ -95,13 +96,6 @@ public class TensorFlowObjectDetection extends LinearOpMode {
                 telemetryTfod();
                 // Push telemetry to the Driver Station.
                 telemetry.update();
-
-                // Save CPU resources; can resume streaming when needed.
-                if (gamepad1.dpad_down) {
-                    visionPortal.stopStreaming();
-                } else if (gamepad1.dpad_up) {
-                    visionPortal.resumeStreaming();
-                }
 
                 // Share the CPU.
                 sleep(20);
@@ -203,32 +197,50 @@ public class TensorFlowObjectDetection extends LinearOpMode {
                 Position = "Left Zone";
                 telemetry.addData("Pixel in", Position);
             }
-            /*else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
-            {
-                //Middle zone
-                Position = "Center";
-                telemetry.addData("Pixel in", Position);
-            }*/
-            else if (x >= 1130 && x <= 1300  && y >= 210  && y <=  330)
-            {
-                //Right zone
-                Position = "Right Zone";
-                telemetry.addData("Pixel in", Position);
-            } /*else {
-                telemetry.addData("It not work :(", x);
-                telemetry.addData("It boken", y);
-            }*/
-            else
+            else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
             {
                 //Middle zone
                 Position = "Center";
                 telemetry.addData("Pixel in", Position);
             }
+            else if (x >= 1130 && x <= 1300  && y >= 210  && y <=  330)
+            {
+                //Right zone
+                Position = "Right Zone";
+                telemetry.addData("Pixel in", Position);
+            } else {
+                telemetry.addData("It not work :(", x);
+                telemetry.addData("It boken", y);
+            }
+            /*
+            else
+            {
+                //Middle zone
+                Position = "Center";
+                telemetry.addData("Pixel in", Position);
+
+            }*/
 
 
         }   // end for() loop
 
+
     }   // end method telemetryTfod()
+/*
+    public static void position()
+    {
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        telemetry.addData("# Objects Detected", currentRecognitions.size());
+
+        // Step through the list of recognitions and display info for each one.
+        for (Recognition recognition : currentRecognitions) {
+            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+
+        double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+        double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+    }
+*/
 
 
 }   // end class
