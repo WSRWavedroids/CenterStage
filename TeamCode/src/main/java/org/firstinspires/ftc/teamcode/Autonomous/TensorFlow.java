@@ -33,7 +33,7 @@ import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -51,8 +51,7 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Disabled
-@TeleOp(name = "Concept: TensorFlow Object Detection", group = "Stage")
+@Autonomous(name = "TF Position Finder", group = "Stage")
 
 public class TensorFlow extends AutonomousPLUS {
 
@@ -73,7 +72,6 @@ public class TensorFlow extends AutonomousPLUS {
      * The variable to store our instance of the TensorFlow Object Detection processor.
      */
     private TfodProcessor tfod;
-
     /**
      * The variable to store our instance of the vision portal.
      */
@@ -84,6 +82,7 @@ public class TensorFlow extends AutonomousPLUS {
 
         initTfod();
 
+
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch Play to start OpMode");
@@ -93,7 +92,7 @@ public class TensorFlow extends AutonomousPLUS {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                telemetryTfod();
+                position();
                 // Push telemetry to the Driver Station.
                 telemetry.update();
 
@@ -116,14 +115,14 @@ public class TensorFlow extends AutonomousPLUS {
         tfod = new TfodProcessor.Builder()
 
             // With the following lines commented out, the default TfodProcessor Builder
-            // will load the default model for the season. To define a custom model to load, 
+            // will load the default model for the season. To define a custom model to load,
             // choose one of the following:
             //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
             //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
             //.setModelAssetName(TFOD_MODEL_ASSET)
             //.setModelFileName(TFOD_MODEL_FILE)
 
-            // The following default settings are available to un-comment and edit as needed to 
+            // The following default settings are available to un-comment and edit as needed to
             // set parameters for custom models.
             //.setModelLabels(LABELS)
             //.setIsModelTensorFlow2(true)
@@ -132,7 +131,6 @@ public class TensorFlow extends AutonomousPLUS {
             //.setModelAspectRatio(16.0 / 9.0)
 
             .build();
-
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
@@ -174,73 +172,44 @@ public class TensorFlow extends AutonomousPLUS {
     /**
      * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
      */
-    private void telemetryTfod() {
 
+
+    public String position() {
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
-
+        String Position = "";
         // Step through the list of recognitions and display info for each one.
         for (Recognition recognition : currentRecognitions) {
-            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
-            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+            double x = (recognition.getLeft() + recognition.getRight()) / 2;
+            double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
-            telemetry.addData(""," ");
+            telemetry.addData("", " ");
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
 
-
-             String Position;
-            if (x >= 300 && x <= 400 && y >= 100 && y <= 200)
-            {
+            if (x >= 300 && x <= 400 && y >= 100 && y <= 200) {
                 //Left Zone
                 Position = "Left Zone";
                 telemetry.addData("Pixel in", Position);
-            }
-            else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
-            {
+            } else if (x >= 700 && x <= 800 && y >= 200 && y <= 300) {
                 //Middle zone
                 Position = "Center";
                 telemetry.addData("Pixel in", Position);
-            }
-            else if (x >= 1130 && x <= 1300  && y >= 210  && y <=  330)
-            {
+            } else if (x >= 1130 && x <= 1300 && y >= 210 && y <= 330) {
                 //Right zone
                 Position = "Right Zone";
                 telemetry.addData("Pixel in", Position);
-            } else {
+            }
+            else
+            {
                 telemetry.addData("It not work :(", x);
                 telemetry.addData("It boken", y);
             }
-            /*
-            else
-            {
-                //Middle zone
-                Position = "Center";
-                telemetry.addData("Pixel in", Position);
 
-            }*/
-
-
-        }   // end for() loop
-
-
-    }   // end method telemetryTfod()
-/*
-    public static void position()
-    {
-        List<Recognition> currentRecognitions = tfod.getRecognitions();
-        telemetry.addData("# Objects Detected", currentRecognitions.size());
-
-        // Step through the list of recognitions and display info for each one.
-        for (Recognition recognition : currentRecognitions) {
-            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
-            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
-
-        double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
-        double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+            return Position;
+        }
+            return Position;
     }
-*/
-
 
 }   // end class
