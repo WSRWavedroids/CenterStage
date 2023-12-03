@@ -12,18 +12,17 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
     public class RedScoreOnBoardWithTF extends AutonomousPLUS {
 
         TensorFlow TF;
+
         public void runOpMode() {
 
-
-
-            String currentPosition = TF.position();
             super.runOpMode();
             //Needs TF reference
-
+            String currentPosition = TF.position();
 
 
             //Start and position yellow
             waitForStart();
+            currentPosition = TF.position();
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;
