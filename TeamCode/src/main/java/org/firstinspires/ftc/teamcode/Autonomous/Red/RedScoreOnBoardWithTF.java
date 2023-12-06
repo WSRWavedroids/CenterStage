@@ -8,21 +8,21 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "Stage", name = "Red score on board")
+@Autonomous(group = "Stage", name = "Red score on board With TF")
     public class RedScoreOnBoardWithTF extends AutonomousPLUS {
 
-        TensorFlow TF;
+        public TensorFlow TF = new TensorFlow();
+        public String currentPosition;
 
         public void runOpMode() {
 
             super.runOpMode();
             //Needs TF reference
-            String currentPosition = TF.position();
-
+            TF.initTfod(TF.tfod, robot.hardwareMap);
 
             //Start and position yellow
             waitForStart();
-            currentPosition = TF.position();
+            currentPosition = TF.position(TF.tfod);
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;

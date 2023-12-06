@@ -31,13 +31,11 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 
 import android.util.Size;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
@@ -71,16 +69,18 @@ public class TensorFlow extends AutonomousPLUS {
     /**
      * The variable to store our instance of the TensorFlow Object Detection processor.
      */
-    private TfodProcessor tfod;
+    public TfodProcessor tfod;
     /**
      * The variable to store our instance of the vision portal.
      */
-    private VisionPortal visionPortal;
+    public VisionPortal visionPortal;
 
     @Override
     public void runOpMode() {
 
-        initTfod();
+        super.runOpMode();
+        waitForStart();
+        initTfod(tfod, robot.hardwareMap);
 
 
         // Wait for the DS start button to be touched.
@@ -92,7 +92,7 @@ public class TensorFlow extends AutonomousPLUS {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                position();
+                position(tfod);
                 // Push telemetry to the Driver Station.
                 telemetry.update();
 
@@ -109,28 +109,42 @@ public class TensorFlow extends AutonomousPLUS {
     /**
      * Initialize the TensorFlow Object Detection processor.
      */
-    private void initTfod() {
+    public void initTfod(TfodProcessor tfod, HardwareMap hardwareMap) {
 
         // Create the TensorFlow processor by using a builder.
+        // With the following lines commented out, the default TfodProcessor Builder
+        // will load the default model for the season. To define a custom model to load,
+        // choose one of the following:
+        //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+        //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+        //.setModelAssetName(TFOD_MODEL_ASSET)
+        //.setModelFileName(TFOD_MODEL_FILE)
+        // The following default settings are available to un-comment and edit as needed to
+        // set parameters for custom models.
+        //.setModelLabels(LABELS)
+        //.setIsModelTensorFlow2(true)
+        //.setIsModelQuantized(true)
+        //.setModelInputSize(300)
+        //.setModelAspectRatio(16.0 / 9.0)
         tfod = new TfodProcessor.Builder()
 
-            // With the following lines commented out, the default TfodProcessor Builder
-            // will load the default model for the season. To define a custom model to load,
-            // choose one of the following:
-            //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
-            //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
-            //.setModelAssetName(TFOD_MODEL_ASSET)
-            //.setModelFileName(TFOD_MODEL_FILE)
+                // With the following lines commented out, the default TfodProcessor Builder
+                // will load the default model for the season. To define a custom model to load,
+                // choose one of the following:
+                //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+                //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+                //.setModelAssetName(TFOD_MODEL_ASSET)
+                //.setModelFileName(TFOD_MODEL_FILE)
 
-            // The following default settings are available to un-comment and edit as needed to
-            // set parameters for custom models.
-            //.setModelLabels(LABELS)
-            //.setIsModelTensorFlow2(true)
-            //.setIsModelQuantized(true)
-            //.setModelInputSize(300)
-            //.setModelAspectRatio(16.0 / 9.0)
+                // The following default settings are available to un-comment and edit as needed to
+                // set parameters for custom models.
+                //.setModelLabels(LABELS)
+                //.setIsModelTensorFlow2(true)
+                //.setIsModelQuantized(true)
+                //.setModelInputSize(300)
+                //.setModelAspectRatio(16.0 / 9.0)
 
-            .build();
+                .build();
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
@@ -174,7 +188,7 @@ public class TensorFlow extends AutonomousPLUS {
      */
 
 
-    public String position() {
+    public String position(TfodProcessor tfod) {
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
         String Position = "";
@@ -207,7 +221,6 @@ public class TensorFlow extends AutonomousPLUS {
                 telemetry.addData("It boken", y);
             }
 
-            return Position; // IDk might not be needed... just wanted to make sure it was the most recent
         }
             return Position; // needed to be here
     }

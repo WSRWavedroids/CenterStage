@@ -30,7 +30,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             moveLift("Down", .55);//
             turnRobotLeft(1070, 100);
             speed = 1;
-            moveRobotForward(4600, 2);
+            moveRobotForward(4000, 2);
+            speed = 0.5;
+            moveRobotForward(300, 2);
             //robot.openClaw();
             //moveRobotBackward(150, 2);
             //moveRobotRight(3600, 2);
