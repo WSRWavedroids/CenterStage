@@ -13,16 +13,24 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
+        public String target;
 
         public void runOpMode() {
 
             super.runOpMode();
             //Needs TF reference
             TF.initTfod(TF.tfod, robot.hardwareMap);
+            while(opModeInInit()){
+                currentPosition = TF.position(TF.tfod);
 
+                if(currentPosition != null){
+                    currentPosition = target;
+                }
+                telemetry.update();
+                sleep(20);
+            }
             //Start and position yellow
             waitForStart();
-            currentPosition = TF.position(TF.tfod);
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;

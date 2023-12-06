@@ -190,6 +190,10 @@ public class TensorFlow extends AutonomousPLUS {
 
     public String position(TfodProcessor tfod) {
         List<Recognition> currentRecognitions = tfod.getRecognitions();
+        if (currentRecognitions == null){
+            telemetry.addData("Couldn't find anything", ":(");
+            return null;
+        }
         telemetry.addData("# Objects Detected", currentRecognitions.size());
         String Position = "";
         // Step through the list of recognitions and display info for each one.
