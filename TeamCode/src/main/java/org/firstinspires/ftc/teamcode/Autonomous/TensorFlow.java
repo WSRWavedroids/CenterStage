@@ -80,7 +80,7 @@ public class TensorFlow extends AutonomousPLUS {
 
         super.runOpMode();
         waitForStart();
-        initTfod(tfod, robot.hardwareMap);
+        initTfod(robot.hardwareMap);
 
 
         // Wait for the DS start button to be touched.
@@ -109,7 +109,30 @@ public class TensorFlow extends AutonomousPLUS {
     /**
      * Initialize the TensorFlow Object Detection processor.
      */
-    public void initTfod(TfodProcessor tfod, HardwareMap hardwareMap) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    public void initTfod(HardwareMap hardwareMap) {
+
+
+
+
 
         // Create the TensorFlow processor by using a builder.
         // With the following lines commented out, the default TfodProcessor Builder
@@ -206,15 +229,15 @@ public class TensorFlow extends AutonomousPLUS {
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
 
-            if (x >= 300 && x <= 400 && y >= 100 && y <= 200) {
+            if (x >= 290 && x <= 525 && y >= 180 && y <= 410) {//good
                 //Left Zone
                 Position = "Left Zone";
                 telemetry.addData("Pixel in", Position);
-            } else if (x >= 700 && x <= 800 && y >= 200 && y <= 300) {
+            } else if (x >= 690 && x <= 900 && y >= 285 && y <= 475) {//good
                 //Middle zone
                 Position = "Center";
                 telemetry.addData("Pixel in", Position);
-            } else if (x >= 1130 && x <= 1300 && y >= 210 && y <= 330) {
+            } else if (x >= 1090 && x <= 1280 && y >= 240 && y <= 450) {
                 //Right zone
                 Position = "Right Zone";
                 telemetry.addData("Pixel in", Position);

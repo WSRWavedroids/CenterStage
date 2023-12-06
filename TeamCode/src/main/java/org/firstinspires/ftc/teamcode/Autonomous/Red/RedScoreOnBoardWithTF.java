@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             super.runOpMode();
             //Needs TF reference
-            TF.initTfod(TF.tfod, robot.hardwareMap);
+            TF.initTfod( robot.hardwareMap);
             while(opModeInInit()){
                 currentPosition = TF.position(TF.tfod);
 
