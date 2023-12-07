@@ -60,10 +60,10 @@ public class TensorFlow extends AutonomousPLUS {
     private static final String TFOD_MODEL_ASSET = "MyModelStoredAsAsset.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/myCustomModel.tflite";
+    private static final String TFOD_MODEL_FILE = "RedD20.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-       "Pixel",
+       "Red Prop",
     };
 
     /**
@@ -156,12 +156,12 @@ public class TensorFlow extends AutonomousPLUS {
                 // choose one of the following:
                 //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
                 //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
-                //.setModelAssetName(TFOD_MODEL_ASSET)
+                .setModelAssetName(TFOD_MODEL_ASSET)
                 //.setModelFileName(TFOD_MODEL_FILE)
 
                 // The following default settings are available to un-comment and edit as needed to
                 // set parameters for custom models.
-                //.setModelLabels(LABELS)
+                .setModelLabels(LABELS)
                 //.setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
                 //.setModelInputSize(300)
