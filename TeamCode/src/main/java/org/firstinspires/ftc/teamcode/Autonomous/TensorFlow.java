@@ -57,7 +57,7 @@ public class TensorFlow extends AutonomousPLUS {
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
-    private static final String TFOD_MODEL_ASSET = "MyModelStoredAsAsset.tflite";
+    private static final String TFOD_MODEL_ASSET = "RedD20.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
     private static final String TFOD_MODEL_FILE = "RedD20.tflite";
@@ -82,12 +82,10 @@ public class TensorFlow extends AutonomousPLUS {
         waitForStart();
         initTfod(robot.hardwareMap);
 
-
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
-
 
         if (opModeIsActive()) {
             while (opModeIsActive()) {
@@ -110,29 +108,7 @@ public class TensorFlow extends AutonomousPLUS {
      * Initialize the TensorFlow Object Detection processor.
      */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     public void initTfod(HardwareMap hardwareMap) {
-
-
-
-
 
         // Create the TensorFlow processor by using a builder.
         // With the following lines commented out, the default TfodProcessor Builder
@@ -232,15 +208,15 @@ public class TensorFlow extends AutonomousPLUS {
             if (x >= 290 && x <= 525 && y >= 180 && y <= 410) {//good
                 //Left Zone
                 Position = "Left Zone";
-                telemetry.addData("Pixel in", Position);
+                telemetry.addData("Prop in", Position);
             } else if (x >= 690 && x <= 900 && y >= 285 && y <= 475) {//good
                 //Middle zone
                 Position = "Center";
-                telemetry.addData("Pixel in", Position);
+                telemetry.addData("Prop in", Position);
             } else if (x >= 1090 && x <= 1280 && y >= 240 && y <= 450) {
                 //Right zone
                 Position = "Right Zone";
-                telemetry.addData("Pixel in", Position);
+                telemetry.addData("Prop in", Position);
             }
             else
             {
