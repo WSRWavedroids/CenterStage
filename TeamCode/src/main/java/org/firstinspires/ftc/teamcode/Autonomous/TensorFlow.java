@@ -49,7 +49,7 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "TF Position Finder", group = "Stage")
+@Autonomous(name = "This one TF", group = "Stage")
 
 public class TensorFlow extends AutonomousPLUS {
 
@@ -57,13 +57,13 @@ public class TensorFlow extends AutonomousPLUS {
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
-    private static final String TFOD_MODEL_ASSET = "RedD20.tflite";
+    private static final String TFOD_MODEL_ASSET = "Red D20Model.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
     private static final String TFOD_MODEL_FILE = "RedD20.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-       "Red Prop",
+       "Red Prop", "Blue Prop"
     };
 
     /**
