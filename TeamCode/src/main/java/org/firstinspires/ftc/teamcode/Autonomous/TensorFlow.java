@@ -57,13 +57,13 @@ public class TensorFlow extends AutonomousPLUS {
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
-    private static final String TFOD_MODEL_ASSET = "Red D20Model.tflite";
+    private static final String TFOD_MODEL_ASSET = "D20.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "RedD20.tflite";
+    private static final String TFOD_MODEL_FILE = "D20.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-       "Red Prop", "Blue Prop"
+            "Blue Prop", "Red Prop"
     };
 
     /**
@@ -209,7 +209,7 @@ public class TensorFlow extends AutonomousPLUS {
                 //Left Zone
                 Position = "Left Zone";
                 telemetry.addData("Prop in", Position);
-            } else if (x >= 690 && x <= 900 && y >= 285 && y <= 475) {//good
+            } else if (x >= 680 && x <= 950 && y >= 200 && y <= 380) {//good
                 //Middle zone
                 Position = "Center";
                 telemetry.addData("Prop in", Position);
