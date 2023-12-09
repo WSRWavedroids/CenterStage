@@ -18,16 +18,18 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
         public void runOpMode() {
 
             super.runOpMode();
-            //Needs TF reference
-            TF.initTfod( robot.hardwareMap);
-            while(opModeInInit()){
-                currentPosition = TF.position(TF.tfod);
+            if (opModeInInit()) {
+                //Needs TF reference
+                TF.initTfod(robot.hardwareMap);
+                while (opModeInInit()) {
+                    currentPosition = TF.position(TF.tfod);
 
-                if(currentPosition != null){
-                    currentPosition = target;
+                    if (currentPosition != null) {
+                        currentPosition = target;
+                    }
+                    telemetry.update();
+                    sleep(20);
                 }
-                telemetry.update();
-                sleep(20);
             }
             //Start and position yellow
             waitForStart();
@@ -44,6 +46,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             if(target == "Left Zone")
             {
                 telemetry.addData("Going to", "Left");
+
             }
 
 

@@ -33,7 +33,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             speed = 0.5;//new
             moveRobotBackward(900, 2);
             turnRobotLeft(1070, 2);// 90 degree turn 1100 was a little t0o far
-            moveRobotLeft(230, 2);
+            moveRobotLeft(250, 2);
             moveRobotForward(1450, 50);//new
 
             moveLift("Down", .22);//new
