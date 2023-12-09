@@ -201,10 +201,13 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
 
 
     public String position(TfodProcessor tfod) {
-        List<Recognition> currentRecognitions = tfod.getRecognitions();
-        if (currentRecognitions == null){
-            telemetry.addData("Couldn't find anything", ":(");
+        List<Recognition> currentRecognitions;
+
+        if (tfod.getRecognitions() == null){
+            telemetry.addLine("Couldn't find anything :(");
             return null;
+        } else {
+           currentRecognitions = tfod.getRecognitions();
         }
         telemetry.addData("# Objects Detected", currentRecognitions.size());
         String Position = "";
