@@ -79,16 +79,15 @@ public class TensorFlow extends AutonomousPLUS {
     public void runOpMode() {
 
         super.runOpMode();
-        waitForStart();
-        initTfod(robot.hardwareMap);
 
-        // Wait for the DS start button to be touched.
-        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
-        telemetry.addData(">", "Touch Play to start OpMode");
-        telemetry.update();
+        if (opModeInInit()) {
+            initTfod(robot.hardwareMap);
 
-        if (opModeIsActive()) {
-            while (opModeIsActive()) {
+            // Wait for the DS start button to be touched.
+            telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
+            telemetry.addData(">", "Touch Play to start OpMode");
+            telemetry.update();
+            while (opModeInInit()) {
 
                 position(tfod);
                 // Push telemetry to the Driver Station.
@@ -175,7 +174,7 @@ public class TensorFlow extends AutonomousPLUS {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        tfod.setMinResultConfidence(0.40f);
+        tfod.setMinResultConfidence(0.55f);
 
         // Disable or re-enable the TFOD processor at any time.
         //visionPortal.setProcessorEnabled(tfod, true);
