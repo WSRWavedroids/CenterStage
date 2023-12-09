@@ -41,13 +41,13 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             moveRobotRight(1800, 2);
 
 
-            if(currentPosition == "Left Zone")
+            if(target == "Left Zone")
             {
                 telemetry.addData("Going to", "Left");
             }
 
 
-            else if(currentPosition == "Center")
+            else if(target == "Center")
             {
                 telemetry.addData("Going to", "Center");
                 moveRobotLeft(1610, 2);
@@ -62,7 +62,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotForward(1450, 50);
             }
 
-            else if(currentPosition == "Right Zone")
+            else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right");
             }
