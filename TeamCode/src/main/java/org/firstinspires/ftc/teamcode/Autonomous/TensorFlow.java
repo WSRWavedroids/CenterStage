@@ -77,7 +77,6 @@ public class TensorFlow extends AutonomousPLUS {
 
     @Override
     public void runOpMode() {
-
         super.runOpMode();
 
         if (opModeInInit()) {
