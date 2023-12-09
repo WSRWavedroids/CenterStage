@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 TF.initTfod(robot.hardwareMap);
                 while (opModeInInit()) {
                     currentPosition = TF.position(TF.tfod);
+                    telemetry.addData(currentPosition,"here");
 
                     if (currentPosition != null) {
                         currentPosition = target;
@@ -46,6 +47,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             if(target == "Left Zone")
             {
                 telemetry.addData("Going to", "Left");
+
 
             }
 
