@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Outreach;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.Outreach.FunBot;
 
 
 /**
@@ -28,7 +30,7 @@ public class FunBotTeleOp extends OpMode {
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
-    public FunBot FunBot = new FunBot();
+    public org.firstinspires.ftc.teamcode.Outreach.FunBot FunBot = new FunBot();
 
     /*
      * Code to run ONCE when the driver hits INIT
