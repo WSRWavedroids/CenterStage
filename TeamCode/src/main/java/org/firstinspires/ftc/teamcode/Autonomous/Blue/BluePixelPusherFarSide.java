@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             moveLift("Up", .55);//
             prepareNextAction(300);
             moveRobotRight(150, 2);
-            moveRobotForward(1195, 2); //1175 was soo close
+            moveRobotForward(1205, 2); //1175 was soo close
             robot.openClaw();
             moveRobotBackward(300, 2);
             moveRobotRight(750, 2);

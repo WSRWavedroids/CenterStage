@@ -19,7 +19,7 @@ public class RedBasicPixelPusherFar extends AutonomousPLUS {
         moveLift("Up", .55);//
         prepareNextAction(300);
         moveRobotLeft(150, 2);
-        moveRobotForward(1195, 2); //1175 was soo close
+        moveRobotForward(1205, 2); //1195 was soo close
         robot.openClaw();
         moveRobotBackward(300, 2);
         moveRobotLeft(750, 2);
