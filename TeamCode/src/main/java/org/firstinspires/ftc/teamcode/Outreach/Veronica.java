@@ -120,11 +120,7 @@ public class Veronica extends OpMode{
 
 
 
-        // Send telemetry message to signify robot running;
-        telemetry.addData("left",  "%.2f", left);
-        telemetry.addData("right", "%.2f", right);
-
-        /*
+/*
         if (gamepad1.dpad_up) {
             speed = 1;
         } else if (gamepad1.dpad_down) {

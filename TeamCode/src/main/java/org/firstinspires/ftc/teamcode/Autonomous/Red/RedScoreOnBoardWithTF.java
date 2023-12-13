@@ -48,13 +48,15 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             if(target == "Left Zone")
             {
                 //This is certainly not tested
-                telemetry.addData("Going to", "Center");
+                telemetry.addData("Going to", "Left");
                 moveRobotLeft(1500, 2);//This value is off
                 moveRobotForward(700, 2);
                 turnRobotLeft(1070, 2);
                 moveRobotRight(400, 2);
-                moveRobotForward(250, 2);
+                moveRobotForward(275, 2);
+                prepareNextAction(200);
                 robot.openClaw();
+                prepareNextAction(200);
                 moveRobotBackward(1350, 2);
             }
 
@@ -65,11 +67,12 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotLeft(1530, 2);
                 speed = 0.5;//new
                 moveRobotForward(1050, 50);
-                prepareNextAction(100);//new
+                prepareNextAction(200);//new
                 robot.openClaw();
+                prepareNextAction(200);
                 speed = 0.5;//new
-                moveRobotBackward(250, 2);
-                moveRobotRight(1500, 2);
+                moveRobotBackward(1000, 2);
+                moveRobotRight(1400, 2);
                 //moveRobotBackward(900, 2);
                 //turnRobotRight(1070, 2);//
                 //moveRobotRight(250, 2);
@@ -81,7 +84,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 telemetry.addData("Going to", "Right");
                 moveRobotLeft(1280, 2);//This value is off
                 moveRobotForward(600, 2);
+                prepareNextAction(200);
                 robot.openClaw();
+                prepareNextAction(200);
                 moveRobotBackward(250, 2);
                 moveRobotRight(1200, 2);
 
