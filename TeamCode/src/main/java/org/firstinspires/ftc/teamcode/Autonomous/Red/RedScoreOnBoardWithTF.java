@@ -53,11 +53,11 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotForward(700, 2);
                 turnRobotLeft(1070, 2);
                 moveRobotRight(400, 2);
-                moveRobotForward(275, 2);
+                moveRobotForward(285, 2);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
-                moveRobotBackward(1350, 2);
+                moveRobotBackward(1450, 2);
             }
 
 
