@@ -99,6 +99,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 telemetry.addLine("oooof nothing detected");
                 moveRobotForward(200, 2);
                 speed = 100;
+                //15 360 spins
                 turnRobotRight(64200,2);
 
             }
