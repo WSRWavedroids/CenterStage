@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "Stage", name = "TensorFlowTest")
+@Autonomous(group = "Stage", name = "C Test")
     public class TensorFlowTest extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
