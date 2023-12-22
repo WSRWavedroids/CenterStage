@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
-@Autonomous(group = "Stage", name = "Secondary Claw Test")
+@Autonomous(group = "D Test", name = "Secondary Claw Test")
     public class SecondaryClawTest extends AutonomousPLUS {
         @Override
         public void runOpMode() {

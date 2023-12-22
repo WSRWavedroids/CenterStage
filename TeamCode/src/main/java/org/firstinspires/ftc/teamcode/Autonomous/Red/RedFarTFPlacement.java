@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "Stage", name = "Far_Place_Pixel_Red")
+@Autonomous(group = "C TensorFlow", name = "Far_Place_Pixel_Red")
     public class RedFarTFPlacement extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();

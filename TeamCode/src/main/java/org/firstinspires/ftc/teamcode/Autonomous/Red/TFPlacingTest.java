@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 
-@Autonomous(group = "Stage", name = "Pixel Position")
+@Autonomous(group = "D Test", name = "Pixel Position")
     public class TFPlacingTest extends AutonomousPLUS {
         @Override
         public void runOpMode() {

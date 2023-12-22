@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "Stage", name = "Red score on board With TF")
+@Autonomous(group = "C TensorFlow", name = "Red score on board With TF")
     public class RedScoreOnBoardWithTF extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();

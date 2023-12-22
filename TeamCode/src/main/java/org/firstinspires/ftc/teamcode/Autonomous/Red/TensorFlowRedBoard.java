@@ -52,7 +52,7 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @Disabled
-@Autonomous(name = "Basic TF Red Score on Board", group = "Stage")
+@Autonomous(name = "Basic TF Red Score on Board", group = "C TensorFlow")
 
 public class TensorFlowRedBoard extends AutonomousPLUS {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera

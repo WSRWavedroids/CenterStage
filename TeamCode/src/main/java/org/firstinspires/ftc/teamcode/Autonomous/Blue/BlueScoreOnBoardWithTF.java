@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "Stage", name = "Blue score on board With TF")
+@Autonomous(group = "C TensorFlow", name = "Blue score on board With TF")
     public class BlueScoreOnBoardWithTF extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();

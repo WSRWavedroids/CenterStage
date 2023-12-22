@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 
 
-    @Autonomous(group = "Stage", name = "Blue Far pixel pusher")
+    @Autonomous(group = "B Legacy", name = "Blue Far pixel pusher")
     public class BluePixelPusherFarSide extends AutonomousPLUS {
         @Override
         public void runOpMode() {

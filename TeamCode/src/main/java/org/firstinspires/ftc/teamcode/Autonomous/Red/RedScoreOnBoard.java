@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 @Disabled
-@Autonomous(group = "Stage", name = "Red score on board")
+@Autonomous(group = "B Legacy", name = "Red score on board")
     public class RedScoreOnBoard extends AutonomousPLUS {
         @Override
         public void runOpMode() {

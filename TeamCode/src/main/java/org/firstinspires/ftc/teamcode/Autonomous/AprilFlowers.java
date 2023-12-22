@@ -15,7 +15,7 @@ import java.util.List;
 
 
 
-@Autonomous(group = "Stage", name = "Vision Experiments")
+@Autonomous(group = "E Base", name = "Vision Experiments")
 public class AprilFlowers extends AutonomousPLUS {
 
     public static final boolean USE_WEBCAM = true;  // Set true to use a webcam, or false for a phone camera
