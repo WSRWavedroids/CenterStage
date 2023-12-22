@@ -232,7 +232,7 @@ public class Robot {
 
     public void openSecondaryClaw()
     {
-        SecondaryClaw.setPosition(0.5);
+        SecondaryClaw.setPosition(0);
     }
 
 
