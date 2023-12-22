@@ -273,6 +273,9 @@ public class Robot {
         telemetry.addData("Motors", String.format("SlideL Power (%.2f) Arm Location (%d) Arm Target (%d)", slideL.getPower(), slideL.getCurrentPosition(), slideL.getTargetPosition()));
         telemetry.addData("Motors", String.format("SlideR Power (%.2f) Arm Location (%d) Arm Target (%d)", slideR.getPower(), slideR.getCurrentPosition(), slideR.getTargetPosition()));
         telemetry.addData("Motors", String.format("Hook Motor Power (%.2f) Arm Location (%d) Arm Target (%d)", hookMotor.getPower(), hookMotor.getCurrentPosition(), hookMotor.getTargetPosition()));
+        telemetry.addData("Center Pod", hookMotor.getCurrentPosition());
+        telemetry.addData("Left Pod", droneMotor.getCurrentPosition());
+        telemetry.addData("Right Pod", slideR.getCurrentPosition());
         telemetry.addData("ArmL", armL.getPosition());
         telemetry.addData("ArmR", armR.getPosition());
         telemetry.addData("ClawL", leftClaw.getPosition());
