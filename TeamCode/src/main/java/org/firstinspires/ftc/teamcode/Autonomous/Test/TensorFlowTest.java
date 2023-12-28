@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Red;
+package org.firstinspires.ftc.teamcode.Autonomous.Test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
-import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
+import org.firstinspires.ftc.teamcode.Autonomous.TF.TensorFlow;
 
 
 @Autonomous(group = "D Test", name = "TensorFlowTest")

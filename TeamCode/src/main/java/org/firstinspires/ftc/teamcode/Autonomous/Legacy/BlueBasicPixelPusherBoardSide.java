@@ -1,12 +1,13 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Red;
+package org.firstinspires.ftc.teamcode.Autonomous.Legacy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
+
 @Disabled
-@Autonomous(group = "B Legacy", name = "Red Pixel Pusher Board Side")
-    public class RedBasicPixelPusherBoardSide extends AutonomousPLUS {
+@Autonomous(group = "B Legacy", name = "Blue Pixel Pusher Board Side")
+    public class BlueBasicPixelPusherBoardSide extends AutonomousPLUS {
         @Override
         public void runOpMode() {
 
@@ -23,16 +24,18 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
             //robot.rotateRightArm(0.2);
 
-            moveRobotRight(1800, 2);
-            moveRobotLeft(1650, 2); // was 100
+            moveRobotLeft(1800, 2);//Flipped
+            moveRobotRight(1650, 2); // was 100
             moveRobotForward(1080, 2); //900 was soo close
             robot.openClaw();
             moveRobotBackward(900, 2);
-            moveRobotRight(1780, 2);
-            moveRobotLeft(150, 2);
+            moveRobotLeft(1780, 2);
+            moveRobotRight(150, 2);
 
             // code goes here
 
 
         }
     }
+
+

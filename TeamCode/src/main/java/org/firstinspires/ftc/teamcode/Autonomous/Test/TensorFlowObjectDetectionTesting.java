@@ -27,12 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.Test;
 
 import android.util.Size;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -49,48 +49,58 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Autonomous(name = "This one TF", group = "E Base")
+@TeleOp(name = "Concept: TensorFlow Object Detection", group = "C Test")
 
-public class TensorFlow extends AutonomousPLUS {
+public class TensorFlowObjectDetectionTesting extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
-    private static final String TFOD_MODEL_ASSET = "D20.tflite";
+    private static final String TFOD_MODEL_ASSET = "MyModelStoredAsAsset.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "D20.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/myCustomModel.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-            "Blue Prop", "Red Prop"
+       "Pixel",
     };
 
     /**
      * The variable to store our instance of the TensorFlow Object Detection processor.
      */
-    public TfodProcessor tfod;
+    private TfodProcessor tfod;
+
     /**
      * The variable to store our instance of the vision portal.
      */
-    public VisionPortal visionPortal;
+    private VisionPortal visionPortal;
 
     @Override
     public void runOpMode() {
-        super.runOpMode();
 
-        if (opModeInInit()) {
-            initTfod(robot.hardwareMap);
+        initTfod();
 
-            // Wait for the DS start button to be touched.
-            telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
-            telemetry.addData(">", "Touch Play to start OpMode");
-            telemetry.update();
-            while (opModeInInit()) {
+        // Wait for the DS start button to be touched.
+        telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
+        telemetry.addData(">", "Touch Play to start OpMode");
+        telemetry.update();
 
-                position(tfod);
+        waitForStart();
+
+        if (opModeIsActive()) {
+            while (opModeIsActive()) {
+
+                telemetryTfod();
                 // Push telemetry to the Driver Station.
                 telemetry.update();
+
+                // Save CPU resources; can resume streaming when needed.
+                if (gamepad1.dpad_down) {
+                    visionPortal.stopStreaming();
+                } else if (gamepad1.dpad_up) {
+                    visionPortal.resumeStreaming();
+                }
 
                 // Share the CPU.
                 sleep(20);
@@ -105,43 +115,29 @@ public class TensorFlow extends AutonomousPLUS {
     /**
      * Initialize the TensorFlow Object Detection processor.
      */
-
-    public void initTfod(HardwareMap hardwareMap) {
+    private void initTfod() {
 
         // Create the TensorFlow processor by using a builder.
-        // With the following lines commented out, the default TfodProcessor Builder
-        // will load the default model for the season. To define a custom model to load,
-        // choose one of the following:
-        //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
-        //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
-        //.setModelAssetName(TFOD_MODEL_ASSET)
-        //.setModelFileName(TFOD_MODEL_FILE)
-        // The following default settings are available to un-comment and edit as needed to
-        // set parameters for custom models.
-        //.setModelLabels(LABELS)
-        //.setIsModelTensorFlow2(true)
-        //.setIsModelQuantized(true)
-        //.setModelInputSize(300)
-        //.setModelAspectRatio(16.0 / 9.0)
         tfod = new TfodProcessor.Builder()
 
-                // With the following lines commented out, the default TfodProcessor Builder
-                // will load the default model for the season. To define a custom model to load,
-                // choose one of the following:
-                //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
-                //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
-                .setModelAssetName(TFOD_MODEL_ASSET)
-                //.setModelFileName(TFOD_MODEL_FILE)
+            // With the following lines commented out, the default TfodProcessor Builder
+            // will load the default model for the season. To define a custom model to load, 
+            // choose one of the following:
+            //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+            //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+            //.setModelAssetName(TFOD_MODEL_ASSET)
+            //.setModelFileName(TFOD_MODEL_FILE)
 
-                // The following default settings are available to un-comment and edit as needed to
-                // set parameters for custom models.
-                .setModelLabels(LABELS)
-                //.setIsModelTensorFlow2(true)
-                //.setIsModelQuantized(true)
-                //.setModelInputSize(300)
-                //.setModelAspectRatio(16.0 / 9.0)
+            // The following default settings are available to un-comment and edit as needed to 
+            // set parameters for custom models.
+            //.setModelLabels(LABELS)
+            //.setIsModelTensorFlow2(true)
+            //.setIsModelQuantized(true)
+            //.setModelInputSize(300)
+            //.setModelAspectRatio(16.0 / 9.0)
 
-                .build();
+            .build();
+
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
@@ -173,7 +169,7 @@ public class TensorFlow extends AutonomousPLUS {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        tfod.setMinResultConfidence(0.55f);
+        tfod.setMinResultConfidence(0.40f);
 
         // Disable or re-enable the TFOD processor at any time.
         //visionPortal.setProcessorEnabled(tfod, true);
@@ -183,48 +179,55 @@ public class TensorFlow extends AutonomousPLUS {
     /**
      * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
      */
+    private void telemetryTfod() {
 
-
-    public String position(TfodProcessor tfod) {
         List<Recognition> currentRecognitions = tfod.getRecognitions();
-        if (currentRecognitions == null){
-            telemetry.addData("Couldn't find anything", ":(");
-            return null;
-        }
         telemetry.addData("# Objects Detected", currentRecognitions.size());
-        String Position = "";
+
         // Step through the list of recognitions and display info for each one.
         for (Recognition recognition : currentRecognitions) {
-            double x = (recognition.getLeft() + recognition.getRight()) / 2;
-            double y = (recognition.getTop() + recognition.getBottom()) / 2;
+            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
 
-            telemetry.addData("", " ");
+            telemetry.addData(""," ");
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
 
-            if (x >= 400 && x <= 600 && y >= 380 && y <= 560) {//good
+
+             String Position;
+            if (x >= 300 && x <= 400 && y >= 100 && y <= 200)
+            {
                 //Left Zone
                 Position = "Left Zone";
-                telemetry.addData("Prop in", Position);
-            } else if (x >= 680 && x <= 950 && y >= 200 && y <= 380) {//good
+                telemetry.addData("Pixel in", Position);
+            }
+            /*else if (x >= 700 && x <= 800 && y >= 200 && y <=  300)
+            {
                 //Middle zone
                 Position = "Center";
-                telemetry.addData("Prop in", Position);
-            } else if (x >= 1090 && x <= 1280 && y >= 240 && y <= 450) {
+                telemetry.addData("Pixel in", Position);
+            }*/
+            else if (x >= 1130 && x <= 1300  && y >= 210  && y <=  330)
+            {
                 //Right zone
                 Position = "Right Zone";
-                telemetry.addData("Prop in", Position);
-            }
-            else
-            {
+                telemetry.addData("Pixel in", Position);
+            } /*else {
                 telemetry.addData("It not work :(", x);
                 telemetry.addData("It boken", y);
+            }*/
+            else
+            {
+                //Middle zone
+                Position = "Center";
+                telemetry.addData("Pixel in", Position);
             }
 
-        }
-            return Position; // needed to be here
 
-    }
+        }   // end for() loop
+
+    }   // end method telemetryTfod()
+
 
 }   // end class

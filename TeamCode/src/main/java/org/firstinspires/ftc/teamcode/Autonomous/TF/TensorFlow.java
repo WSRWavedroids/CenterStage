@@ -27,12 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous.Red;
+package org.firstinspires.ftc.teamcode.Autonomous.TF;
 
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -51,10 +50,10 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-@Disabled
-@Autonomous(name = "Basic TF Red Score on Board", group = "C TensorFlow")
+@Autonomous(name = "This one TF", group = "E Base")
 
-public class TensorFlowRedBoard extends AutonomousPLUS {
+public class TensorFlow extends AutonomousPLUS {
+
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
@@ -76,85 +75,28 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
      * The variable to store our instance of the vision portal.
      */
     public VisionPortal visionPortal;
-    public String currentPosition;
-    public String target;
 
     @Override
     public void runOpMode() {
-
         super.runOpMode();
-        initTfod(robot.hardwareMap);
-        waitForStart();
 
-        while(opModeInInit()){
-            currentPosition = position(tfod);
+        if (opModeInInit()) {
+            initTfod(robot.hardwareMap);
 
-            if(currentPosition != null){
-                currentPosition = target;
-            }
+            // Wait for the DS start button to be touched.
+            telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
+            telemetry.addData(">", "Touch Play to start OpMode");
             telemetry.update();
-            sleep(20);
+            while (opModeInInit()) {
+
+                position(tfod);
+                // Push telemetry to the Driver Station.
+                telemetry.update();
+
+                // Share the CPU.
+                sleep(20);
+            }
         }
-        //Start and position yellow
-        waitForStart();
-        robot.closeClaw();
-        prepareNextAction(300);
-        sleepTime = 175;
-        moveLift("Up", .55);
-        prepareNextAction(300);
-        //Branches here
-        moveRobotForward(150, 2);
-        moveRobotRight(1800, 2);
-
-
-        if(target == "Left Zone")
-        {
-            telemetry.addData("Going to", "Left");
-        }
-
-
-        else if(target == "Center")
-        {
-            telemetry.addData("Going to", "Center");
-            moveRobotLeft(1610, 2);
-            speed = 0.5;//new
-            moveRobotForward(1050, 50);
-            prepareNextAction(100);//new
-            robot.openClaw();
-            speed = 0.5;//new
-            moveRobotBackward(900, 2);
-            turnRobotRight(1070, 2);//
-            moveRobotRight(250, 2);
-            moveRobotForward(1450, 50);
-        }
-
-        else if(target == "Right Zone")
-        {
-            telemetry.addData("Going to", "Right");
-        }
-
-        //Pick up starts here
-        moveLift("Down", .22);//new
-        prepareNextAction(500);//new
-        sleep(500);
-        robot.closeClaw();//new
-        sleep(500);
-        moveLift("Up", .44);//new
-        moveRobotBackward(900, 2);//new
-        moveRobotLeft(1160, 2);//was 900
-
-        //Place
-        robot.rotateArmUp();
-        prepareNextAction(200);
-        speed = 0.4;
-        moveRobotForward(700, 300);// 1375 was too far
-        robot.openClaw();
-        moveRobotBackward(100, 2);
-        prepareNextAction(300);
-        moveLift("Down", .55);//
-
-        robot.openClaw();
-        prepareNextAction(1000);
 
         // Save more CPU resources when camera is no longer needed.
         visionPortal.close();
@@ -167,11 +109,40 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
 
     public void initTfod(HardwareMap hardwareMap) {
 
+        // Create the TensorFlow processor by using a builder.
+        // With the following lines commented out, the default TfodProcessor Builder
+        // will load the default model for the season. To define a custom model to load,
+        // choose one of the following:
+        //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+        //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+        //.setModelAssetName(TFOD_MODEL_ASSET)
+        //.setModelFileName(TFOD_MODEL_FILE)
+        // The following default settings are available to un-comment and edit as needed to
+        // set parameters for custom models.
+        //.setModelLabels(LABELS)
+        //.setIsModelTensorFlow2(true)
+        //.setIsModelQuantized(true)
+        //.setModelInputSize(300)
+        //.setModelAspectRatio(16.0 / 9.0)
         tfod = new TfodProcessor.Builder()
-                .setModelAssetName(TFOD_MODEL_ASSET)
-                .setModelLabels(LABELS)
-                .build();
 
+                // With the following lines commented out, the default TfodProcessor Builder
+                // will load the default model for the season. To define a custom model to load,
+                // choose one of the following:
+                //   Use setModelAssetName() if the custom TF Model is built in as an asset (AS only).
+                //   Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+                .setModelAssetName(TFOD_MODEL_ASSET)
+                //.setModelFileName(TFOD_MODEL_FILE)
+
+                // The following default settings are available to un-comment and edit as needed to
+                // set parameters for custom models.
+                .setModelLabels(LABELS)
+                //.setIsModelTensorFlow2(true)
+                //.setIsModelQuantized(true)
+                //.setModelInputSize(300)
+                //.setModelAspectRatio(16.0 / 9.0)
+
+                .build();
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
@@ -185,6 +156,17 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
         // Choose a camera resolution. Not all cameras support all resolutions.
         builder.setCameraResolution(new Size(1280, 720));
 
+        // Enable the RC preview (LiveView).  Set "false" to omit camera monitoring.
+        //builder.enableLiveView(true);
+
+        // Set the stream format; MJPEG uses less bandwidth than default YUY2.
+        //builder.setStreamFormat(VisionPortal.StreamFormat.YUY2);
+
+        // Choose whether or not LiveView stops if no processors are enabled.
+        // If set "true", monitor shows solid orange screen if no processors enabled.
+        // If set "false", monitor shows camera view without annotations.
+        //builder.setAutoStopLiveView(false);
+
         // Set and enable the processor.
         builder.addProcessor(tfod);
 
@@ -192,8 +174,10 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        tfod.setMinResultConfidence(0.40f);
+        tfod.setMinResultConfidence(0.55f);
 
+        // Disable or re-enable the TFOD processor at any time.
+        //visionPortal.setProcessorEnabled(tfod, true);
 
     }   // end method initTfod()
 
@@ -203,13 +187,10 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
 
 
     public String position(TfodProcessor tfod) {
-        List<Recognition> currentRecognitions;
-
-        if (tfod.getRecognitions() == null){
-            telemetry.addLine("Couldn't find anything :(");
+        List<Recognition> currentRecognitions = tfod.getRecognitions();
+        if (currentRecognitions == null){
+            telemetry.addData("Couldn't find anything", ":(");
             return null;
-        } else {
-           currentRecognitions = tfod.getRecognitions();
         }
         telemetry.addData("# Objects Detected", currentRecognitions.size());
         String Position = "";
@@ -223,7 +204,7 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
 
-            if (x >= 290 && x <= 525 && y >= 180 && y <= 410) {//good
+            if (x >= 400 && x <= 600 && y >= 380 && y <= 560) {//good
                 //Left Zone
                 Position = "Left Zone";
                 telemetry.addData("Prop in", Position);
@@ -244,6 +225,7 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
 
         }
             return Position; // needed to be here
+
     }
 
 }   // end class

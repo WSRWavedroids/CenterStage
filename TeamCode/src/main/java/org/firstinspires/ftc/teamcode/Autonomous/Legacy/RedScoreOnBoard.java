@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Blue;
+package org.firstinspires.ftc.teamcode.Autonomous.Legacy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 @Disabled
-@Autonomous(group = "B Legacy", name = "Blue score on board")
-    public class BlueScoreOnBoard extends AutonomousPLUS {
+@Autonomous(group = "B Legacy", name = "Red score on board")
+    public class RedScoreOnBoard extends AutonomousPLUS {
         @Override
         public void runOpMode() {
 
@@ -25,16 +25,16 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
             //robot.rotateRightArm(0.2);
 
-            moveRobotLeft(1800, 2);
-            moveRobotRight(1610, 2); // was 100
+            moveRobotRight(1800, 2);
+            moveRobotLeft(1610, 2); // was 100
             speed = 0.5;//new
             moveRobotForward(1050, 50); //900 was soo close
             prepareNextAction(100);//new
             robot.openClaw();
             speed = 0.5;//new
             moveRobotBackward(900, 2);
-            turnRobotLeft(1070, 2);// 90 degree turn 1100 was a little t0o far
-            moveRobotLeft(250, 2);
+            turnRobotRight(1070, 2);// 90 degree turn 1100 was a little t0o far
+            moveRobotRight(250, 2);
             moveRobotForward(1450, 50);//new
 
             moveLift("Down", .22);//new
@@ -44,7 +44,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
             sleep(500);
             moveLift("Up", .44);//new
             moveRobotBackward(900, 2);//new
-            moveRobotRight(1160, 2);//was 900
+            moveRobotLeft(1160, 2);//was 900
             //prepareNextAction(1000);// remove these when testing is done
             //robot.closeClaw();
             //prepareNextAction(500); //remove these when testing is done
