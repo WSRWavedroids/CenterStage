@@ -12,9 +12,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
-
-
-
 @Autonomous(group = "D Base", name = "Vision Experiments")
 public class AprilFlowers extends AutonomousPLUS {
 

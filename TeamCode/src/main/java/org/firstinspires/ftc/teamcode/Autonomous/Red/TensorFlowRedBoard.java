@@ -88,7 +88,7 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
             currentPosition = position(tfod);
 
             if(currentPosition != null){
-                currentPosition = target;
+                target = currentPosition;
             }
             telemetry.update();
             sleep(20);

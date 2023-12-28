@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                     telemetry.addData(currentPosition,"here");
 
                     if (currentPosition != null) {
-                        currentPosition = target;
+                        target = currentPosition;
                     }
                     telemetry.update();
                     sleep(20);
