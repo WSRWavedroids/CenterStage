@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
-@Autonomous(group = "Stage", name = "Red Far pixel pusher")
+@Autonomous(group = "B Legacy", name = "Red Far pixel pusher")
 public class RedBasicPixelPusherFar extends AutonomousPLUS {
+
     @Override
+
     public void runOpMode() {
 
         super.runOpMode();
@@ -19,7 +22,7 @@ public class RedBasicPixelPusherFar extends AutonomousPLUS {
         moveLift("Up", .55);//
         prepareNextAction(300);
         moveRobotLeft(150, 2);
-        moveRobotForward(1195, 2); //1175 was soo close
+        moveRobotForward(1205, 2); //1195 was soo close
         robot.openClaw();
         moveRobotBackward(300, 2);
         moveRobotLeft(750, 2);

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Teleop;
 
 import android.annotation.SuppressLint;
 
@@ -43,6 +43,8 @@ public class Robot {
     public Servo leftClaw;
     public Servo rightClaw;
 
+    public Servo SecondaryClaw;
+
     public Servo hookServo;
 
     public Servo armL;
@@ -80,6 +82,7 @@ public class Robot {
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
         hookServo = hardwareMap.get(Servo.class, "hookServo");
+        SecondaryClaw = hardwareMap.get(Servo.class, "SecondaryClaw");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
         hookMotor = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
         droneMotor = hardwareMap.get(DcMotor.class, "droneAndOdoPodL");
@@ -220,6 +223,16 @@ public class Robot {
         } else if (position >= 0.3) {
             telemetry.addData("Claw", "Open");
         }
+    }
+
+    public void closeSecondaryClaw()
+    {
+        SecondaryClaw.setPosition(0.5);
+    }
+
+    public void openSecondaryClaw()
+    {
+        SecondaryClaw.setPosition(0);
     }
 
 

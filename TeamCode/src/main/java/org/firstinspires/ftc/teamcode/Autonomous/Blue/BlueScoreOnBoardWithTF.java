@@ -1,15 +1,13 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Red;
+package org.firstinspires.ftc.teamcode.Autonomous.Blue;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "C TensorFlow", name = "Red score on board With TF")
-    public class RedScoreOnBoardWithTF extends AutonomousPLUS {
+@Autonomous(group = "C TensorFlow", name = "Blue score on board With TF")
+    public class BlueScoreOnBoardWithTF extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
@@ -42,29 +40,26 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
-            moveRobotRight(1800, 2);
+            moveRobotLeft(1800, 2);
             telemetry.addData(currentPosition,"still here");
 
             if(target == "Left Zone")
             {
-                //This is certainly not tested
                 telemetry.addData("Going to", "Left");
-                moveRobotLeft(1500, 2);//This value is off
-                moveRobotForward(700, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(400, 2);
-                moveRobotForward(285, 2);
+                moveRobotRight(1170, 2);//This value is off
+                moveRobotForward(600, 2);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
-                moveRobotBackward(1450, 2);
+                moveRobotBackward(250, 2);
+                moveRobotLeft(1200, 2);
             }
 
 
             else if(target == "Center")
             {
                 telemetry.addData("Going to", "Center");
-                moveRobotLeft(1530, 2);
+                moveRobotRight(1530, 2);
                 speed = 0.5;//new
                 moveRobotForward(1050, 50);
                 prepareNextAction(200);//new
@@ -72,7 +67,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(200);
                 speed = 0.5;//new
                 moveRobotBackward(1000, 2);
-                moveRobotRight(1400, 2);
+                moveRobotLeft(1600, 2);
+                moveRobotRight(100, 2);
                 //moveRobotBackward(900, 2);
                 //turnRobotRight(1070, 2);//
                 //moveRobotRight(250, 2);
@@ -82,21 +78,23 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right");
-                moveRobotLeft(1280, 2);//This value is off
-                moveRobotForward(600, 2);
+                moveRobotRight(1500, 2);//This value is off
+                moveRobotForward(700, 2);
+                turnRobotRight(1070, 2);
+                moveRobotLeft(400, 2);
+                moveRobotForward(220, 2);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
-                moveRobotBackward(250, 2);
-                moveRobotRight(1200, 2);
+                moveRobotBackward(1550, 2);
+                moveRobotRight(600, 2);
 
             } else {
                 //This is certainly not tested
-                telemetry.addData("Going to", "Center");
-                moveRobotLeft(1500, 2);//This value is off
+                moveRobotRight(1500, 2);//This value is off
                 moveRobotForward(700, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(400, 2);
+                turnRobotRight(1070, 2);
+                moveRobotLeft(400, 2);
                 moveRobotForward(300, 2);
                 robot.openClaw();
                 moveRobotBackward(1450, 2);

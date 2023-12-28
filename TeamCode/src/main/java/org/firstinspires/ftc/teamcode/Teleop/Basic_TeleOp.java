@@ -27,16 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.lang.Math;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
 /**
@@ -62,6 +57,7 @@ public class Basic_TeleOp extends OpMode {
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
     private double speed = 0.75;
+    //private double storedSpeed;
     public Robot robot = null;
 
 
@@ -182,8 +178,9 @@ public class Basic_TeleOp extends OpMode {
         {
             if (readyToSuspend == false) //enable hold
             {
+
+                speed = 1;
                 robot.hookMotor.setPower(0.4);
-                readyToSuspend = true;
             }
             else if (readyToSuspend == true) //disable hold
             {
@@ -209,7 +206,22 @@ public class Basic_TeleOp extends OpMode {
         }
 
 
+//Beginning of fast turn
+        if(gamepad1.right_trigger >= 0.5)
+        {
+            //storedSpeed = speed;
+            speed = 1;
+            //Do something
+            //speed = storedSpeed;
 
+        }
+        else if (gamepad1.left_trigger >0.5)
+        {
+            //storedSpeed = speed;
+            speed = 0.50;
+            //Do something
+            //speed = storedSpeed;
+        }
 
 
 

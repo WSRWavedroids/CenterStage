@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "C TensorFlow", name = "Red score on board With TF")
-    public class RedScoreOnBoardWithTF extends AutonomousPLUS {
+@Autonomous(group = "C TensorFlow", name = "Far_Place_Pixel_Red")
+    public class RedFarTFPlacement extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
@@ -24,11 +22,13 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 while (opModeInInit()) {
                     currentPosition = TF.position(TF.tfod);
                     telemetry.addData(target, "Its here");
-
                     if (currentPosition != null) {
                         target = currentPosition;
+                        telemetry.addData("Its time to", "Gatekeep, Gasslight Girlboss");
+                        telemetry.addData("Ur gonna do", "great");
                     }
                     telemetry.update();
+
                     sleep(20);
                 }
             }
@@ -42,65 +42,59 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
-            moveRobotRight(1800, 2);
             telemetry.addData(currentPosition,"still here");
 
             if(target == "Left Zone")
             {
                 //This is certainly not tested
                 telemetry.addData("Going to", "Left");
-                moveRobotLeft(1500, 2);//This value is off
                 moveRobotForward(700, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(400, 2);
-                moveRobotForward(285, 2);
-                prepareNextAction(200);
+                moveRobotLeft(450, 2);
+                prepareNextAction(200);//new
                 robot.openClaw();
                 prepareNextAction(200);
-                moveRobotBackward(1450, 2);
+                moveRobotBackward(400, 2);
             }
 
 
             else if(target == "Center")
             {
                 telemetry.addData("Going to", "Center");
-                moveRobotLeft(1530, 2);
-                speed = 0.5;//new
-                moveRobotForward(1050, 50);
+                moveRobotLeft(150, 2);
+                moveRobotForward(1000, 2);
+
                 prepareNextAction(200);//new
                 robot.openClaw();
                 prepareNextAction(200);
-                speed = 0.5;//new
-                moveRobotBackward(1000, 2);
-                moveRobotRight(1400, 2);
-                //moveRobotBackward(900, 2);
-                //turnRobotRight(1070, 2);//
-                //moveRobotRight(250, 2);
-                //moveRobotForward(1450, 50);
             }
 
             else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right");
-                moveRobotLeft(1280, 2);//This value is off
-                moveRobotForward(600, 2);
+                //moveRobotLeft(1500, 2);//This value is off
+                moveRobotForward(830, 2);
+                turnRobotRight(1070, 2);
+                moveRobotLeft(185, 2);
+                moveRobotForward(150, 2);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
-                moveRobotBackward(250, 2);
-                moveRobotRight(1200, 2);
+                moveRobotBackward(300, 2);
+                turnRobotLeft(2140, 2);
+                moveLift("Up", .25);
+                moveRobotForward(200, 2);
+                prepareNextAction(200);
+                robot.closeClaw();
+                prepareNextAction(200);
+                moveRobotBackward(100,2 );
+                moveRobotLeft(200, 2);
 
             } else {
                 //This is certainly not tested
-                telemetry.addData("Going to", "Center");
-                moveRobotLeft(1500, 2);//This value is off
-                moveRobotForward(700, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(400, 2);
-                moveRobotForward(300, 2);
-                robot.openClaw();
-                moveRobotBackward(1450, 2);
-                telemetry.addLine("I don't know what to do... going left");
+                telemetry.addLine("oooof nothing detected");
+                moveRobotForward(200, 2);
+                speed = 100;
+                turnRobotLeft(64200,2);
 
             }
              /* This scores on the board... values need adjusted

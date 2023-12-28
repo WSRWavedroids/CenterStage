@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
-
-@Autonomous(group = "Stage", name = "Red Pixel Pusher Board Side")
+@Disabled
+@Autonomous(group = "B Legacy", name = "Red Pixel Pusher Board Side")
     public class RedBasicPixelPusherBoardSide extends AutonomousPLUS {
         @Override
         public void runOpMode() {
