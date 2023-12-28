@@ -17,10 +17,13 @@ public class MeepMeepTesting {
                                 .forward(6)
                                 .strafeLeft(40)
                                 .strafeRight(36)
-                                .forward(20)
-                                .back(15)
-                                .strafeLeft(40)
-                                .strafeRight(6)
+                                .forward(10)
+                                .turn(Math.toRadians(-90))
+                                //.lineToLinearHeading(new Pose2d(14,48, Math.toRadians(180)))
+                                .strafeLeft(16)
+                                .forward(3)
+                                .back(36)
+                                .strafeRight(10)
                                 .build()
                 );
 
