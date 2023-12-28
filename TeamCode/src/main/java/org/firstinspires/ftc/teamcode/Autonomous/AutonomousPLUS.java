@@ -51,6 +51,8 @@ public class AutonomousPLUS extends LinearOpMode {
     public int sleepTime;
     public boolean inMarker;
     public double power;
+    public String currentPosition;
+    public String target;
     public double slidePos;
 
     //DO NOT DELETE THIS LINE! CAPITALIZATION IS VERY IMPORTANT!!!

@@ -34,7 +34,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
     // This enum defines our "state"
     // This is essentially just defines the possible steps our program will take
     enum State {
-        BASE_TRAJ,   // First, follow the basic instructions
+        BASE_TRAJ,      // First, follow the basic instructions
         LEFT_TRAJ,      // If left, then do this
         CENTER_TRAJ,    // If center, then do this
         RIGHT_TRAJ,     // If right, then do this
@@ -50,8 +50,6 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
     Pose2d startPose = new Pose2d(10, 64, Math.toRadians(-90));
 
     public TensorFlow TF = new TensorFlow();
-    public String currentPosition;
-    public String target;
 
     @Override
     public void runOpMode(){
