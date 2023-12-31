@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous.RR;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -71,32 +72,35 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                     slidePos = 1000;
                 })
                 .forward(6)
-                .strafeLeft(40)
+                .lineTo(new Vector2d(-40,0))
                 .build();
 
         Trajectory leftTraj = drive.trajectoryBuilder(baseTraj.end())
-                .strafeRight(27) //Check this
+                .lineTo(new Vector2d(27,0))
+                //.strafeRight(27) //Check this
                 .forward(16) //Check this
                 .addDisplacementMarker(() -> {
                     robot.openClaw();
                 })
                 .back(8)
-                .strafeLeft(25)
+                .lineTo(new Vector2d(-25,0))
                 .build();
 
         Trajectory centerTraj = drive.trajectoryBuilder(baseTraj.end())
-                .strafeRight(38)
+                .lineTo(new Vector2d(38,0))
+                //.strafeRight(38)
                 .forward(24)
                 .addDisplacementMarker(() -> {
                     robot.openClaw();
                 })
                 .back(18)
-                .strafeLeft(35)
-                .strafeRight(3)
+                .lineTo(new Vector2d(-35,0))
+                .lineTo(new Vector2d(3,0))
                 .build();
 
         Trajectory rightTraj = drive.trajectoryBuilder(baseTraj.end())
-                .strafeRight(36)
+                .lineTo(new Vector2d(36,0))
+                //.strafeRight(36)
                 .forward(10)
                 .lineToLinearHeading(new Pose2d(14,32, Math.toRadians(180)))
                 .forward(3)
@@ -104,7 +108,8 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                     robot.openClaw();
                 })
                 .back(36)
-                .strafeRight(10)
+                .lineTo(new Vector2d(10,0))
+                //.strafeRight(10)
                 .build();
 
 
