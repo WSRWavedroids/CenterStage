@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
-import org.firstinspires.ftc.teamcode.Autonomous.RR.PoseStorage;
 import org.firstinspires.ftc.teamcode.Autonomous.TF.TensorFlow;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
 
@@ -57,7 +56,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
         // Initialize SampleMecanumDrive
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        // Set inital pose
+        // Set initial pose
         drive.setPoseEstimate(startPose);
 
         // Base trajectory: use no matter what prop position

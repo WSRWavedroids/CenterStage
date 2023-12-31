@@ -25,7 +25,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
 
     public void executeFATA(SampleMecanumDrive drive, Trajectory baseTraj, Trajectory leftTraj, Trajectory centerTraj, Trajectory rightTraj, Pose2d startPose){
 
-        // Set inital pose
+        // Set initial pose
         drive.setPoseEstimate(startPose);
 
         if (isStopRequested()) return;
@@ -66,6 +66,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
                         double i = Math.random();
                         if (i <= 0.33){
                             currentState = State.LEFT_TRAJ;
+
                             drive.followTrajectoryAsync(leftTraj);
                         } else if (i >= 0.67){
                             currentState = State.CENTER_TRAJ;
@@ -80,6 +81,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
             case LEFT_TRAJ:
                 // Check if the drive class is busy following the trajectory
                 // If not, end
+                telemetry.addLine("Going to the left!");
                 if (!drive.isBusy()) {
                     currentState = State.IDLE;
                 }
@@ -87,6 +89,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
             case CENTER_TRAJ:
                 // Check if the drive class is busy following the trajectory
                 // If not, end
+                telemetry.addLine("Going to the center!");
                 if (!drive.isBusy()) {
                     currentState = State.IDLE;
                 }
@@ -94,6 +97,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
             case RIGHT_TRAJ:
                 // Check if the drive class is busy following the trajectory
                 // If not, end
+                telemetry.addLine("Going to the right!");
                 if (!drive.isBusy()) {
                     currentState = State.IDLE;
                 }
