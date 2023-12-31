@@ -10,7 +10,7 @@ public class RedBasicPixelPusherFar extends AutonomousPLUS {
 
     @Override
 
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
         super.runOpMode();
 

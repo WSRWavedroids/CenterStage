@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 @Autonomous(group = "B Legacy", name = "Blue score on board")
     public class BlueScoreOnBoard extends AutonomousPLUS {
         @Override
-        public void runOpMode() {
+        public void runOpMode() throws InterruptedException {
 
             super.runOpMode();
 

@@ -59,7 +59,7 @@ public class AutonomousPLUS extends LinearOpMode {
     public Robot robot = null;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         robot = new Robot(hardwareMap, telemetry, this);
     }
 

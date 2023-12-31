@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TF.TensorFlow;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 
 /**
  * This opmode explains how you follow multiple trajectories in succession, asynchronously. This
@@ -38,7 +39,7 @@ public class TestFATA extends AutonomousPLUS {
     public FollowAutoTrajAsync FATA = new FollowAutoTrajAsync();
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() throws InterruptedException{
 
         super.runOpMode();
 
@@ -46,28 +47,28 @@ public class TestFATA extends AutonomousPLUS {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         // Base trajectory: use no matter what prop position
-        Trajectory baseTraj = drive.trajectoryBuilder(startPose)
+        TrajectorySequence baseTraj = drive.trajectorySequenceBuilder(startPose)
                 .forward(1)
                 .addDisplacementMarker(() -> {
                     telemetry.addLine("Did the base traj");
                  })
                 .build();
 
-        Trajectory leftTraj = drive.trajectoryBuilder(baseTraj.end())
+        TrajectorySequence leftTraj = drive.trajectorySequenceBuilder(baseTraj.end())
                 .forward(1)
                 .addDisplacementMarker(() -> {
                     telemetry.addLine("Did the left traj");
                 })
                 .build();
 
-        Trajectory centerTraj = drive.trajectoryBuilder(baseTraj.end())
+        TrajectorySequence centerTraj = drive.trajectorySequenceBuilder(baseTraj.end())
                 .forward(1)
                 .addDisplacementMarker(() -> {
                     telemetry.addLine("Did the center traj");
                 })
                 .build();
 
-        Trajectory rightTraj = drive.trajectoryBuilder(baseTraj.end())
+        TrajectorySequence rightTraj = drive.trajectorySequenceBuilder(baseTraj.end())
                 .forward(1)
                 .addDisplacementMarker(() -> {
                     telemetry.addLine("Did the right traj");

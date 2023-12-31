@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.RR.PoseStorage;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 
 public class FollowAutoTrajAsync extends AutonomousPLUS {
 
@@ -23,7 +24,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
     // Default to IDLE
     State currentState = State.IDLE;
 
-    public void executeFATA(SampleMecanumDrive drive, Trajectory baseTraj, Trajectory leftTraj, Trajectory centerTraj, Trajectory rightTraj, Pose2d startPose){
+    public void executeFATA(SampleMecanumDrive drive, TrajectorySequence baseTraj, TrajectorySequence leftTraj, TrajectorySequence centerTraj, TrajectorySequence rightTraj, Pose2d startPose){
 
         // Set initial pose
         drive.setPoseEstimate(startPose);
@@ -35,7 +36,7 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
     // Make sure you use the async version of the commands
     // Otherwise it will be blocking and pause the program here until the trajectory finishes
         currentState = State.BASE_TRAJ;
-        drive.followTrajectoryAsync(baseTraj);
+        drive.followTrajectorySequenceAsync(baseTraj);
 
         while (opModeIsActive() && !isStopRequested()) {
         // Our state machine logic
@@ -54,26 +55,26 @@ public class FollowAutoTrajAsync extends AutonomousPLUS {
 
                     if (target == "Left Zone"){
                         currentState = State.LEFT_TRAJ;
-                        drive.followTrajectoryAsync(leftTraj);
+                        drive.followTrajectorySequenceAsync(leftTraj);
                     } else if (target == "Center"){
                         currentState = State.CENTER_TRAJ;
-                        drive.followTrajectoryAsync(centerTraj);
+                        drive.followTrajectorySequenceAsync(centerTraj);
                     } else if (target == "Right Zone"){
                         currentState = State.RIGHT_TRAJ;
-                        drive.followTrajectoryAsync(rightTraj);
+                        drive.followTrajectorySequenceAsync(rightTraj);
                     } else {
                         //If it can't figure out a zone, do something random! Panic the drive team! Mwahahahaha!
                         double i = Math.random();
                         if (i <= 0.33){
                             currentState = State.LEFT_TRAJ;
 
-                            drive.followTrajectoryAsync(leftTraj);
+                            drive.followTrajectorySequenceAsync(leftTraj);
                         } else if (i >= 0.67){
                             currentState = State.CENTER_TRAJ;
-                            drive.followTrajectoryAsync(centerTraj);
+                            drive.followTrajectorySequenceAsync(centerTraj);
                         } else {
                             currentState = State.RIGHT_TRAJ;
-                            drive.followTrajectoryAsync(rightTraj);
+                            drive.followTrajectorySequenceAsync(rightTraj);
                         }
                     }
                 }

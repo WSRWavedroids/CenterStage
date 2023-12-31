@@ -77,7 +77,7 @@ public class TensorFlow extends AutonomousPLUS {
     public VisionPortal visionPortal;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         super.runOpMode();
 
         if (opModeInInit()) {

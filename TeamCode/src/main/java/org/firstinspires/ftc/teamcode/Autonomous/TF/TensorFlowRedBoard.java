@@ -80,7 +80,7 @@ public class TensorFlowRedBoard extends AutonomousPLUS {
     public String target;
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
         super.runOpMode();
         initTfod(robot.hardwareMap);

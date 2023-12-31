@@ -25,7 +25,7 @@ public class AprilFlowers extends AutonomousPLUS {
     public AprilTagDetection desiredTag = null;     // Used to hold the data for a detected AprilTag
 
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
 
         super.runOpMode();
 

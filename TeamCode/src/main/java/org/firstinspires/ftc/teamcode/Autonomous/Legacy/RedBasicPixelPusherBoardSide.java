@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 @Autonomous(group = "B Legacy", name = "Red Pixel Pusher Board Side")
     public class RedBasicPixelPusherBoardSide extends AutonomousPLUS {
         @Override
-        public void runOpMode() {
+        public void runOpMode() throws InterruptedException {
 
             super.runOpMode();
 

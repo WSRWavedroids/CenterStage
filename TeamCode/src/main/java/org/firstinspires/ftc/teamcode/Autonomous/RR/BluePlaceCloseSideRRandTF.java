@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TF.TensorFlow;
 import org.firstinspires.ftc.teamcode.RoadRunner.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySequence;
 
 /**
  * This opmode explains how you follow multiple trajectories in succession, asynchronously. This
@@ -52,7 +53,9 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
     public TensorFlow TF = new TensorFlow();
 
     @Override
-    public void runOpMode(){
+    public void runOpMode() throws InterruptedException{
+
+        super.runOpMode();
 
         // Initialize SampleMecanumDrive
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -61,32 +64,26 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
         drive.setPoseEstimate(startPose);
 
         // Base trajectory: use no matter what prop position
-        Trajectory baseTraj = drive.trajectoryBuilder(startPose)
-                //Start with arm down and claw closed
-                .addDisplacementMarker(() -> {
-                    slidePos = 400;
-                    robot.closeClaw();
-                 })
+        TrajectorySequence baseTraj = drive.trajectorySequenceBuilder(startPose)
                 //Raise the arm
                 .addDisplacementMarker(() -> {
-                    slidePos = 1000;
+                    robot.rotateArmUp();
                 })
                 .forward(6)
-                .lineTo(new Vector2d(-40,0))
+                .strafeLeft(40)
                 .build();
 
-        Trajectory leftTraj = drive.trajectoryBuilder(baseTraj.end())
-                .lineTo(new Vector2d(27,0))
-                //.strafeRight(27) //Check this
+        TrajectorySequence leftTraj = drive.trajectorySequenceBuilder(baseTraj.end())
+                .strafeRight(27) //Check this
                 .forward(16) //Check this
                 .addDisplacementMarker(() -> {
                     robot.openClaw();
                 })
                 .back(8)
-                .lineTo(new Vector2d(-25,0))
+                .strafeLeft(-25)
                 .build();
 
-        Trajectory centerTraj = drive.trajectoryBuilder(baseTraj.end())
+        TrajectorySequence centerTraj = drive.trajectorySequenceBuilder(baseTraj.end())
                 .lineTo(new Vector2d(38,0))
                 //.strafeRight(38)
                 .forward(24)
@@ -94,13 +91,12 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                     robot.openClaw();
                 })
                 .back(18)
-                .lineTo(new Vector2d(-35,0))
-                .lineTo(new Vector2d(3,0))
+                .strafeLeft(35)
+                .strafeRight(3)
                 .build();
 
-        Trajectory rightTraj = drive.trajectoryBuilder(baseTraj.end())
-                .lineTo(new Vector2d(36,0))
-                //.strafeRight(36)
+        TrajectorySequence rightTraj = drive.trajectorySequenceBuilder(baseTraj.end())
+                .strafeRight(36)
                 .forward(10)
                 .lineToLinearHeading(new Pose2d(14,32, Math.toRadians(180)))
                 .forward(3)
@@ -108,8 +104,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                     robot.openClaw();
                 })
                 .back(36)
-                .lineTo(new Vector2d(10,0))
-                //.strafeRight(10)
+                .strafeRight(10)
                 .build();
 
 
@@ -130,14 +125,14 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
 
         waitForStart();
 
-        if (isStopRequested()) return;
+
 
         // Set the current state to TRAJECTORY_1, our first step
         // Then have it follow that trajectory
         // Make sure you use the async version of the commands
         // Otherwise it will be blocking and pause the program here until the trajectory finishes
         currentState = State.BASE_TRAJ;
-        drive.followTrajectoryAsync(baseTraj);
+        drive.followTrajectorySequenceAsync(baseTraj);
 
         while (opModeIsActive() && !isStopRequested()) {
             // Our state machine logic
@@ -156,25 +151,25 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
 
                         if (target == "Left Zone"){
                             currentState = State.LEFT_TRAJ;
-                            drive.followTrajectoryAsync(leftTraj);
+                            drive.followTrajectorySequenceAsync(leftTraj);
                         } else if (target == "Center"){
                             currentState = State.CENTER_TRAJ;
-                            drive.followTrajectoryAsync(centerTraj);
+                            drive.followTrajectorySequenceAsync(centerTraj);
                         } else if (target == "Right Zone"){
                             currentState = State.RIGHT_TRAJ;
-                            drive.followTrajectoryAsync(rightTraj);
+                            drive.followTrajectorySequenceAsync(rightTraj);
                         } else {
                             //If it can't figure out a zone, do something random! Panic the drive team! Mwahahahaha!
                             double i = Math.random();
                             if (i <= 0.33){
                                 currentState = State.LEFT_TRAJ;
-                                drive.followTrajectoryAsync(leftTraj);
+                                drive.followTrajectorySequenceAsync(leftTraj);
                             } else if (i >= 0.67){
                                 currentState = State.CENTER_TRAJ;
-                                drive.followTrajectoryAsync(centerTraj);
+                                drive.followTrajectorySequenceAsync(centerTraj);
                             } else {
                                 currentState = State.RIGHT_TRAJ;
-                                drive.followTrajectoryAsync(rightTraj);
+                                drive.followTrajectorySequenceAsync(rightTraj);
                             }
                         }
                     }
@@ -212,7 +207,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
             // We update drive continuously in the background, regardless of state
             drive.update();
             // We update our lift PID continuously in the background, regardless of state
-            armPID();
+            //armPID();
 
             // Read pose
             Pose2d poseEstimate = drive.getPoseEstimate();
@@ -225,6 +220,8 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.update();
+
+            if (isStopRequested()) break;
         }
     }
 
@@ -238,7 +235,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
         }
 
         public void update() {
-            armPID();
+            //armPID();
         }
     }
 }

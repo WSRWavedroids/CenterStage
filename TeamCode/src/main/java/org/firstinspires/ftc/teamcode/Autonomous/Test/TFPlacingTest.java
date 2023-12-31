@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 @Autonomous(group = "D Test", name = "Pixel Position")
     public class TFPlacingTest extends AutonomousPLUS {
         @Override
-        public void runOpMode() {
+        public void runOpMode() throws InterruptedException {
 
             super.runOpMode();
 

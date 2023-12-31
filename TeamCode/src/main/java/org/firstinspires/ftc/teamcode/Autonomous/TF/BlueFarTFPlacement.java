@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TF.TensorFlow;
         public String currentPosition;
         public String target;
 
-        public void runOpMode() {
+        public void runOpMode() throws InterruptedException {
 
             super.runOpMode();
             if (opModeInInit()) {
