@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "C TensorFlow", name = "Red score on board With TF")
-    public class RedScoreOnBoardWithTF extends AutonomousPLUS {
+@Autonomous(group = "C TensorFlow", name = "Red Close Score On Board TF")
+    public class RedCloseScoreOnBoardTF extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
@@ -36,71 +34,107 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             waitForStart();
             telemetry.addData(currentPosition,"here now");
             robot.closeClaw();
-            prepareNextAction(300);
-            sleepTime = 175;
-            moveLift("Up", .55);
+            robot.closeSecondaryClaw();
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
-            moveRobotRight(1800, 2);
+            //moveRobotRight(1800, 2);
             telemetry.addData(currentPosition,"still here");
 
             if(target == "Left Zone")
             {
-                //This is certainly not tested
                 telemetry.addData("Going to", "Left");
-                moveRobotLeft(1500, 2);//This value is off
                 moveRobotForward(700, 2);
                 turnRobotLeft(1070, 2);
-                moveRobotRight(400, 2);
-                moveRobotForward(285, 2);
+                moveRobotRight(500, 2);
+                moveRobotForward(550, 2);
                 prepareNextAction(200);
-                robot.openClaw();
+                sleepTime = 175;
+                moveLift("Up", .55);
                 prepareNextAction(200);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
                 moveRobotBackward(1450, 2);
+                prepareNextAction(200);
+                moveLift("Down", .55);
+                robot.rotateArmUp();
+                prepareNextAction(200);
+                turnRobotRight(2140,2);
+                moveRobotForward(700, 2);
+                robot.openClaw();
+                moveRobotBackward(450, 2);
+                moveRobotRight(1500, 2);
+                moveRobotForward(700, 2);
             }
 
 
             else if(target == "Center")
             {
+                robot.rotateArmDown();
                 telemetry.addData("Going to", "Center");
-                moveRobotLeft(1530, 2);
-                speed = 0.5;//new
-                moveRobotForward(1050, 50);
+                moveRobotForward(1638, 50);
                 prepareNextAction(200);//new
+                sleepTime = 175;
+                moveLift("Up", .55);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
+                moveRobotBackward(750, 2);
+                moveLift("Down", .55);
+                robot.rotateArmUp();
+                turnRobotRight(1070, 2);
+                moveRobotForward(1500, 2);
+                moveRobotLeft(150, 2);
                 robot.openClaw();
-                prepareNextAction(200);
-                speed = 0.5;//new
-                moveRobotBackward(1000, 2);
-                moveRobotRight(1400, 2);
-                //moveRobotBackward(900, 2);
-                //turnRobotRight(1070, 2);//
-                //moveRobotRight(250, 2);
-                //moveRobotForward(1450, 50);
+                moveRobotBackward(450, 2);
+                moveRobotRight(1100, 2);
+                moveRobotForward(450, 2);
+
             }
 
             else if(target == "Right Zone")
             {
+
                 telemetry.addData("Going to", "Right");
-                moveRobotLeft(1280, 2);//This value is off
-                moveRobotForward(600, 2);
+                robot.rotateArmUp();
+                moveRobotRight(530, 2);//This value is off
+                moveRobotForward(1100, 2);
+                prepareNextAction(200);
+                robot.openSecondaryClaw();
+                prepareNextAction(200);
+                moveRobotBackward(500, 2);
+                moveRobotRight(700, 2);
+                turnRobotRight(1070, 2);
+                moveRobotLeft(200, 2);
+                moveRobotForward(430, 0);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
-                moveRobotBackward(250, 2);
-                moveRobotRight(1200, 2);
+                moveRobotBackward(450, 2);
+                robot.rotateArmDown();
+                moveRobotRight(800, 2);
+                moveRobotForward(450, 2);
 
             } else {
-                //This is certainly not tested
-                telemetry.addData("Going to", "Center");
-                moveRobotLeft(1500, 2);//This value is off
-                moveRobotForward(700, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(400, 2);
-                moveRobotForward(300, 2);
+
+                telemetry.addData("Going to", "Right");
+                robot.rotateArmUp();
+                moveRobotRight(530, 2);//This value is off
+                moveRobotForward(1100, 2);
+                prepareNextAction(200);
+                robot.openSecondaryClaw();
+                prepareNextAction(200);
+                moveRobotBackward(500, 2);
+                moveRobotRight(700, 2);
+                turnRobotRight(1070, 2);
+                moveRobotLeft(200, 2);
+                moveRobotForward(430, 0);
+                prepareNextAction(200);
                 robot.openClaw();
-                moveRobotBackward(1450, 2);
-                telemetry.addLine("I don't know what to do... going left");
+                prepareNextAction(200);
+                moveRobotBackward(450, 2);
+                robot.rotateArmDown();
+                moveRobotRight(800, 2);
+                moveRobotForward(450, 2);
 
             }
              /* This scores on the board... values need adjusted
