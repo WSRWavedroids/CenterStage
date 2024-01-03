@@ -69,8 +69,8 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                 .addDisplacementMarker(() -> {
                     robot.rotateArmUp();
                 })
-                .forward(6)
-                .strafeLeft(40)
+                .forward(0.01)
+                //.strafeLeft(40)
                 .build();
 
         TrajectorySequence leftTraj = drive.trajectorySequenceBuilder(baseTraj.end())
@@ -96,15 +96,37 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                 .build();
 
         TrajectorySequence rightTraj = drive.trajectorySequenceBuilder(baseTraj.end())
-                .strafeRight(36)
-                .forward(10)
-                .lineToLinearHeading(new Pose2d(14,32, Math.toRadians(180)))
-                .forward(3)
+                //.strafeRight(36)
+                //.forward(10)
+                //.lineToLinearHeading(new Pose2d(14,32, Math.toRadians(180)))
+                //.forward(3)
+                //.addDisplacementMarker(() -> {
+                  //  robot.openClaw();
+                //})
+                //.back(36)
+                //.strafeRight(10)
+                //.build();
+
+                .strafeLeft(3)
+                .forward(28) //(-21.5,-64)
+                .turn(Math.toRadians(-90))
+                .forward(12) //(-33, -64)
+                /*
                 .addDisplacementMarker(() -> {
+                    robot.openSecondaryClaw();
+                })
+                .back(40)
+                .turn(Math.toRadians(180))
+                .back(7)
+                .strafeLeft(8)
+                //.lineToLinearHeading(new Pose2d(43,-36, Math.toRadians(0)))
+                .addDisplacementMarker(() -> {
+                    robot.rotateArmUp();
                     robot.openClaw();
                 })
-                .back(36)
-                .strafeRight(10)
+                .back(3)
+                 */
+
                 .build();
 
 

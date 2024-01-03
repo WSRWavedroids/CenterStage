@@ -74,13 +74,17 @@ public class RedPlaceCloseSideRRandTF extends AutonomousPLUS {
                 .build();
 
         TrajectorySequence leftTraj = drive.trajectorySequenceBuilder(baseTraj.end())
-                .forward(31.5) //(-21.5,-64)
+                .forward(31) //(-21.5,-64)
                 .turn(Math.toRadians(90))
                 .forward(12.5) //(-33, -64)
                 .addDisplacementMarker(() -> {
                     robot.openSecondaryClaw();
                 })
-                .lineToLinearHeading(new Pose2d(43,-36, Math.toRadians(0)))
+                .back(40)
+                .turn(Math.toRadians(180))
+                .back(7)
+                .strafeLeft(8)
+                //.lineToLinearHeading(new Pose2d(43,-36, Math.toRadians(0)))
                 .addDisplacementMarker(() -> {
                     robot.rotateArmUp();
                     robot.openClaw();
@@ -109,7 +113,10 @@ public class RedPlaceCloseSideRRandTF extends AutonomousPLUS {
                 .addDisplacementMarker(() -> {
                     robot.openSecondaryClaw();
                 })
-                .lineToLinearHeading(new Pose2d(43,-41, Math.toRadians(0)))
+                .back(7)
+                .turn(Math.toRadians(-90))
+                .forward(23)
+                //.lineToLinearHeading(new Pose2d(43,-41, Math.toRadians(0)))
                 .addDisplacementMarker(() -> {
                     robot.rotateArmUp();
                     robot.openClaw();
