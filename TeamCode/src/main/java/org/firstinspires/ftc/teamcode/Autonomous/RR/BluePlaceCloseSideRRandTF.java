@@ -107,10 +107,20 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                 //.strafeRight(10)
                 //.build();
 
-                .strafeLeft(3)
-                .forward(28) //(-21.5,-64)
+                //.strafeLeft(3)
+                //.forward(28) //(-21.5,-64)
+                //.turn(Math.toRadians(-90))
+                //.forward(12) //(-33, -64)
+
+                .forward(12) //(-21.5,-64)
                 .turn(Math.toRadians(-90))
                 .forward(12) //(-33, -64)
+                .turn(Math.toRadians(-90))
+                .forward(12) //(-33, -64)
+                .turn(Math.toRadians(-90))
+                .forward(12) //(-33, -64)
+                .turn(Math.toRadians(-90))
+
                 /*
                 .addDisplacementMarker(() -> {
                     robot.openSecondaryClaw();
@@ -171,6 +181,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                     // Make sure we use the async follow function
                     if (!drive.isBusy()) {
 
+                        /*
                         if (target == "Left Zone"){
                             currentState = State.LEFT_TRAJ;
                             drive.followTrajectorySequenceAsync(leftTraj);
@@ -194,6 +205,11 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                                 drive.followTrajectorySequenceAsync(rightTraj);
                             }
                         }
+
+                         */
+                        currentState = State.RIGHT_TRAJ;
+                        drive.followTrajectorySequenceAsync(rightTraj);
+
                     }
                     break;
                 case LEFT_TRAJ:
