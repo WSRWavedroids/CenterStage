@@ -36,7 +36,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;
-            moveLift("Up", .55);
+            //moveLift("Up", .55);
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 telemetry.addData("Going to", "Left");
                 robot.rotateArmUp();
-                moveRobotLeft(530, 2);//This value is off
+                moveRobotLeft(575, 2);//This value is off
                 moveRobotForward(1100, 2);
                 prepareNextAction(200);
                 robot.openSecondaryClaw();
@@ -55,23 +55,24 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotBackward(500, 2);
                 moveRobotLeft(700, 2);
                 turnRobotLeft(1070, 2);
-                moveRobotRight(200, 2);
-                moveRobotForward(430, 0);
+                moveRobotRight(300, 2);
+                moveRobotForward(645, 0);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
-                moveRobotLeft(800, 2);
-                moveRobotForward(450, 2);
+                moveRobotLeft(900, 2);
+                moveRobotForward(650, 2);
             }
 
 
             else if(target == "Center")
             {
-                robot.rotateArmDown();
                 telemetry.addData("Going to", "Center");
-                moveRobotForward(1638, 50);
+                robot.rotateArmDown();
+                moveRobotLeft(45, 2);
+                moveRobotForward(1628, 50);
                 prepareNextAction(200);//new
                 sleepTime = 175;
                 moveLift("Up", .55);
@@ -82,8 +83,10 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.rotateArmUp();
                 turnRobotLeft(1070, 2);
                 moveRobotForward(1500, 2);
-                moveRobotRight(150, 2);
+                moveRobotRight(200, 2);
+                moveRobotForward(200, 2);
                 robot.openClaw();
+               prepareNextAction(50);
                 moveRobotBackward(450, 2);
                 moveRobotLeft(1100, 2);
                 moveRobotForward(450, 2);
