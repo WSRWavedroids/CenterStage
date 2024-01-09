@@ -37,14 +37,14 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             robot.closeSecondaryClaw();
             prepareNextAction(300);
             //Branches here
-            moveRobotForward(150, 2);
-            //moveRobotRight(1800, 2);
+            //moveRobotForward(150, 2);
+            moveRobotLeft(100, 2);
             telemetry.addData(currentPosition,"still here");
 
             if(target == "Left Zone")
             {
                 telemetry.addData("Going to", "Left");
-                moveRobotForward(700, 2);
+                moveRobotForward(850, 2);
                 turnRobotLeft(1070, 2);
                 moveRobotRight(500, 2);
                 moveRobotForward(550, 2);
@@ -72,7 +72,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Center");
-                moveRobotForward(1638, 50);
+                moveRobotForward(1788, 50);
                 prepareNextAction(200);//new
                 sleepTime = 175;
                 moveLift("Up", .55);
@@ -82,8 +82,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveLift("Down", .55);
                 robot.rotateArmUp();
                 turnRobotRight(1070, 2);
-                moveRobotForward(1500, 2);
-                moveRobotLeft(150, 2);
+                moveRobotForward(1600, 2);
+                moveRobotLeft(100, 2);
                 robot.openClaw();
                 moveRobotBackward(450, 2);
                 moveRobotRight(1100, 2);
@@ -97,7 +97,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 telemetry.addData("Going to", "Right");
                 robot.rotateArmUp();
                 moveRobotRight(530, 2);//This value is off
-                moveRobotForward(1100, 2);
+                moveRobotForward(1250, 2);
                 prepareNextAction(200);
                 robot.openSecondaryClaw();
                 prepareNextAction(200);
