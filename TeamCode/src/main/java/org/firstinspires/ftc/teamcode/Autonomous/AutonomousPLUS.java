@@ -47,7 +47,7 @@ public class AutonomousPLUS extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    public double speed = 0.4;
+    public double speed = 0.6;
     public int sleepTime;
     public boolean inMarker;
     public double power;
