@@ -112,14 +112,11 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                 //.turn(Math.toRadians(-90))
                 //.forward(12) //(-33, -64)
 
-                .forward(12) //(-21.5,-64)
-                .turn(Math.toRadians(-90))
+                .splineTo(new Vector2d(-3,20), Math.toRadians(-180 - 0.0000000000000000000001))
+                //.strafeLeft(3)
+                //.forward(28) //(-21.5,-64)
+                //.turn(Math.toRadians(-90))
                 .forward(12) //(-33, -64)
-                .turn(Math.toRadians(-90))
-                .forward(12) //(-33, -64)
-                .turn(Math.toRadians(-90))
-                .forward(12) //(-33, -64)
-                .turn(Math.toRadians(-90))
 
                 /*
                 .addDisplacementMarker(() -> {
