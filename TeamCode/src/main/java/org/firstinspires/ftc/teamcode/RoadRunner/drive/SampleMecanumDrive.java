@@ -146,6 +146,7 @@ public class SampleMecanumDrive extends MecanumDrive {
                         )
                 )
         );
+        imu.initialize(myIMUparameters);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
