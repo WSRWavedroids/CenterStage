@@ -14,6 +14,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
             //Do this to pass inspection.
             waitForStart();
+            robot.closeSecondaryClaw();
+            prepareNextAction(800);
             robot.openSecondaryClaw();
             prepareNextAction(800);
             robot.closeSecondaryClaw();

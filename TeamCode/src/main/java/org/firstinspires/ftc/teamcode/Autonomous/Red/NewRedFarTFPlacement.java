@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                     telemetry.addData(target, "Its here");
                     if (currentPosition != null) {
                         target = currentPosition;
+                        telemetry.addLine();
                         telemetry.addData("Its time to", "Gatekeep, Gasslight Girlboss");
                         telemetry.addData("Ur gonna do", "great");
                     }
@@ -36,12 +37,14 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             waitForStart();
             telemetry.addData(currentPosition,"here now");
             robot.closeClaw();
-            prepareNextAction(300);
+            robot.closeSecondaryClaw();
+            prepareNextAction(100);
             sleepTime = 175;
-            moveLift("Up", .55);
-            prepareNextAction(300);
+            robot.rotateArmUp();
+            prepareNextAction(100);
             //Branches here
             moveRobotForward(150, 2);
+           moveRobotLeft(50,2);
             telemetry.addData(currentPosition,"still here");
 
             if(target == "Left Zone")
@@ -49,23 +52,50 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 //This is certainly not tested
                 telemetry.addData("Going to", "Left");
                 moveRobotForward(700, 2);
-                moveRobotLeft(450, 2);
+                moveRobotLeft(575, 2);
+
+                moveRobotForward(400,2);
                 prepareNextAction(200);//new
-                robot.openClaw();
+                robot.openSecondaryClaw();
                 prepareNextAction(200);
-                moveRobotBackward(400, 2);
+                moveRobotBackward(700, 2);
+                moveRobotRight(550,2);
+                robot.rotateArmDown();
+                moveRobotForward(1600,2);
+                turnRobotRight(1070,2);
+                speed = 1;
+                moveRobotForward(3000,2);
+               speed = 0.75;
+               robot.rotateArmUp();
+                moveRobotRight(1000,2);
+                sleepTime = 140;
+                moveLift("Up", .50);
+                moveRobotForward(515,2);
+                robot.openClaw();
+                moveRobotBackward(200,2);
+                moveLift("Down", .55);
+                robot.rotateArmDown();
+                moveRobotLeft(850,2);
+
             }
 
 
             else if(target == "Center")
             {
                 telemetry.addData("Going to", "Center");
-                moveRobotLeft(150, 2);
-                moveRobotForward(1000, 2);
-
+                robot.rotateArmDown();
+                moveRobotLeft(100, 2);
+                moveRobotForward(1600, 50);
                 prepareNextAction(200);//new
-                robot.openClaw();
-                prepareNextAction(200);
+                sleepTime = 100;
+                speed = .75;
+                moveLift("Up", .55);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
+                moveRobotBackward(750, 1);
+                moveRobotLeft(900, 2);
+                moveRobotForward(1000, 2);
+                turnRobotRight(1070, 2);
             }
 
             else if(target == "Right Zone")

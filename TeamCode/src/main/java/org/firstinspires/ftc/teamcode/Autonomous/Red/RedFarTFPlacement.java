@@ -50,9 +50,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 telemetry.addData("Going to", "Left");
                 moveRobotForward(700, 2);
                 moveRobotLeft(450, 2);
-                prepareNextAction(200);//new
+                prepareNextAction(100);//new
                 robot.openClaw();
-                prepareNextAction(200);
+                prepareNextAction(100);
                 moveRobotBackward(400, 2);
             }
 

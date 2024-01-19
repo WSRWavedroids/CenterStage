@@ -227,7 +227,7 @@ public class Robot {
 
     public void closeSecondaryClaw()
     {
-        SecondaryClaw.setPosition(0.57);
+        SecondaryClaw.setPosition(0.55);
     }
 
     public void openSecondaryClaw()

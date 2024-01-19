@@ -75,41 +75,46 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 telemetry.addData("Going to", "Center");
                 robot.rotateArmDown();
-                moveRobotLeft(45, 1);
-                moveRobotForward(1628, 50);
+                moveRobotLeft(100, 2);
+                moveRobotForward(1600, 50);
                 prepareNextAction(200);//new
-                sleepTime = 175;
+                sleepTime = 100;
+                speed = .75;
                 moveLift("Up", .55);
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
                 moveRobotBackward(750, 1);
                 moveLift("Down", .55);
                 robot.rotateArmUp();
-                turnRobotLeft(1070, 1);
-                moveRobotForward(1500, 1);
-                moveRobotRight(200, 1);
+                turnRobotLeft(1000, 1);
+                moveRobotForward(1425, 1);
+               // moveRobotRight(150, 1);
+               speed = .5;
                 moveRobotForward(200, 1);
                 robot.openClaw();
                prepareNextAction(50);
-                moveRobotBackward(450, 1);
-                moveRobotLeft(1100, 1);
-                moveRobotForward(450, 1);
+               moveRobotBackward(450, 1);
+               robot.rotateArmDown();
+                moveRobotLeft(1150, 1);
+                moveRobotForward(500, 1);
             }
 
             else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right ");
-                moveRobotLeft(45, 1);
+                speed = 0.5;
+                moveRobotLeft(100, 1);
                 moveRobotForward(1000, 1);
                 turnRobotRight(1070, 1);
                 moveRobotLeft(100, 1);
-                moveRobotForward(530, 1);
+                moveRobotForward(565, 1);
                 prepareNextAction(200);
                 sleepTime = 175;
                 moveLift("Up", .55);
                 prepareNextAction(200);
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
+                speed = .75;
                 moveRobotBackward(1450, 1);
                 prepareNextAction(200);
                 moveLift("Down", .55);
@@ -121,8 +126,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(100);
                 robot.openClaw();
                 prepareNextAction(100);
+                robot.rotateArmDown();
                 moveRobotBackward(450, 1);
-                moveRobotLeft(1300, 1);
+                moveRobotLeft(1500, 1);
                 robot.rotateArmDown();
                 moveRobotForward(750, 1);
 
