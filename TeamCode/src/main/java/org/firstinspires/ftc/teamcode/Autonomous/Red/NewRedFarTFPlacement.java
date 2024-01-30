@@ -99,37 +99,45 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveLift("Down",0.55);
                speed = 0.85;
                 moveRobotForward(3600,2);
-                moveRobotRight(1200,2);
+                moveRobotRight(1300,2);
                prepareNextAction(200);
                moveLift("Up",0.55);
                 prepareNextAction(200);
                 robot.rotateArmUp();
                prepareNextAction(200);
-                moveRobotForward(500,2);
+                moveRobotForward(600,2);
                 robot.openClaw();
-moveRobotBackward(200,2);
+moveRobotBackward(100,2);
             }
 
             else if(target == "Right Zone")
             {
+                robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
                 //moveRobotLeft(1500, 2);//This value is off
+                speed = .80;
                 moveRobotForward(830, 2);
                 turnRobotRight(1070, 2);
-                moveRobotLeft(185, 2);
-                moveRobotForward(150, 2);
+                moveRobotLeft(195, 2);
+                moveRobotForward(540, 2);
                 prepareNextAction(200);
+                robot.openSecondaryClaw();
+                robot.rotateArmUp();
+                prepareNextAction(200);
+                moveRobotBackward(1000, 2);
+                moveRobotLeft(1300, 2);
+                robot.rotateArmDown();
+                prepareNextAction(200);
+                speed = 0.90;
+                moveRobotForward(3600,2);
+                moveRobotRight(1500,2);
+                prepareNextAction(200);
+                moveLift("Up",0.55);
+                prepareNextAction(200);
+                robot.rotateArmUp();
+                prepareNextAction(500);
+                moveRobotForward(500,2);
                 robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(300, 2);
-                turnRobotLeft(2140, 2);
-                moveLift("Up", .25);
-                moveRobotForward(200, 2);
-                prepareNextAction(200);
-                robot.closeClaw();
-                prepareNextAction(200);
-                moveRobotBackward(100,2 );
-                moveRobotLeft(200, 2);
 
             } else {
                 //This is certainly not tested
