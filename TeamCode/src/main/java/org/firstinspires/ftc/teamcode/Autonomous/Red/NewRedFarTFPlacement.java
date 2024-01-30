@@ -94,8 +94,20 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(400);
                 moveRobotBackward(750, 1);
                 moveRobotLeft(900, 2);
-                moveRobotForward(1000, 2);
-                turnRobotRight(1070, 2);
+                moveRobotForward(1200, 2);
+                turnRobotRight(1060, 2);
+                moveLift("Down",0.55);
+               speed = 0.85;
+                moveRobotForward(3600,2);
+                moveRobotRight(1200,2);
+               prepareNextAction(200);
+               moveLift("Up",0.55);
+                prepareNextAction(200);
+                robot.rotateArmUp();
+               prepareNextAction(200);
+                moveRobotForward(500,2);
+                robot.openClaw();
+moveRobotBackward(200,2);
             }
 
             else if(target == "Right Zone")
