@@ -136,7 +136,7 @@ moveRobotBackward(100,2);
                 prepareNextAction(200);
                 robot.rotateArmUp();
                 prepareNextAction(500);
-                moveRobotForward(500,2);
+                moveRobotForward(480,2);
                 robot.openClaw();
 
             } else {
