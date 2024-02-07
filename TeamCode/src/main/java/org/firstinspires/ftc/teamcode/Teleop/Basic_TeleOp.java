@@ -165,7 +165,11 @@ public class Basic_TeleOp extends OpMode {
 
         if(gamepad2.dpad_up)
         {
-            robot.firePlane(400); //650 was short
+            gamepad2.rumble(1000);
+            gamepad2.setLedColor(255, 0, 0, 60000);
+            gamepad1.rumble(1000);
+            gamepad1.setLedColor(255, 0, 0, 60000);
+            robot.firePlane(400);
         }
 
 
@@ -212,7 +216,7 @@ public class Basic_TeleOp extends OpMode {
             //storedSpeed = speed;
             speed = 1;
             //Do something
-            //speed = storedSpeed;
+            //speed = storedSpeed;']]]'
 
         }
         else if (gamepad1.left_trigger >0.5)

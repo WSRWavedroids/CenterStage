@@ -38,7 +38,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;
-            moveLift("Up", .55);
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
@@ -47,24 +46,37 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             if(target == "Left Zone")
             {
                 //This is certainly not tested
-                telemetry.addData("Going to", "Left");
+                robot.rotateArmDown();
+                telemetry.addData("Going to", "Right");
                 //moveRobotLeft(1500, 2);//This value is off
-                moveRobotForward(830, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(185, 2);
-                moveRobotForward(150, 2);
+                speed = .80;
+                moveRobotForward(1030, 2);
+                turnRobotLeft(1065, 2);
+                moveRobotForward(555, 2);
                 prepareNextAction(200);
+                robot.openSecondaryClaw();
+                robot.rotateArmUp();
+                prepareNextAction(200);
+                moveRobotBackward(1000, 2);
+                prepareNextAction(200);
+                moveRobotRight(1200, 2);
+                robot.rotateArmDown();
+                prepareNextAction(400);
+                speed = 0.90;
+                moveRobotForward(3600,2);
+                moveRobotLeft(1370,2);
+                prepareNextAction(200);
+                moveLift("Up",0.55);
+                prepareNextAction(200);
+                robot.rotateArmUp();
+                prepareNextAction(500);
+                moveRobotForward(670,2);
                 robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(300, 2);
-                turnRobotRight(2140, 2);
-                moveLift("Up", .25);
-                moveRobotForward(200, 2);
-                prepareNextAction(200);
-                robot.closeClaw();
-                prepareNextAction(200);
-                moveRobotBackward(100,2 );
-                moveRobotRight(200, 2);
+                moveRobotBackward(400, 2);
+                robot.rotateArmDown();
+                moveRobotLeft(400, 2);
+                moveRobotForward(400, 2);
+
             }
 
 

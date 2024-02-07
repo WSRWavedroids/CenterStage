@@ -203,11 +203,11 @@ public class TensorFlow extends AutonomousPLUS {
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
 
-            if (x >= 400 && x <= 600 && y >= 380 && y <= 560) {//good
+            if (x >= 350 && x <= 600 && y >= 330 && y <= 560) {//good
                 //Left Zone
                 Position = "Left Zone";
                 telemetry.addData("Prop in", Position);
-            } else if (x >= 680 && x <= 950 && y >= 200 && y <= 380) {//good
+            } else if (x >= 680 && x <= 950 && y >= 150 && y <= 380) {//good
                 //Middle zone
                 Position = "Center";
                 telemetry.addData("Prop in", Position);

@@ -54,15 +54,16 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotForward(700, 2);
                 moveRobotLeft(575, 2);
 
-                moveRobotForward(400,2);
+                moveRobotForward(450,2);
                 prepareNextAction(200);//new
                 robot.openSecondaryClaw();
                 prepareNextAction(200);
-                moveRobotBackward(700, 2);
-                moveRobotRight(550,2);
+                moveRobotBackward(750, 2);
+                moveRobotRight(585,2);
                 robot.rotateArmDown();
                 moveRobotForward(1600,2);
                 turnRobotRight(1070,2);
+                moveRobotLeft(100, 2);
                 speed = 1;
                 moveRobotForward(3000,2);
                speed = 0.75;
@@ -70,12 +71,13 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotRight(1000,2);
                 sleepTime = 140;
                 moveLift("Up", .50);
-                moveRobotForward(515,2);
+                moveRobotForward(620,2);
                 robot.openClaw();
                 moveRobotBackward(200,2);
                 moveLift("Down", .55);
                 robot.rotateArmDown();
-                moveRobotLeft(850,2);
+                moveRobotLeft(870,2);
+                moveRobotForward(500, 2);
 
             }
 
@@ -99,15 +101,15 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveLift("Down",0.55);
                speed = 0.85;
                 moveRobotForward(3600,2);
-                moveRobotRight(1300,2);
+                moveRobotRight(1410,2);
                prepareNextAction(200);
                moveLift("Up",0.55);
                 prepareNextAction(200);
                 robot.rotateArmUp();
                prepareNextAction(200);
-                moveRobotForward(650,2);
+                moveRobotForward(820,2);
                 robot.openClaw();
-moveRobotBackward(100,2);
+                moveRobotBackward(100,2);
             }
 
             else if(target == "Right Zone")
@@ -136,7 +138,7 @@ moveRobotBackward(100,2);
                 prepareNextAction(200);
                 robot.rotateArmUp();
                 prepareNextAction(500);
-                moveRobotForward(480,2);
+                moveRobotForward(460,2);
                 robot.openClaw();
 
             } else {

@@ -44,26 +44,27 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             if(target == "Left Zone")
             {
                 telemetry.addData("Going to", "Left");
-                moveRobotForward(850, 2);
+                moveRobotForward(1150, 2);
                 turnRobotLeft(1070, 2);
-                moveRobotRight(500, 2);
-                moveRobotForward(550, 2);
+                moveRobotForward(570, 2);
                 prepareNextAction(200);
                 sleepTime = 175;
                 moveLift("Up", .55);
                 prepareNextAction(200);
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
-                moveRobotBackward(1450, 2);
+                moveRobotBackward(1470, 2);
                 prepareNextAction(200);
                 moveLift("Down", .55);
                 robot.rotateArmUp();
                 prepareNextAction(200);
                 turnRobotRight(2140,2);
-                moveRobotForward(700, 2);
+                moveRobotForward(730, 2);
+                moveRobotLeft(275, 2);
                 robot.openClaw();
                 moveRobotBackward(450, 2);
-                moveRobotRight(1500, 2);
+                robot.rotateArmDown();
+                moveRobotRight(1625, 2);
                 moveRobotForward(700, 2);
             }
 
@@ -72,20 +73,22 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Center");
-                moveRobotForward(1788, 50);
+                moveRobotForward(1780, 50);
                 prepareNextAction(200);//new
                 sleepTime = 175;
                 moveLift("Up", .55);
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
-                moveRobotBackward(750, 2);
+                moveRobotBackward(750, 10);
                 moveLift("Down", .55);
                 robot.rotateArmUp();
-                turnRobotRight(1070, 2);
-                moveRobotForward(1600, 2);
-                moveRobotLeft(100, 2);
+                turnRobotRight(1065, 2);
+                prepareNextAction(100);
+                moveRobotForward(1620, 2);
+                moveRobotLeft(200, 2);
                 robot.openClaw();
                 moveRobotBackward(450, 2);
+                robot.rotateArmDown();
                 moveRobotRight(1100, 2);
                 moveRobotForward(450, 2);
 
@@ -93,26 +96,29 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             else if(target == "Right Zone")
             {
-
+                robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
-                robot.rotateArmUp();
-                moveRobotRight(530, 2);//This value is off
-                moveRobotForward(1250, 2);
+                moveRobotRight(540, 2);//This value is off
+                moveRobotForward(1375, 2);
                 prepareNextAction(200);
+                sleepTime = 175;
+                moveLift("Up", .55);
                 robot.openSecondaryClaw();
-                prepareNextAction(200);
-                moveRobotBackward(500, 2);
+                prepareNextAction(400);
+                moveRobotBackward(650, 2);
+                moveLift("Down", .55);
                 moveRobotRight(700, 2);
                 turnRobotRight(1070, 2);
+                robot.rotateArmUp();
                 moveRobotLeft(200, 2);
-                moveRobotForward(430, 0);
+                moveRobotForward(520, 0);
                 prepareNextAction(200);
                 robot.openClaw();
                 prepareNextAction(200);
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
                 moveRobotRight(800, 2);
-                moveRobotForward(450, 2);
+                moveRobotForward(500, 2);
 
             } else {
 
