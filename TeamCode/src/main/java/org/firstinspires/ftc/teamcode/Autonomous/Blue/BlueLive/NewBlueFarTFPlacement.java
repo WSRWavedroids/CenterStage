@@ -53,32 +53,35 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotForward(1030, 2);
                 turnRobotLeft(1060, 2);
                 moveRobotForward(555, 2);
-                prepareNextAction(200);
+                prepareNextAction(400);
                 robot.openSecondaryClaw();
                 robot.rotateArmUp();
-                prepareNextAction(400);
+                prepareNextAction(700);
                 speed = .60;
                 moveRobotBackward(1000, 2);
                 prepareNextAction(500);
                 moveRobotRight(1200, 2);
                 robot.rotateArmDown();
-                turnRobotRight(25, 2); // this might be dumb
+                turnRobotRight(35, 2); // this might be dumb
                 prepareNextAction(400);
                 speed = 0.90;
                 moveRobotForward(3600,2);
-                moveRobotLeft(1400,2);
+                turnRobotRight(35, 2); // this might be dumb
+                speed = .8;
+                moveRobotLeft(1570,2);
                 prepareNextAction(200);
                 moveLift("Up",0.55);
                 prepareNextAction(200);
                 robot.rotateArmUp();
                 prepareNextAction(500);
-                moveRobotForward(650,2);
+                moveRobotForward(500,2);
                 robot.openClaw();
-                moveRobotBackward(700, 2);
+                moveRobotBackward(550, 2);
                 robot.rotateArmDown();
                 moveLift("Down", 0.55);
-                moveRobotLeft(900, 2);
+                moveRobotRight(1400, 2);
                 moveRobotForward(700, 2);
+                moveRobotBackward(1, 0);//stop the robot
 
             }
 
@@ -86,17 +89,35 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             else if(target == "Center")
             {
                 telemetry.addData("Going to", "Center");
-                moveRobotRight(150, 2);
-                moveRobotForward(1000, 2);
-
+                robot.rotateArmDown();
+                moveRobotRight(100, 2);
+                moveRobotForward(1600, 50);
                 prepareNextAction(200);//new
-                robot.openClaw();
+                sleepTime = 100;
+                speed = .75;
+                moveLift("Up", .55);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
+                moveRobotBackward(850, 1);
+                moveRobotRight(900, 2);
+                moveRobotForward(1400, 2);
+                turnRobotLeft(1060, 2);
+                moveLift("Down",0.55);
+                moveRobotRight(100, 2);
+                turnRobotRight(35, 2); // this might be dumb
+                speed = 0.85;
+                moveRobotForward(3600,2);
+                moveRobotLeft(1250,2);
                 prepareNextAction(200);
-
-                //moveRobotBackward(900, 2);
-                //turnRobotRight(1070, 2);//
-                //moveRobotRight(250, 2);
-                //moveRobotForward(1450, 50);
+                moveLift("Up",0.55);
+                prepareNextAction(200);
+                robot.rotateArmUp();
+                prepareNextAction(200);
+                moveRobotForward(820,2);
+                robot.openClaw();
+                moveRobotBackward(150,2);
+                moveLift("Down",0.55);
+                robot.rotateArmDown();
             }
 
             else if(target == "Right Zone")
