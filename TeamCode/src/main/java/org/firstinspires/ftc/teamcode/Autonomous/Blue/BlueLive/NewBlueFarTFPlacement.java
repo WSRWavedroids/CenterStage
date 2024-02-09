@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Blue;
+package org.firstinspires.ftc.teamcode.Autonomous.Blue.BlueLive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -6,8 +6,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "C TensorFlow", name = "Far_Place_Pixel_Blue")
-    public class BlueFarTFPlacement extends AutonomousPLUS {
+@Autonomous(group = "C TensorFlow", name = "Blue Far Score")
+    public class NewBlueFarTFPlacement extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
@@ -38,7 +38,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;
-            moveLift("Up", .55);
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
@@ -47,24 +46,40 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             if(target == "Left Zone")
             {
                 //This is certainly not tested
-                telemetry.addData("Going to", "Left");
+                robot.rotateArmDown();
+                telemetry.addData("Going to", "Right");
                 //moveRobotLeft(1500, 2);//This value is off
-                moveRobotForward(830, 2);
-                turnRobotLeft(1070, 2);
-                moveRobotRight(185, 2);
-                moveRobotForward(150, 2);
+                speed = .70;
+                moveRobotForward(1030, 2);
+                turnRobotLeft(1060, 2);
+                moveRobotForward(555, 2);
                 prepareNextAction(200);
+                robot.openSecondaryClaw();
+                robot.rotateArmUp();
+                prepareNextAction(400);
+                speed = .60;
+                moveRobotBackward(1000, 2);
+                prepareNextAction(500);
+                moveRobotRight(1200, 2);
+                robot.rotateArmDown();
+                turnRobotRight(25, 2); // this might be dumb
+                prepareNextAction(400);
+                speed = 0.90;
+                moveRobotForward(3600,2);
+                moveRobotLeft(1400,2);
+                prepareNextAction(200);
+                moveLift("Up",0.55);
+                prepareNextAction(200);
+                robot.rotateArmUp();
+                prepareNextAction(500);
+                moveRobotForward(650,2);
                 robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(300, 2);
-                turnRobotRight(2140, 2);
-                moveLift("Up", .25);
-                moveRobotForward(200, 2);
-                prepareNextAction(200);
-                robot.closeClaw();
-                prepareNextAction(200);
-                moveRobotBackward(100,2 );
-                moveRobotRight(200, 2);
+                moveRobotBackward(700, 2);
+                robot.rotateArmDown();
+                moveLift("Down", 0.55);
+                moveRobotLeft(900, 2);
+                moveRobotForward(700, 2);
+
             }
 
 

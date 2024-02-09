@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Blue;
+package org.firstinspires.ftc.teamcode.Autonomous.Blue.BlueLive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
-@Autonomous(group = "C TensorFlow", name = "Blue score on board With TF")
+@Autonomous(group = "C TensorFlow", name = "Blue Close Score")
     public class BlueCloseScoreOnBoardTF extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();

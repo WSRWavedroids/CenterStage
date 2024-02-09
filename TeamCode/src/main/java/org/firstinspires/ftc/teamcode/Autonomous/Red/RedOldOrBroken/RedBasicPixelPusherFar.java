@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Red;
+package org.firstinspires.ftc.teamcode.Autonomous.Red.RedOldOrBroken;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
-
+@Disabled
 @Autonomous(group = "B Legacy", name = "Red Far pixel pusher")
 public class RedBasicPixelPusherFar extends AutonomousPLUS {
 
