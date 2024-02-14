@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
 @Autonomous(group = "C TensorFlow", name = "Red Far Score")
-    public class NewRedFarTFPlacement extends AutonomousPLUS {
+    public class redFarScore extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
@@ -49,7 +49,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             if(target == "Left Zone")
             {
-                //This is certainly not tested
                 telemetry.addData("Going to", "Left");
                 moveRobotForward(700, 2);
                 moveRobotLeft(575, 2);
@@ -142,39 +141,35 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openClaw();
 
             } else {
-                //This is certainly not tested
-                telemetry.addLine("oooof nothing detected");
-                moveRobotForward(200, 2);
-                speed = 100;
-                turnRobotLeft(64200,2);
+                telemetry.addData("Going to", "Left");
+                moveRobotForward(700, 2);
+                moveRobotLeft(575, 2);
+                moveRobotForward(450,2);
+                prepareNextAction(200);//new
+                robot.openSecondaryClaw();
+                prepareNextAction(200);
+                moveRobotBackward(750, 2);
+                moveRobotRight(585,2);
+                robot.rotateArmDown();
+                moveRobotForward(1600,2);
+                turnRobotRight(1070,2);
+                moveRobotLeft(100, 2);
+                speed = 1;
+                moveRobotForward(3000,2);
+                speed = 0.75;
+                robot.rotateArmUp();
+                moveRobotRight(1000,2);
+                sleepTime = 140;
+                moveLift("Up", .50);
+                moveRobotForward(620,2);
+                robot.openClaw();
+                moveRobotBackward(200,2);
+                moveLift("Down", .55);
+                robot.rotateArmDown();
+                moveRobotLeft(870,2);
+                moveRobotForward(500, 2);
 
             }
-             /* This scores on the board... values need adjusted
-            //Pick up starts here
-            moveLift("Down", .22);//new
-            prepareNextAction(500);//new
-            sleep(500);
-            robot.closeClaw();//new
-            sleep(500);
-            moveLift("Up", .44);//new
-            moveRobotBackward(900, 2);//new
-            moveRobotLeft(1160, 2);//was 900
-
-
-            //Place
-            robot.rotateArmUp();
-            prepareNextAction(200);
-            speed = 0.4;
-            moveRobotForward(700, 300);// 1375 was too far
-            robot.openClaw();
-            moveRobotBackward(100, 2);
-            prepareNextAction(300);
-            moveLift("Down", .55);//
-
-            robot.openClaw();
-            prepareNextAction(1000);
-            */
-
         }
     }
 

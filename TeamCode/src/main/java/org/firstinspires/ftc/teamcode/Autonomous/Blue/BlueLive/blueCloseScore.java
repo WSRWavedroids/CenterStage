@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
 
 @Autonomous(group = "C TensorFlow", name = "Blue Close Score")
-    public class BlueCloseScoreOnBoardTF extends AutonomousPLUS {
+    public class blueCloseScore extends AutonomousPLUS {
 
         public TensorFlow TF = new TensorFlow();
         public String currentPosition;
