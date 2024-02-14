@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Blue.BlueOldOrBroken;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 
 
-
+@Disabled
     @Autonomous(group = "B Legacy", name = "Blue Far pixel pusher")
     public class BluePixelPusherFarSide extends AutonomousPLUS {
         @Override

@@ -104,7 +104,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 turnRobotLeft(1060, 2);
                 moveLift("Down",0.55);
                 moveRobotRight(100, 2);
-                turnRobotRight(35, 2); // this might be dumb
+                turnRobotRight(55, 2); // this might be dumb
                 speed = 0.85;
                 moveRobotForward(3600,2);
                 moveRobotLeft(1250,2);
@@ -113,7 +113,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(200);
                 robot.rotateArmUp();
                 prepareNextAction(200);
-                moveRobotForward(820,2);
+                moveRobotForward(800,2);
                 robot.openClaw();
                 moveRobotBackward(150,2);
                 moveLift("Down",0.55);

@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Blue.BlueOldOrBroken;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
-
+@Disabled
 @Autonomous(group = "C TensorFlow", name = "Blue Close TF")
     public class BlueCloseTF extends AutonomousPLUS {
 
