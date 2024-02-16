@@ -123,20 +123,25 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right");
-                moveRobotForward(700, 2);
+                moveRobotForward(950, 2);
                 moveRobotRight(450, 2);
                 prepareNextAction(200);//new
-                robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(400, 2);
+                moveLift("Up", .55);
+                moveRobotForward(450,2);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
+                moveRobotBackward(850, 1);
 
             } else {
-                //This is certainly not tested
-                telemetry.addLine("oooof nothing detected");
-                moveRobotForward(200, 2);
-                speed = 100;
-                //15 360 spins
-                turnRobotRight(64200,2);
+                telemetry.addData("Going to", "Right");
+                moveRobotForward(950, 2);
+                moveRobotRight(450, 2);
+                prepareNextAction(200);//new
+                moveLift("Up", .55);
+                moveRobotForward(450,2);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
+                moveRobotBackward(850, 1);
 
             }
              /* This scores on the board... values need adjusted

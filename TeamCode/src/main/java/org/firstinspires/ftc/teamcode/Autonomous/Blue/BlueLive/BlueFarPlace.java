@@ -78,26 +78,25 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right");
-                moveRobotForward(700, 2);
+                moveRobotForward(950, 2);
                 moveRobotRight(450, 2);
                 prepareNextAction(200);//new
-                robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(400, 2);
+                moveLift("Up", .55);
+                moveRobotForward(450,2);
+                robot.openSecondaryClaw();
+                prepareNextAction(400);
+                moveRobotBackward(850, 1);
 
             } else {
-                robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
-                speed = .70;
-                moveRobotForward(1030, 2);
-                turnRobotLeft(1060, 2);
-                moveRobotForward(555, 2);
-                prepareNextAction(400);
+                moveRobotForward(950, 2);
+                moveRobotRight(450, 2);
+                prepareNextAction(200);//new
+                moveLift("Up", .55);
+                moveRobotForward(450,2);
                 robot.openSecondaryClaw();
-                robot.rotateArmUp();
-                prepareNextAction(700);
-                speed = .60;
-                moveRobotBackward(1000, 2);
+                prepareNextAction(400);
+                moveRobotBackward(850, 1);
 
             }
         }

@@ -57,6 +57,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openSecondaryClaw();
                 prepareNextAction(200);
                 moveRobotBackward(750, 2);
+                robot.rotateArmDown();
             }
 
 
@@ -73,6 +74,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
                 moveRobotBackward(750, 1);
+                robot.rotateArmDown();
             }
 
             else if(target == "Right Zone")
@@ -90,6 +92,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.rotateArmUp();
                 prepareNextAction(200);
                 moveRobotBackward(1000, 2);
+                robot.rotateArmDown();
 
             } else {
                 telemetry.addData("Going to", "Left");
@@ -100,6 +103,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openSecondaryClaw();
                 prepareNextAction(200);
                 moveRobotBackward(750, 2);
+                robot.rotateArmDown();
             }
         }
     }

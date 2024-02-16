@@ -92,7 +92,8 @@ public class Basic_TeleOp extends OpMode {
     public void loop() {
 
         singleJoystickDrive();
-
+        gamepad1.setLedColor(0, 0, 255, 100000000);
+        gamepad2.setLedColor(0, 0, 255, 100000000);
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -165,13 +166,14 @@ public class Basic_TeleOp extends OpMode {
 
         if(gamepad2.dpad_up)
         {
-            gamepad2.rumble(1000);
-            gamepad2.setLedColor(255, 0, 0, 60000);
-            gamepad1.rumble(1000);
-            gamepad1.setLedColor(255, 0, 0, 60000);
+            gamepad2.rumble(800);
+            gamepad2.setLedColor(255, 0, 0, 10000);
+            gamepad1.rumble(800);
+            gamepad1.setLedColor(255, 0, 0, 10000);
             robot.firePlane(400);
         }
-
+        gamepad1.setLedColor(0, 0, 255, 100000000);
+        gamepad2.setLedColor(0, 0, 255, 100000000);
 
         if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
         {
