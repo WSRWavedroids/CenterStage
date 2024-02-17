@@ -131,7 +131,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(200);
                 speed = 0.90;
                 moveRobotForward(3600,2);
-                moveRobotRight(1950,2);
+                moveRobotRight(1550,2);
                 prepareNextAction(200);
                 moveLift("Up",0.55);
                 prepareNextAction(200);
@@ -139,7 +139,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(500);
                 moveRobotForward(460,2);
                 robot.openClaw();
-                moveRobotBackward(200, 2);
+                moveRobotBackward(150, 2);
                 robot.rotateArmDown();
 
             } else {

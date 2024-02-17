@@ -74,7 +74,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(200);
                 robot.rotateArmUp();
                 prepareNextAction(500);
-                moveRobotForward(500,2);
+                moveRobotForward(400,2);
                 robot.openClaw();
                 moveRobotBackward(550, 2);
                 robot.rotateArmDown();
@@ -133,15 +133,42 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotBackward(850, 1);
 
             } else {
+                robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
-                moveRobotForward(950, 2);
-                moveRobotRight(450, 2);
-                prepareNextAction(200);//new
-                moveLift("Up", .55);
-                moveRobotForward(450,2);
-                robot.openSecondaryClaw();
+                //moveRobotLeft(1500, 2);//This value is off
+                speed = .70;
+                moveRobotForward(1030, 2);
+                turnRobotLeft(1060, 2);
+                moveRobotForward(555, 2);
                 prepareNextAction(400);
-                moveRobotBackward(850, 1);
+                robot.openSecondaryClaw();
+                robot.rotateArmUp();
+                prepareNextAction(700);
+                speed = .60;
+                moveRobotBackward(1000, 2);
+                prepareNextAction(500);
+                moveRobotRight(1200, 2);
+                robot.rotateArmDown();
+                turnRobotRight(35, 2); // this might be dumb
+                prepareNextAction(400);
+                speed = 0.90;
+                moveRobotForward(3600,2);
+                turnRobotRight(35, 2); // this might be dumb
+                speed = .8;
+                moveRobotLeft(1570,2);
+                prepareNextAction(200);
+                moveLift("Up",0.55);
+                prepareNextAction(200);
+                robot.rotateArmUp();
+                prepareNextAction(500);
+                moveRobotForward(500,2);
+                robot.openClaw();
+                moveRobotBackward(550, 2);
+                robot.rotateArmDown();
+                moveLift("Down", 0.55);
+                moveRobotRight(1400, 2);
+                moveRobotForward(700, 2);
+                moveRobotBackward(1, 0);//stop the robot
 
             }
              /* This scores on the board... values need adjusted
