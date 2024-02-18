@@ -29,7 +29,6 @@ package org.firstinspires.ftc.teamcode.Autonomous;
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -40,7 +39,6 @@ import org.firstinspires.ftc.teamcode.Robot.Launcher;
 import org.firstinspires.ftc.teamcode.Robot.Lift;
 import org.firstinspires.ftc.teamcode.Robot.Robot;
 import org.firstinspires.ftc.teamcode.Robot.Arm;
-import org.firstinspires.ftc.teamcode.Robot.Drivetrain;
 
 import java.util.Objects;
 
@@ -68,7 +66,7 @@ public class AutonomousPLUS extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot = new Robot(hardwareMap, telemetry);
-        claw = new Claw(robot.claw.rightClaw, robot.claw.leftClaw, robot.telemetry);
+        claw = new Claw(robot.claw.rightClaw, robot.claw.leftClaw, robot.claw.secondClaw, robot.telemetry);
         lift = new Lift(robot.lift.slideL, robot.lift.slideRAndOdoPodR);
         launcher = new Launcher(robot.launcher.droneAndOdoPodL);
         arm = new Arm(robot.arm.armL,robot.arm.armR);
@@ -82,73 +80,52 @@ public class AutonomousPLUS extends LinearOpMode {
         robot.lift.runJankyHomemadeTimer();
     }
 
-    public void StrafeFromOdometry(float deltaX, float deltaY, long pause){
+    public boolean inTolerance(float target, int pos, int tolerance){
+        if(target == pos){
+            return true;
+        } else if(pos > target - tolerance){
+            //On the lower side of the tolerance
+            return true;
+        } else if(pos < target + tolerance){
+            //On the upper side of the tolerance
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-        //robot.findDisplacement();
-
-        robot.odoPodReset();
+    public void StrafeFromOdometry(float delta, String direction, int tolerance, long pause){
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
-        float xTarget = launcher.droneAndOdoPodL.getCurrentPosition() + deltaX;
-        float yTarget = lift.slideRAndOdoPodR.getCurrentPosition() + deltaY;
+        float lTarget = launcher.droneAndOdoPodL.getCurrentPosition() + delta;
+        float cTarget = hook.hookAndOdoPodC.getCurrentPosition() + delta;
+        float rTarget = lift.slideRAndOdoPodR.getCurrentPosition() + delta;
 
         //2. Translate that to motor power
-        //robot.DT.moveFromManualControl(xTarget, yTarget, 0);
 
-        if(deltaX == 0) {
-
-            if (deltaY > 0) {
+            if (Objects.equals(direction, "Right")) {
                 //Just right
                 robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
-            } else if (deltaY < 0) {
+            } else if (Objects.equals(direction, "Left")) {
                 //Just left
                 robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
 
-            }
-
-        } else if (deltaX > 0){
-            //We're going up
-
-            if (deltaY > 0) {
-                //Up+right
-                robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
-
-            } else if (deltaY < 0) {
-                //Up+left
-                robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
-                robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
-
-            } else if (deltaY == 0){
+            } else if (Objects.equals(direction, "Up")){
                 //Just up
                 robot.DT.backLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontLeftDrive.setPower(robot.drivetrainSpeed);
                 robot.DT.frontRightDrive.setPower(robot.drivetrainSpeed);
 
-            }
-
-        } else if (deltaX < 0){
-
-            if (deltaY > 0) {
-                //Down+right
-                robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
-                robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
-
-            } else if (deltaY < 0) {
-                //Down+left
-                robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
-                robot.DT.frontLeftDrive.setPower(-robot.drivetrainSpeed);
-
-            } else if (deltaY == 0){
+            } else if (Objects.equals(direction, "Down")){
                 //Just down
                 robot.DT.backLeftDrive.setPower(-robot.drivetrainSpeed);
                 robot.DT.backRightDrive.setPower(-robot.drivetrainSpeed);
@@ -156,14 +133,12 @@ public class AutonomousPLUS extends LinearOpMode {
                 robot.DT.frontRightDrive.setPower(-robot.drivetrainSpeed);
 
             }
-        }
 
         //3. Check the targets against the odometry pod position
-        while (!(launcher.droneAndOdoPodL.getCurrentPosition() == xTarget && lift.slideRAndOdoPodR.getCurrentPosition() == yTarget) && opModeIsActive()){
+        while (!(inTolerance(lTarget, launcher.droneAndOdoPodL.getCurrentPosition(), tolerance) && inTolerance(cTarget, hook.hookAndOdoPodC.getCurrentPosition(), tolerance) && inTolerance(rTarget, lift.slideRAndOdoPodR.getCurrentPosition(), tolerance) && opModeIsActive())){
             robot.findDisplacement();
-            telemetry.addData("Odometry", String.valueOf(xTarget), String.valueOf(yTarget));
+            telemetry.addData("Odometry", String.valueOf(lTarget), String.valueOf(cTarget), String.valueOf(rTarget));
             telemetry.update();
-            //robot.standardTelemetryOutput();
         }
 
         //4. Once it hits that point, stop driving
@@ -207,4 +182,5 @@ public class AutonomousPLUS extends LinearOpMode {
         sleep(pause);
 
     }
+
 }

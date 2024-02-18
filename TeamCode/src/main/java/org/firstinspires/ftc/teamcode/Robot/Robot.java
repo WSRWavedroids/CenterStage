@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -17,8 +16,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
-import java.util.concurrent.TimeUnit;
 
 public class Robot {
 
@@ -55,7 +52,7 @@ public class Robot {
     double phi;
     double deltaMiddle;
     double deltaPerpendicular;
-    public double heading;
+    public double refHeading;
     double trackWidth = 12.25; //inches between centers of side odometry pods
     double centerPodToCenter = 7.5; //inches between center of center pod and center of robot
 
@@ -69,7 +66,7 @@ public class Robot {
         // Make sure that the device name is the exact same thing you typed in on the configuration on the driver hub.
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
 
-        claw = new Claw(hardwareMap.get(Servo.class, "leftClaw"), hardwareMap.get(Servo.class, "rightClaw"), telemetry);
+        claw = new Claw(hardwareMap.get(Servo.class, "leftClaw"), hardwareMap.get(Servo.class, "rightClaw"), hardwareMap.get(Servo.class, "SecondaryClaw"), telemetry);
         DT = new Drivetrain(hardwareMap.get(DcMotor.class, "frontRightDrive"), hardwareMap.get(DcMotor.class, "frontLeftDrive"), hardwareMap.get(DcMotor.class, "backRightDrive"), hardwareMap.get(DcMotor.class, "backLeftDrive"), telemetry);
         launcher = new Launcher(hardwareMap.get(DcMotor.class, "droneAndOdoPodL"));
         hook = new Hook(hardwareMap.get(Servo.class,"hookServo"),hardwareMap.get(DcMotor.class,"hookAndOdoPodC"));
@@ -101,7 +98,7 @@ public class Robot {
         //This is new..
         telemetry.addData("Status", "Initialized");
 
-        heading = imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        refHeading = imu.getRobotOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
 
     }
 
@@ -135,12 +132,12 @@ public class Robot {
         deltaMiddle = (deltaLeft + deltaRight) / 2;
         deltaPerpendicular = deltaCenter - centerPodToCenter * phi;
 
-        deltaX = deltaMiddle * Math.cos(heading) - deltaPerpendicular * Math.sin(heading);
-        deltaY = deltaMiddle * Math.sin(heading) + deltaPerpendicular * Math.cos(heading);
+        deltaX = deltaMiddle * Math.cos(refHeading) - deltaPerpendicular * Math.sin(refHeading);
+        deltaY = deltaMiddle * Math.sin(refHeading) + deltaPerpendicular * Math.cos(refHeading);
 
         actualX += deltaX;
         actualY += deltaY;
-        heading += phi;
+        refHeading += phi;
 
         lastLeftPos = launcher.droneAndOdoPodL.getCurrentPosition();
         lastRightPos = lift.slideRAndOdoPodR.getCurrentPosition();

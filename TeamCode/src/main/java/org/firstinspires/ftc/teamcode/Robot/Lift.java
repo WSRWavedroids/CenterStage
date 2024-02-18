@@ -22,7 +22,7 @@ public class Lift {
         this.slideRAndOdoPodR = slideRAndOdoPodR;
     }
 
-    public void moveLift(String direction, long wait) {
+    public void moveLift(String direction, double wait) {
         if (Objects.equals(direction, "Up")) {
             slideL.setDirection(DcMotor.Direction.FORWARD);
             slideL.setPower(0.75);

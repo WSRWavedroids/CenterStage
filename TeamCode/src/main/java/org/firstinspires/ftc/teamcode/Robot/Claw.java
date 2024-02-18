@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -15,14 +14,16 @@ public class Claw {
 
     public final Servo rightClaw;
     public final Servo leftClaw;
+    public final Servo secondClaw;
     public HardwareMap hardwareMap;
     public final Telemetry telemetry;
 
     public Robot robot = null;
 
-    public Claw(Servo rightClaw, Servo leftClaw, Telemetry telemetry) {
+    public Claw(Servo rightClaw, Servo leftClaw, Servo secondClaw, Telemetry telemetry) {
         this.rightClaw = rightClaw;
         this.leftClaw = leftClaw;
+        this.secondClaw = secondClaw;
         this.telemetry = telemetry;
     }
 
@@ -59,6 +60,16 @@ public class Claw {
     public void openRightClaw() {
         rightClaw.setPosition(RIGHT_CLAW_OPEN_POSITION);
         telemetry.addData("Right Claw", "Open");
+    }
+
+    public void closeSecondaryClaw()
+    {
+        secondClaw.setPosition(0.55);
+    }
+
+    public void openSecondaryClaw()
+    {
+        secondClaw.setPosition(.62);
     }
 
 }
