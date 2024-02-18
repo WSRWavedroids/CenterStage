@@ -83,10 +83,10 @@ public class AutonomousPLUS extends LinearOpMode {
     public boolean inTolerance(float target, int pos, int tolerance){
         if(target == pos){
             return true;
-        } else if(pos > target - tolerance){
+        } else if(pos >= target - tolerance){
             //On the lower side of the tolerance
             return true;
-        } else if(pos < target + tolerance){
+        } else if(pos <= target + tolerance){
             //On the upper side of the tolerance
             return true;
         } else {
