@@ -117,7 +117,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                 //.strafeLeft(3)
                 //.forward(28) //(-21.5,-64)
                 //.turn(Math.toRadians(-90))
-                .forward(12) //(-33, -64)
+                .forward(9) //(-33, -64)
 
                 /*
                 .addDisplacementMarker(() -> {
