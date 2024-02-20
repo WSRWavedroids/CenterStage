@@ -229,6 +229,17 @@ public class Basic_TeleOp extends OpMode {
             //speed = storedSpeed;
         }
 
+        //windshield wiper motion... hopefully
+        double idealPosition;
+        double rightClosedPosition = .6;
+        double leftClosedPosition = .4;
+        if (robot.primaryClawClosed == true)
+        {
+            idealPosition = gamepad2.right_stick_x * 0.1;
+            robot.openAndCloseRightClaw(rightClosedPosition -= idealPosition);
+            robot.openAndCloseLeftClaw(leftClosedPosition -= idealPosition);
+        }
+
 
 
         //Moves the turntable based on the x-coordinate of the right joystick

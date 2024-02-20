@@ -365,16 +365,18 @@ public class Robot {
     }
 
 
+    public boolean primaryClawClosed = false;
     public void closeClaw()
     {
-        openAndCloseRightClaw(0.58); //Moves right claw left GOOD DONE
-        openAndCloseLeftClaw(0.38); // //Moves left claw right
+        openAndCloseRightClaw(0.6); //Moves right claw left 58 worked ok
+        openAndCloseLeftClaw(0.4); // //Moves left claw right 38 worked ok
+        primaryClawClosed = true;
     }
 
-    public void openClaw()
-    {
+    public void openClaw() {
         openAndCloseLeftClaw(0.5); //Moves left claw left
-        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE .3 was good
+        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE
+        primaryClawClosed = false;
     }
 
   /*
