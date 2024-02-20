@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Autonomous.Red;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.apache.commons.math3.random.StableRandomGenerator;
 import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
 import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 

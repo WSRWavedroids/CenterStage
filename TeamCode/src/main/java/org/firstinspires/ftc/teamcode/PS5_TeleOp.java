@@ -54,7 +54,7 @@ import java.lang.Math;
  * did a horrible job of doing that.
  */
 
-@TeleOp(name="CenterStage Chonk Drive :)", group="CompBot")
+@TeleOp(name="PS5 Drive", group="CompBot")
 public class PS5_TeleOp extends OpMode {
 
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.

@@ -1,11 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-//import com.qualcomm.robotcore.util.ElapsedTime;
-//import org.firstinspires.ftc.teamcode.Autonomous.AutonomousPLUS;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 

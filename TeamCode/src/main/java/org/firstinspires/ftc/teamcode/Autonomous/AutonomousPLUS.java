@@ -98,9 +98,16 @@ public class AutonomousPLUS extends LinearOpMode {
 
         //1. Find the difference between the target and the actual position (and find the actual position)
 
-        float lTarget = launcher.droneAndOdoPodL.getCurrentPosition() + delta;
-        float cTarget = hook.hookAndOdoPodC.getCurrentPosition() + delta;
-        float rTarget = lift.slideRAndOdoPodR.getCurrentPosition() + delta;
+        float lTarget = 0;
+        float rTarget = 0;
+        float cTarget = 0;
+
+        if (direction == "Up" || direction == "Down"){
+            lTarget = launcher.droneAndOdoPodL.getCurrentPosition() + delta;
+            rTarget = lift.slideRAndOdoPodR.getCurrentPosition() + delta;
+        } else {
+            cTarget = hook.hookAndOdoPodC.getCurrentPosition() + delta;
+        }
 
         //2. Translate that to motor power
 

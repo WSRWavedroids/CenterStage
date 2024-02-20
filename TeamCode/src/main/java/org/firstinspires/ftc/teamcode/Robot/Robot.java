@@ -82,8 +82,8 @@ public class Robot {
                                 AxesOrder.XYZ,
                                 AngleUnit.DEGREES,
                                 45,
-                                90,
                                 0,
+                                90,
                                 0  // acquisitionTime, not used
                                 //TODO: Check these values
                         )
@@ -104,15 +104,17 @@ public class Robot {
 
     @SuppressLint("DefaultLocale")
     public void standardTelemetryOutput(){
+        telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", launcher.droneAndOdoPodL.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", lift.slideRAndOdoPodR.getCurrentPosition()));
+        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", hook.hookAndOdoPodC.getCurrentPosition()));
+
         telemetry.addData("Motors", String.format("FL Power(%.2f) FL Location (%d) FL Target (%d)", DT.frontLeftDrive.getPower(), DT.frontLeftDrive.getCurrentPosition(), DT.frontLeftDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("FR Power(%.2f) FR Location (%d) FR Target (%d)", DT.frontRightDrive.getPower(), DT.frontRightDrive.getCurrentPosition(), DT.frontRightDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BL Power(%.2f) BL Location (%d) BL Target (%d)", DT.backLeftDrive.getPower(), DT.backLeftDrive.getCurrentPosition(), DT.backLeftDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("BR Power(%.2f) BR Location (%d) BR Target (%d)", DT.backRightDrive.getPower(), DT.backRightDrive.getCurrentPosition(), DT.backRightDrive.getTargetPosition()));
         telemetry.addData("Motors", String.format("Slide Power (%.2f) Arm Location (%d) Arm Target (%d)", lift.slideL.getPower(), lift.slideL.getCurrentPosition(), lift.slideL.getTargetPosition()));
         telemetry.addData("Motors", String.format("Hook Motor Power (%.2f)", hook.hookAndOdoPodC.getPower()));
-        telemetry.addData("Odometry",String.format("Odo Pod Left Location (%d)", launcher.droneAndOdoPodL.getCurrentPosition()));
-        telemetry.addData("Odometry",String.format("Odo Pod Right Location (%d)", lift.slideRAndOdoPodR.getCurrentPosition()));
-        telemetry.addData("Odometry",String.format("Odo Pod Center Location (%d)", hook.hookAndOdoPodC.getCurrentPosition()));
+
 
         telemetry.addData("ArmL", arm.armL.getPosition());
         telemetry.addData("ArmR", arm.armR.getPosition());
