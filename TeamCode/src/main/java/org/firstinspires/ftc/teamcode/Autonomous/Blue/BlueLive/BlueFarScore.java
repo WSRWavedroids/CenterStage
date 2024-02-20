@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 //This is certainly not tested
                 robot.rotateArmDown();
-                telemetry.addData("Going to", "Right");
+                telemetry.addData("Going to", "Left");
                 //moveRobotLeft(1500, 2);//This value is off
                 speed = .70;
                 moveRobotForward(1030, 2);
@@ -134,7 +134,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             } else {
                 robot.rotateArmDown();
-                telemetry.addData("Going to", "Right");
+                telemetry.addData("Going to", "Left");
                 //moveRobotLeft(1500, 2);//This value is off
                 speed = .70;
                 moveRobotForward(1030, 2);
@@ -161,7 +161,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(200);
                 robot.rotateArmUp();
                 prepareNextAction(500);
-                moveRobotForward(500,2);
+                moveRobotForward(400,2);
                 robot.openClaw();
                 moveRobotBackward(550, 2);
                 robot.rotateArmDown();
@@ -171,31 +171,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotBackward(1, 0);//stop the robot
 
             }
-             /* This scores on the board... values need adjusted
-            //Pick up starts here
-            moveLift("Down", .22);//new
-            prepareNextAction(500);//new
-            sleep(500);
-            robot.closeClaw();//new
-            sleep(500);
-            moveLift("Up", .44);//new
-            moveRobotBackward(900, 2);//new
-            moveRobotLeft(1160, 2);//was 900
-
-
-            //Place
-            robot.rotateArmUp();
-            prepareNextAction(200);
-            speed = 0.4;
-            moveRobotForward(700, 300);// 1375 was too far
-            robot.openClaw();
-            moveRobotBackward(100, 2);
-            prepareNextAction(300);
-            moveLift("Down", .55);//
-
-            robot.openClaw();
-            prepareNextAction(1000);
-            */
 
         }
     }

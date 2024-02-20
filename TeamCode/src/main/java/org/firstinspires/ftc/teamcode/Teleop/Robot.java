@@ -238,16 +238,16 @@ public class Robot {
 
     public void rotateArmUp()
     {         //Raise
-            rotateLeftArm(0.55); // perfect... The lower the value the higher it goes
-             rotateRightArm(0.55); // was .3 but too shallow
+             rotateLeftArm(0.30); // perfect... The lower the value the higher it goes
+             rotateRightArm(0.54);
 
     }
 
     public void rotateArmDown()
     {
         //lower
-        rotateLeftArm(0.87);
-        rotateRightArm(0.28);
+        rotateLeftArm(0.55);
+        rotateRightArm(0.26);
 
     }
 

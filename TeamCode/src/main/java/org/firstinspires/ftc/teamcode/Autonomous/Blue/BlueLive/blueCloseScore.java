@@ -133,31 +133,27 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotForward(750, 1);
 
             } else {
-                telemetry.addData("Going to", "Right ");
-                moveRobotForward(700, 2);
-                turnRobotRight(1070, 2);
-                moveRobotLeft(500, 2);
-                moveRobotForward(550, 2);
-                prepareNextAction(200);
-                sleepTime = 175;
-                moveLift("Up", .55);
-                prepareNextAction(200);
-                robot.openSecondaryClaw();
-                prepareNextAction(400);
-                moveRobotBackward(1450, 2);
-                prepareNextAction(200);
-                moveLift("Down", .55);
+                telemetry.addData("Going to", "Left");
                 robot.rotateArmUp();
-                prepareNextAction(200);
-                turnRobotLeft(2140,2);
-                moveRobotForward(700, 2);
-                moveRobotRight(1000,2);
-                prepareNextAction(200);
+                moveRobotLeft(700, 1);//This value is off
+                moveRobotForward(1100, 1);
+                prepareNextAction(150);
+                robot.openSecondaryClaw();
+                prepareNextAction(150);
+                moveRobotBackward(600, 1);
+                moveRobotLeft(700, 1);
+                speed = .5;
+                turnRobotLeft(1070, 1);
+                moveRobotRight(350, 1);
+                speed = .75;
+                moveRobotForward(685, 0);//was 645 before
+                prepareNextAction(150);
                 robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(450, 2);
-                moveRobotLeft(1450, 2);
-                moveRobotForward(500, 2);
+                prepareNextAction(150);
+                moveRobotBackward(450, 1);
+                robot.rotateArmDown();
+                moveRobotLeft(1050, 1);
+                moveRobotForward(650, 1);
 
             }
 
