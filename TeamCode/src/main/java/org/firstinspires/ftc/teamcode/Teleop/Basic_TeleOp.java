@@ -232,7 +232,7 @@ public class Basic_TeleOp extends OpMode {
         {
             idealPosition = gamepad2.right_stick_x * 0.1;
             robot.openAndCloseRightClaw(rightClosedPosition -= idealPosition);
-            robot.openAndCloseLeftClaw(leftClosedPosition += idealPosition);
+            robot.openAndCloseLeftClaw(leftClosedPosition -= idealPosition);
         }
 
 
