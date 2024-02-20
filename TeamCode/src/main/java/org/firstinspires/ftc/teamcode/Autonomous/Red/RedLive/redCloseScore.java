@@ -98,7 +98,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
-                moveRobotRight(540, 2);//This value is off
+                moveRobotRight(640, 2);//This value is off
                 moveRobotForward(1375, 2);
                 prepareNextAction(200);
                 sleepTime = 175;
@@ -111,6 +111,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 turnRobotRight(1070, 2);
                 robot.rotateArmUp();
                 moveRobotLeft(200, 2);
+                turnRobotLeft(55, 2);
                 moveRobotForward(520, 0);
                 prepareNextAction(200);
                 robot.openClaw();
@@ -118,7 +119,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
                 moveRobotRight(800, 2);
-                moveRobotForward(500, 2);
+                moveRobotForward(450, 2);
 
             } else {
 

@@ -76,7 +76,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
-                moveRobotRight(540, 2);//This value is off
+                moveRobotRight(640, 2);//This value is off
                 moveRobotForward(1375, 2);
                 prepareNextAction(200);
                 sleepTime = 175;
