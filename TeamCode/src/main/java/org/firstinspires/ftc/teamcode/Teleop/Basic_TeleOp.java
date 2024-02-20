@@ -84,6 +84,8 @@ public class Basic_TeleOp extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.addData("HYPE", "Let's do this!!!");
+        gamepad1.setLedColor(0, 0, 255, 100000000);
+        gamepad2.setLedColor(0, 0, 255, 100000000);
     }
 
     /*
@@ -92,8 +94,8 @@ public class Basic_TeleOp extends OpMode {
     public void loop() {
 
         singleJoystickDrive();
-        gamepad1.setLedColor(0, 0, 255, 100000000);
-        gamepad2.setLedColor(0, 0, 255, 100000000);
+
+
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -144,7 +146,6 @@ public class Basic_TeleOp extends OpMode {
             robot.holdArm();
         }
 
-
         //A bunch of messy last minute code
         boolean readyToSuspend = false;
         if(gamepad1.y) // might need a
@@ -157,12 +158,6 @@ public class Basic_TeleOp extends OpMode {
             robot.hookMotor.setPower(-0.2);
         }
 
-        /*
-        while (gamepad1.y)
-        {
-            robot.hookMotor.setPower(0.85);
-        }
-        */
 
         if(gamepad2.dpad_up)
         {
@@ -229,6 +224,17 @@ public class Basic_TeleOp extends OpMode {
             //speed = storedSpeed;
         }
 
+        //windshield wiper motion... hopefully
+        double idealPosition;
+        double rightClosedPosition = .6;
+        double leftClosedPosition = .4;
+        if (robot.primaryClawClosed == true)
+        {
+            idealPosition = gamepad2.right_stick_x * 0.1;
+            robot.openAndCloseRightClaw(rightClosedPosition -= idealPosition);
+            robot.openAndCloseLeftClaw(leftClosedPosition += idealPosition);
+        }
+
 
 
         //Moves the turntable based on the x-coordinate of the right joystick
@@ -243,14 +249,9 @@ public class Basic_TeleOp extends OpMode {
             //robot.rotateLeftArm(0.6);
             robot.rotateArmDown();
         }
-        /*else {
-            robot.armR.setPosition(0);
-            robot.armL.setPosition(0);
-        }
-        */
 
 
-        //other possible code is this without this
+
         if (this.gamepad2.b) { // open
             robot.openClaw();
         } else if (this.gamepad2.a) {//close

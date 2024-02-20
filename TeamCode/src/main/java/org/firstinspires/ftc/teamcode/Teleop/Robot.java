@@ -206,6 +206,7 @@ public class Robot {
 
         if (position == 0){
             telemetry.addData("Claw", "Closed");
+
         } else if (position >= 0.3){
             telemetry.addData("Claw", "Open");
         }
@@ -215,7 +216,6 @@ public class Robot {
     public void openAndCloseRightClaw (double position) {
         //leftClaw.setPosition(position);
         rightClaw.setPosition(position);
-
 
 
         if (position == 0) {
@@ -364,17 +364,19 @@ public class Robot {
         hookMotor.setPower(0.5); //if no work then resume setdirection
     }
 
-
+    public boolean primaryClawClosed = false;
     public void closeClaw()
     {
-        openAndCloseRightClaw(0.58); //Moves right claw left GOOD DONE
-        openAndCloseLeftClaw(0.38); // //Moves left claw right
+        openAndCloseRightClaw(0.6); //Moves right claw left 58 worked ok
+        openAndCloseLeftClaw(0.4); // //Moves left claw right 38 worked ok
+        primaryClawClosed = true;
     }
 
     public void openClaw()
     {
         openAndCloseLeftClaw(0.5); //Moves left claw left
-        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE .3 was good
+        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE
+        primaryClawClosed = false;
     }
 
   /*
