@@ -28,10 +28,10 @@
  */
 
 package org.firstinspires.ftc.teamcode.Teleop;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import java.lang.Math;
 
 
 /**
@@ -51,8 +51,8 @@ import java.lang.Math;
  * did a horrible job of doing that.
  */
 
-@TeleOp(name="CenterStage Chonk Drive :)", group="CompBot")
-public class Basic_TeleOp extends OpMode {
+@TeleOp(name="Michael Drive", group="CompBot")
+public class REEEEEEEALLLY_Basic_TeleOp extends OpMode {
 
     // This section tells the program all of the different pieces of hardware that are on our robot that we will use in the program.
     private ElapsedTime runtime = new ElapsedTime();
@@ -100,39 +100,6 @@ public class Basic_TeleOp extends OpMode {
         robot.tellMotorOutput();
 
         float armStickY = this.gamepad2.left_stick_y;
-        float turntableStickX = this.gamepad2.right_stick_x;
-
-        // This section checks what buttons on the Dpad are being pressed and changes the speed accordingly.
-
-        if (gamepad1.back) {
-            if (robot.controlMode == "Robot Centric"){
-                robot.controlMode = "Field Centric";
-                telemetry.addData("Control Mode", "Field Centric Controls");
-            } else if (robot.controlMode == "Field Centric"){
-                robot.controlMode = "Robot Centric";
-                telemetry.addData("Control Mode", "Robot Centric Controls");
-            }
-        }
-
-        if (gamepad1.dpad_up) {
-            speed = 1;
-        } else if (gamepad1.dpad_down) {
-            speed = 0.25;
-        } else if (gamepad1.dpad_left) {
-            speed = 0.5;
-        } else if (gamepad1.dpad_right) {
-            speed = 0.75;
-        }
-
-        if (speed == 1) {
-            telemetry.addData("Speed", "Fast Boi");
-        } else if (speed == 0.5) {
-            telemetry.addData("Speed", "Slow Boi");
-        } else if (speed == 0.25) {
-            telemetry.addData("Speed", "Super Slow Boi");
-        } else if (speed == 0.75) {
-            telemetry.addData("Speed", "Normal Boi");
-        }
 
         if (gamepad2.left_stick_y < -0.5){
             robot.slideL.setPower(-armStickY * 0.75);
@@ -143,26 +110,6 @@ public class Basic_TeleOp extends OpMode {
         } else {
             robot.holdArm();
         }
-
-
-        //A bunch of messy last minute code
-        boolean readyToSuspend = false;
-        if(gamepad1.y) // might need a
-        {
-            robot.hookMotor.setPower(0.85);
-        }
-
-        if(gamepad1.back)
-        {
-            robot.hookMotor.setPower(-0.2);
-        }
-
-        /*
-        while (gamepad1.y)
-        {
-            robot.hookMotor.setPower(0.85);
-        }
-        */
 
         if(gamepad2.dpad_up)
         {
@@ -175,60 +122,6 @@ public class Basic_TeleOp extends OpMode {
         gamepad1.setLedColor(0, 0, 255, 100000000);
         gamepad2.setLedColor(0, 0, 255, 100000000);
 
-        if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
-        {
-            robot.hookMotor.setPower(0);
-        }
-
-        else if(gamepad1.x)
-        {
-            if (readyToSuspend == false) //enable hold
-            {
-
-                speed = 1;
-                robot.hookMotor.setPower(0.4);
-            }
-            else if (readyToSuspend == true) //disable hold
-            {
-                robot.hookMotor.setPower(0);
-                readyToSuspend = false;
-            }
-
-
-
-        }
-         if (gamepad1.b)
-        {
-            robot.hookServo.setPosition(.5);
-        }
-        else if (gamepad1.a)
-        {
-            robot.hookServo.setPosition(0);
-        }
-
-        if (readyToSuspend ==  true)
-        {
-            robot.SuspendRobot();
-        }
-
-
-//Beginning of fast turn
-        if(gamepad1.right_trigger >= 0.5)
-        {
-            //storedSpeed = speed;
-            speed = 1;
-            //Do something
-            //speed = storedSpeed;']]]'
-
-        }
-        else if (gamepad1.left_trigger >0.5)
-        {
-            //storedSpeed = speed;
-            speed = 0.50;
-            //Do something
-            //speed = storedSpeed;
-        }
-
         //windshield wiper motion... hopefully
         double idealPosition;
         double rightClosedPosition = .6;
@@ -239,8 +132,6 @@ public class Basic_TeleOp extends OpMode {
             robot.openAndCloseRightClaw(rightClosedPosition -= idealPosition);
             robot.openAndCloseLeftClaw(leftClosedPosition -= idealPosition);
         }
-
-
 
         //Moves the turntable based on the x-coordinate of the right joystick
         //We need to switch out these motor functions for servo stuff... Idk the position we need

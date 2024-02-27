@@ -84,6 +84,9 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
                 moveRobotBackward(650, 2);
+                moveRobotLeft(900, 2);
+                moveRobotBackward(900, 2);
+                robot.openClaw();
 
             } else {
 

@@ -64,7 +64,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openClaw();
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
-                moveRobotRight(1625, 2);
+                moveRobotRight(1600, 2);
                 moveRobotForward(700, 2);
             }
 
@@ -85,11 +85,11 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 turnRobotRight(1065, 2);
                 prepareNextAction(100);
                 moveRobotForward(1620, 2);
-                moveRobotLeft(200, 2);
+                moveRobotLeft(250, 2);
                 robot.openClaw();
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
-                moveRobotRight(1100, 2);
+                moveRobotRight(1250, 2);
                 moveRobotForward(450, 2);
 
             }
@@ -110,7 +110,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotRight(700, 2);
                 turnRobotRight(1070, 2);
                 robot.rotateArmUp();
-                moveRobotLeft(200, 2);
+
                 turnRobotLeft(55, 2);
                 moveRobotForward(520, 0);
                 prepareNextAction(200);
@@ -144,7 +144,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.openClaw();
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
-                moveRobotRight(1625, 2);
+                moveRobotRight(1675, 2);
                 moveRobotForward(700, 2);
 
             }
