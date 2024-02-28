@@ -122,13 +122,13 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(200);
                 turnRobotLeft(2140,1);
                 moveRobotForward(785, 1);
-                moveRobotRight(200, 1);
+                moveRobotRight(240, 1);
                 prepareNextAction(100);
                 robot.openClaw();
                 prepareNextAction(100);
                 robot.rotateArmDown();
                 moveRobotBackward(450, 1);
-                moveRobotLeft(1500, 1);
+                moveRobotLeft(1540, 1);
                 robot.rotateArmDown();
                 moveRobotForward(750, 1);
 
