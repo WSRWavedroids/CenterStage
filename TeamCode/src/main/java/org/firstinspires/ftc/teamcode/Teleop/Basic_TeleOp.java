@@ -242,31 +242,25 @@ public class Basic_TeleOp extends OpMode {
 
 
 
-        //Moves the turntable based on the x-coordinate of the right joystick
-        //We need to switch out these motor functions for servo stuff... Idk the position we need
+       //Moves The servo arm using a function in Robot.Java
         if (gamepad2.y){ // up
-            //robot.armL.setPosition(1);
-           //robot.rotateLeftArm(0.59); // good no change
             robot.rotateArmUp();
 
         } else if (gamepad2.x) { //lower
-            //robot.rotateLeftArm(0.85); // GOOD NO CHANGE
-            //robot.rotateLeftArm(0.6);
             robot.rotateArmDown();
         }
-        /*else {
-            robot.armR.setPosition(0);
-            robot.armL.setPosition(0);
-        }
-        */
 
 
-        //other possible code is this without this
+
+
         if (this.gamepad2.b || this.gamepad2.left_trigger > 0.5) { // open
             robot.openClaw();
         } else if (this.gamepad2.a || this.gamepad2.right_trigger > 0.5) {//close
             robot.closeClaw();
         }
+
+
+        //if (distanceSensor.getDistance((DistanceUnit.CM)))
 
 
 

@@ -147,6 +147,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 telemetry.addData("Going to", "Left");
                 moveRobotForward(700, 2);
                 moveRobotLeft(575, 2);
+
                 moveRobotForward(450,2);
                 prepareNextAction(200);//new
                 robot.openSecondaryClaw();
@@ -157,7 +158,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotForward(1600,2);
                 turnRobotRight(1070,2);
                 moveRobotLeft(100, 2);
-                prepareNextAction(5000);
                 speed = 1;
                 moveRobotForward(3000,2);
                 speed = 0.75;

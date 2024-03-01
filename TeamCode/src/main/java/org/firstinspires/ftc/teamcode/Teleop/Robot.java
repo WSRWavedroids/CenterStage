@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -51,6 +52,9 @@ public class Robot {
 
     public Servo armR;
 
+    //public DistanceSensor distanceSensor;
+
+
     public WebcamName CamCam;
 
     public Telemetry telemetry;
@@ -84,6 +88,7 @@ public class Robot {
         hookServo = hardwareMap.get(Servo.class, "hookServo");
         SecondaryClaw = hardwareMap.get(Servo.class, "SecondaryClaw");
         CamCam = hardwareMap.get(WebcamName.class, "CamCam");
+        //distanceSensor = hardwareMap.get(DistanceSensor.class, "distanceSensor");
         hookMotor = hardwareMap.get(DcMotor.class, "hookAndOdoPodC");
         droneMotor = hardwareMap.get(DcMotor.class, "droneAndOdoPodL");
 
