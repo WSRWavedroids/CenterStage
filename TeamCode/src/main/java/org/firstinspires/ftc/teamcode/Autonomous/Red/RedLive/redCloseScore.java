@@ -85,7 +85,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 turnRobotRight(1065, 2);
                 prepareNextAction(100);
                 moveRobotForward(1620, 2);
-                moveRobotLeft(250, 2);
+                moveRobotLeft(200, 2);
                 robot.openClaw();
                 moveRobotBackward(450, 2);
                 robot.rotateArmDown();
