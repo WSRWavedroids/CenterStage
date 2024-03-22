@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             super.runOpMode();
             if (opModeInInit()) {
-                //Needs TF reference
+
                 TF.initTfod(robot.hardwareMap);
                 while (opModeInInit()) {
                     currentPosition = TF.position(TF.tfod);
@@ -30,41 +30,37 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                     sleep(20);
                 }
             }
-            //Start and position yellow
+            //Start
             waitForStart();
             telemetry.addData(currentPosition,"here now");
             robot.closeClaw();
             robot.closeSecondaryClaw();
             prepareNextAction(300);
             sleepTime = 175;
-            //moveLift("Up", .55);
             prepareNextAction(300);
             //Branches here
             moveRobotForward(150, 2);
-            //moveRobotLeft(1800, 2);
             telemetry.addData(currentPosition,"still here");
             speed = .75;
-
+            // Place the Purple Pixel
             if(target == "Left Zone")
             {
                 telemetry.addData("Going to", "Left");
                 robot.rotateArmUp();
-                moveRobotLeft(700, 1);//This value is off
+                moveRobotLeft(700, 1);
                 moveRobotForward(1100, 1);
                 prepareNextAction(150);
                 robot.openSecondaryClaw();
                 prepareNextAction(150);
                 moveRobotBackward(600, 1);
             }
-
-
             else if(target == "Center")
             {
                 telemetry.addData("Going to", "Center");
                 robot.rotateArmDown();
                 moveRobotLeft(100, 2);
                 moveRobotForward(1600, 50);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 sleepTime = 100;
                 speed = .75;
                 moveLift("Up", .55);
@@ -72,7 +68,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(400);
                 moveRobotBackward(750, 1);
             }
-
             else if(target == "Right Zone")
             {
                 telemetry.addData("Going to", "Right ");
@@ -95,7 +90,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             } else {
                 telemetry.addData("Going to", "Left");
                 robot.rotateArmUp();
-                moveRobotLeft(700, 1);//This value is off
+                moveRobotLeft(700, 1);
                 moveRobotForward(1100, 1);
                 prepareNextAction(150);
                 robot.openSecondaryClaw();

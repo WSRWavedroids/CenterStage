@@ -357,9 +357,9 @@ public class Robot {
     }
 
     public void holdArm(){
-        slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
+        slideL.setDirection(DcMotor.Direction.FORWARD);//
         slideL.setPower(0.05);
-        slideR.setDirection(DcMotor.Direction.REVERSE);
+        slideR.setDirection(DcMotor.Direction.REVERSE);//Inverted BC facing other way
         slideR.setPower(0.05);//used to be 0.1
     }
 

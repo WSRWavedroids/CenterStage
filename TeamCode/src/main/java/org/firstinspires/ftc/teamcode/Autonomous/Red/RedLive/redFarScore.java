@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             super.runOpMode();
             if (opModeInInit()) {
-                //Needs TF reference
                 TF.initTfod(robot.hardwareMap);
                 while (opModeInInit()) {
                     currentPosition = TF.position(TF.tfod);
@@ -33,7 +32,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                     sleep(20);
                 }
             }
-            //Start and position yellow
+            //Start
             waitForStart();
             telemetry.addData(currentPosition,"here now");
             robot.closeClaw();
@@ -42,7 +41,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             sleepTime = 175;
             robot.rotateArmUp();
             prepareNextAction(100);
-            //Branches here
             moveRobotForward(150, 2);
            moveRobotLeft(50,2);
             telemetry.addData(currentPosition,"still here");
@@ -54,7 +52,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotLeft(575, 2);
 
                 moveRobotForward(450,2);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 robot.openSecondaryClaw();
                 prepareNextAction(200);
                 moveRobotBackward(750, 2);
@@ -87,7 +85,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.rotateArmDown();
                 moveRobotLeft(100, 2);
                 moveRobotForward(1600, 50);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 sleepTime = 100;
                 speed = .75;
                 moveLift("Up", .55);
@@ -116,7 +114,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
             {
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Right");
-                //moveRobotLeft(1500, 2);//This value is off
                 speed = .80;
                 moveRobotForward(830, 2);
                 turnRobotRight(1070, 2);
@@ -149,7 +146,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveRobotLeft(575, 2);
 
                 moveRobotForward(450,2);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 robot.openSecondaryClaw();
                 prepareNextAction(200);
                 moveRobotBackward(750, 2);
@@ -172,7 +169,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.rotateArmDown();
                 moveRobotLeft(870,2);
                 moveRobotForward(500, 2);
-
             }
         }
     }
