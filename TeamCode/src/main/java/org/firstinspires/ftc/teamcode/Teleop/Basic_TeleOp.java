@@ -104,6 +104,8 @@ public class Basic_TeleOp extends OpMode {
 
         // This section checks what buttons on the Dpad are being pressed and changes the speed accordingly.
         //So Begins the input chain. At least try a bit to organise by driver
+
+        //Driver 1
         if (gamepad1.back) {
             if (robot.controlMode == "Robot Centric"){
                 robot.controlMode = "Field Centric";
