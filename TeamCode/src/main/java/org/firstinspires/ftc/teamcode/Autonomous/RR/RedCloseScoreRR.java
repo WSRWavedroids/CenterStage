@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous.RR;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -29,8 +27,8 @@ import org.firstinspires.ftc.teamcode.RoadRunner.trajectorysequence.TrajectorySe
  * to supercharge your code. This can be much cleaner by abstracting many of these things. This
  * opmode only serves as an initial starting point.
  */
-@Autonomous(name = "Blue Close Score RR", group = "A RoadRunner")
-public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
+@Autonomous(name = "Red Close Score RR", group = "A RoadRunner")
+public class RedCloseScoreRR extends AutonomousPLUS {
 
     // This enum defines our "state"
     // This is essentially just defines the possible steps our program will take
@@ -50,7 +48,7 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
 
     // Define our start pose
     // This assumes we start at x: 15, y: 10, heading: 180 degrees
-    Pose2d startPose = new Pose2d(10, 64, Math.toRadians(-90));
+    Pose2d startPose = new Pose2d(10, -64, Math.toRadians(90));
 
     public TensorFlow TF = new TensorFlow();
 
@@ -84,23 +82,23 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
 
         if (target == "Left Zone"){
             TrajectorySequence leftTraj = drive.trajectorySequenceBuilder(startPose)
-
-                    .strafeLeft(12) //Check this
-                    .forward(36) //Check this
+                    .forward(24)
+                    //Turn to truss
+                    .lineToLinearHeading(new Pose2d(14,-35, Math.toRadians(180)))
+                    .forward(14)
                     .addDisplacementMarker(() -> {
                         robot.openSecondaryClaw();
                         robot.rotateArmUp();
                     })
-                    .back(12)
-                    .splineToLinearHeading(new Pose2d(44, 40,Math.toRadians(0)), Math.toRadians(90))
+                    .back(18)
+                    .splineToLinearHeading(new Pose2d(44, -28,Math.toRadians(0)), Math.toRadians(90))                                .strafeRight(3)
+                    .forward(2)
                     .addDisplacementMarker(() -> {
                         robot.openClaw();
                     })
-                    .forward(2)
-                    .strafeLeft(18)
+                    .strafeRight(30)
                     .forward(6)
                     .build();
-
             targetTraj = leftTraj;
 
         } else if (target == "Center"){
@@ -112,12 +110,12 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
                     })
                     .back(24)
                     //THESE COORDS ARE NOT RIGHT
-                    .splineToLinearHeading(new Pose2d(44, 38,Math.toRadians(0)), Math.toRadians(90))
+                    .splineToLinearHeading(new Pose2d(44, -38,Math.toRadians(0)), Math.toRadians(90))
                     .addDisplacementMarker(() -> {
                         robot.openClaw();
                     })
                     .forward(2)
-                    .strafeLeft(18)
+                    .strafeRight(18)
                     .forward(6)
                     .build();
 
@@ -125,43 +123,43 @@ public class BluePlaceCloseSideRRandTF extends AutonomousPLUS {
 
         } else if (target == "Right Zone"){
             TrajectorySequence rightTraj = drive.trajectorySequenceBuilder(startPose)
-                    .forward(24)
-                    //Turn to truss
-                    .lineToLinearHeading(new Pose2d(14,35, Math.toRadians(180)))
-                    .forward(14)
+
+                    .forward(6)
+                    .strafeRight(12) //Check this
+                    .forward(30) //Check this
                     .addDisplacementMarker(() -> {
                         robot.openSecondaryClaw();
                         robot.rotateArmUp();
                     })
-                    .back(18)
-                    .splineToLinearHeading(new Pose2d(44, 32,Math.toRadians(0)), Math.toRadians(90))                                .strafeRight(3)
-                    .forward(2)
+                    .back(12)
+                    .splineToLinearHeading(new Pose2d(44, -40,Math.toRadians(0)), Math.toRadians(90))
                     .addDisplacementMarker(() -> {
                         robot.openClaw();
                     })
-                    .strafeLeft(30)
+                    .forward(2)
+                    .strafeRight(18)
                     .forward(6)
-
                     .build();
 
             targetTraj = rightTraj;
 
         } else {
             TrajectorySequence leftTraj = drive.trajectorySequenceBuilder(startPose)
-
-                    .strafeLeft(12) //Check this
-                    .forward(36) //Check this
+                    .forward(24)
+                    //Turn to truss
+                    .lineToLinearHeading(new Pose2d(14,-35, Math.toRadians(180)))
+                    .forward(14)
                     .addDisplacementMarker(() -> {
                         robot.openSecondaryClaw();
                         robot.rotateArmUp();
                     })
-                    .back(12)
-                    .splineToLinearHeading(new Pose2d(44, 40,Math.toRadians(0)), Math.toRadians(90))
+                    .back(18)
+                    .splineToLinearHeading(new Pose2d(44, -32,Math.toRadians(0)), Math.toRadians(90))                                .strafeRight(3)
+                    .forward(2)
                     .addDisplacementMarker(() -> {
                         robot.openClaw();
                     })
-                    .forward(2)
-                    .strafeLeft(18)
+                    .strafeRight(30)
                     .forward(6)
                     .build();
 
