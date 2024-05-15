@@ -50,7 +50,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Robot: Teleop Tank", group="CompBot")
-@Disabled
+
 public class Veronica extends OpMode{
 
     /* Declare OpMode members. */
