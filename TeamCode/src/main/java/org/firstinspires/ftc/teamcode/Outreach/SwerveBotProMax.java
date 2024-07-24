@@ -29,12 +29,9 @@
 
 package org.firstinspires.ftc.teamcode.Outreach;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 /*
  * This OpMode executes a Tank Drive control TeleOp a direct drive robot
@@ -49,15 +46,14 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Robot: Teleop Tank", group="CompBot")
-@Disabled
-public class Veronica extends OpMode{
+@TeleOp(name="Ich Bin SwerveBotProMax", group="CompBot")
+public class SwerveBotProMax extends OpMode{
 
     /* Declare OpMode members. */
     public DcMotor  left;
     public DcMotor  right;
 
-    public DcMotor droneMotor;
+    //public DcMotor droneMotor;
       // Run arm motor down at -25% power
 
     /*
@@ -68,13 +64,17 @@ public class Veronica extends OpMode{
         // Define and Initialize Motors
         left  = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
-        droneMotor = hardwareMap.get(DcMotor.class, "droneMotor");
+        //droneMotor = hardwareMap.get(DcMotor.class, "droneMotor");
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left and right sticks forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         left.setDirection(DcMotor.Direction.REVERSE);
         right.setDirection(DcMotor.Direction.FORWARD);
-        droneMotor.setDirection(DcMotor.Direction.REVERSE);
+
+
+        left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //droneMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -101,26 +101,8 @@ public class Veronica extends OpMode{
     public void loop() {
         double leftVal;
         double rightVal;
-        //double speed;
+        double speed;
 
-        // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
-        leftVal = -this.gamepad1.left_stick_y;
-        rightVal = -this.gamepad1.right_stick_y;
-
-        left.setPower(leftVal);
-        right.setPower(rightVal);
-
-        if(gamepad1.a)
-        {
-           firePlane(400);
-        }
-
-
-        // Use gamepad left & right Bumpers to open and close the claw
-
-
-
-/*
         if (gamepad1.dpad_up) {
             speed = 1;
         } else if (gamepad1.dpad_down) {
@@ -128,6 +110,10 @@ public class Veronica extends OpMode{
         } else if (gamepad1.dpad_left) {
             speed = 0.5;
         } else if (gamepad1.dpad_right) {
+            speed = 0.75;
+        }
+        else
+        {
             speed = 0.75;
         }
 
@@ -140,14 +126,60 @@ public class Veronica extends OpMode{
         } else if (speed == 0.75) {
             telemetry.addData("Speed", "Normal Boi");
         }
-        */
+
+        // Run wheels in tank mode (note: The joystick goes negative when pushed forward, so negate it)
+        leftVal = -this.gamepad1.left_stick_y * speed;
+        rightVal = -this.gamepad1.right_stick_y * speed;
+
+
+        if(gamepad1.right_trigger > 0.25)
+        {
+            left.setPower(gamepad1.right_trigger * speed);
+            right.setPower(gamepad1.right_trigger * speed );
+        }
+        else if(gamepad1.left_trigger > 0.25)
+        {
+            left.setPower(-gamepad1.left_trigger * speed);
+            right.setPower(-gamepad1.left_trigger * speed);
+        }
+        else if(gamepad1.left_bumper)
+        {
+            left.setPower(-speed);
+            right.setPower(speed);
+        }
+        else if(gamepad1.right_bumper)
+        {
+            left.setPower(speed);
+            right.setPower(-speed);
+        }
+        else
+        {
+            left.setPower(leftVal);
+            right.setPower(rightVal);
+        }
+
+
+
+
+        /*if(gamepad1.a)
+        {
+           firePlane(400);
+        }*/
+
+
+        // Use gamepad left & right Bumpers to open and close the claw
+
+
+
+
+
 
     }
 
     /*
      * Code to run ONCE after the driver hits STOP
      */
-    public void firePlane(long motorTime)
+    /*public void firePlane(long motorTime)
     {
         long beginning = System.currentTimeMillis();
         long end = beginning + motorTime;
@@ -167,4 +199,6 @@ public class Veronica extends OpMode{
         //timer
 
     }
+
+     */
 }
