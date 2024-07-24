@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             super.runOpMode();
             if (opModeInInit()) {
-                //Needs TF reference
                 TF.initTfod(robot.hardwareMap);
                 while (opModeInInit()) {
                     currentPosition = TF.position(TF.tfod);
@@ -32,14 +31,13 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                     sleep(20);
                 }
             }
-            //Start and position yellow
+            //Start
             waitForStart();
             telemetry.addData(currentPosition,"here now");
             robot.closeClaw();
             prepareNextAction(300);
             sleepTime = 175;
             prepareNextAction(300);
-            //Branches here
             moveRobotForward(150, 2);
             telemetry.addData(currentPosition,"still here");
 
@@ -66,7 +64,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.rotateArmDown();
                 moveRobotRight(100, 2);
                 moveRobotForward(1600, 50);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 sleepTime = 100;
                 speed = .75;
                 moveLift("Up", .55);
@@ -80,7 +78,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 telemetry.addData("Going to", "Right");
                 moveRobotForward(950, 2);
                 moveRobotRight(450, 2);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 moveLift("Up", .55);
                 moveRobotForward(450,2);
                 robot.openSecondaryClaw();

@@ -61,10 +61,11 @@ public class AutonomousPLUS extends LinearOpMode {
         robot = new Robot(hardwareMap, telemetry, this);
     }
 
-    //I think the setTargets Function is broken. Motors don't stop at the right place
+    //These are the basic functions for mechnum movement during auto... Don't mess with these unless something is inverted
+    // Remember Without ODO pods there will be some inconsistency due to mechnum slippage
     public void moveRobotForward(int ticks, long pause) {
         if (opModeIsActive()) {
-            robot.setTargets("Backward", ticks);
+            robot.setTargets("Backward", ticks); // Inverted... Lol
             robot.positionRunningMode();
         }
         robot.powerSet(speed);
@@ -160,7 +161,7 @@ public class AutonomousPLUS extends LinearOpMode {
             robot.powerSet(speed);
 
             while (opModeIsActive() && robot.isWheelsBusy()) {
-                robot.tellMotorOutput(); //
+                robot.tellMotorOutput();
             }
 
             robot.stopAllMotors();
@@ -194,34 +195,6 @@ public class AutonomousPLUS extends LinearOpMode {
             robot.slideR.setPower(0.5);
         }
     }
-
-
-/* commented bc errors and idk servos
-we wanted to test wheels and slides first
-    public void moveTurntable(String direction, int distance) {
-
-        if (direction == "Left") {
-            robot.turntable.setDirection(DcMotor.Direction.FORWARD); //Check on this...
-
-        } else if (direction == "Right") {
-            robot.turntable.setDirection(DcMotor.Direction.REVERSE); //Check on this...
-        }
-
-        if (opModeIsActive()) {
-            robot.setTargets("Turntable", distance);
-            robot.turntable.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.powerSet(0.45);
-
-            while (opModeIsActive() && robot.turntable.isBusy()) {
-                robot.tellMotorOutput();
-            }
-
-            robot.turntable.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
-        robot.turntable.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-    */
-
 
     public void armPID(){
 

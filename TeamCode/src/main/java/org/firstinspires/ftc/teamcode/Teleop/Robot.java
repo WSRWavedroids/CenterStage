@@ -318,34 +318,14 @@ public class Robot {
         }
     }
 
-
-
-    public void raiseHook(String direction)
-    {
-        if (direction == "HookGoUp")
-        {
-            hookMotor.setPower(.8);
-            hookMotor.setDirection(DcMotor.Direction.FORWARD);
-        }
-        else if (direction == "HookGoDown")
-        {
-            hookMotor.setPower(0.25);
-            hookMotor.setDirection(DcMotor.Direction.REVERSE);
-        }
-    }
-
-    ElapsedTime timer = new ElapsedTime();//may be bad
+    ElapsedTime timer = new ElapsedTime();
     public void firePlane(long motorTime)
     {
         long beginning = System.currentTimeMillis();
          long end = beginning + motorTime;
          boolean planeAlreadyLaunched = false;
         while (end > System.currentTimeMillis() && planeAlreadyLaunched == false){
-
-
-            droneMotor.setPower(2);//still fireing a little far
-
-
+            droneMotor.setPower(2);
         }
         planeAlreadyLaunched = true;
             droneMotor.setPower(0);
@@ -357,34 +337,28 @@ public class Robot {
     }
 
     public void holdArm(){
-        slideL.setDirection(DcMotor.Direction.FORWARD);//Inverted
+        slideL.setDirection(DcMotor.Direction.FORWARD);//
         slideL.setPower(0.05);
-        slideR.setDirection(DcMotor.Direction.REVERSE);
+        slideR.setDirection(DcMotor.Direction.REVERSE);//Inverted BC facing other way
         slideR.setPower(0.05);//used to be 0.1
-    }
-
-
-    public void SuspendRobot(){
-        //hookMotor.setDirection(DcMotor.Direction.REVERSE);//Inverted
-        hookMotor.setPower(0.5); //if no work then resume setdirection
     }
 
 
     public boolean primaryClawClosed = false;
     public void closeClaw()
     {
-        openAndCloseRightClaw(0.6); //Moves right claw left 58 worked ok
-        openAndCloseLeftClaw(0.4); // //Moves left claw right 38 worked ok
+        openAndCloseRightClaw(0.6); //Moves right claw left
+        openAndCloseLeftClaw(0.4); // //Moves left claw right
         primaryClawClosed = true;
     }
 
     public void openClaw() {
         openAndCloseLeftClaw(0.5); //Moves left claw left
-        openAndCloseRightClaw(0.5); // Moves right claw right GOOD DONE
+        openAndCloseRightClaw(0.5); // Moves right claw
         primaryClawClosed = false;
     }
 
-  /*
+  /*  Some April Tag and tensorflow stuff
 
     public void showersAndFlowers(){
 

@@ -84,6 +84,8 @@ public class Basic_TeleOp extends OpMode {
     public void start() {
         runtime.reset();
         telemetry.addData("HYPE", "Let's do this!!!");
+        gamepad1.setLedColor(0, 0, 255, 100000000);
+        gamepad2.setLedColor(0, 0, 255, 100000000);
     }
 
     /*
@@ -92,8 +94,6 @@ public class Basic_TeleOp extends OpMode {
     public void loop() {
 
         singleJoystickDrive();
-        gamepad1.setLedColor(0, 0, 255, 100000000);
-        gamepad2.setLedColor(0, 0, 255, 100000000);
         // This little section updates the driver hub on the runtime and the motor powers.
         // It's mostly used for troubleshooting.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -103,7 +103,9 @@ public class Basic_TeleOp extends OpMode {
         float turntableStickX = this.gamepad2.right_stick_x;
 
         // This section checks what buttons on the Dpad are being pressed and changes the speed accordingly.
+        //So Begins the input chain. At least try a bit to organise by driver
 
+        //Driver 1
         if (gamepad1.back) {
             if (robot.controlMode == "Robot Centric"){
                 robot.controlMode = "Field Centric";
@@ -134,20 +136,10 @@ public class Basic_TeleOp extends OpMode {
             telemetry.addData("Speed", "Normal Boi");
         }
 
-        if (gamepad2.left_stick_y < -0.5){
-            robot.slideL.setPower(-armStickY * 0.75);
-            robot.slideR.setPower(-armStickY * 0.75);
-        } else if (gamepad2.left_stick_y > 0.5){
-            robot.slideL.setPower(-armStickY * 0.75);
-            robot.slideR.setPower(-armStickY * 0.75);
-        } else {
-            robot.holdArm();
-        }
 
 
-        //A bunch of messy last minute code
-        boolean readyToSuspend = false;
-        if(gamepad1.y) // might need a
+
+        if(gamepad1.y)
         {
             robot.hookMotor.setPower(0.85);
         }
@@ -157,13 +149,60 @@ public class Basic_TeleOp extends OpMode {
             robot.hookMotor.setPower(-0.2);
         }
 
-        /*
-        while (gamepad1.y)
+        if (!gamepad1.y && !gamepad1.back)
         {
-            robot.hookMotor.setPower(0.85);
+            robot.hookMotor.setPower(0);
         }
-        */
 
+        if (gamepad1.b)
+        {
+            robot.hookServo.setPosition(.5);
+        }
+        else if (gamepad1.a)
+        {
+            robot.hookServo.setPosition(0);
+        }
+
+        //Beginning of fast turn
+
+        if(gamepad1.right_trigger >= 0.5)
+        {
+            //storedSpeed = speed;
+            speed = 1;
+            //Do something
+            //speed = storedSpeed;
+
+        }
+        else if (gamepad1.left_trigger >0.5)
+        {
+            //storedSpeed = speed;
+            speed = 0.50;
+            //Do something
+            //speed = storedSpeed;
+        }
+        //
+
+
+
+    //Driver 2 Starts here
+    //Lift
+        if (gamepad2.left_stick_y < -0.5){
+            robot.slideL.setPower(-armStickY * 0.75);
+            robot.slideR.setPower(-armStickY * 0.75);
+        } else if (gamepad2.left_stick_y > 0.5){
+            robot.slideL.setPower(-armStickY * 0.75);
+            robot.slideR.setPower(-armStickY * 0.75);
+        } else {
+            robot.holdArm();
+        }
+    //ServoArm
+        if (gamepad2.y){ // up
+            robot.rotateArmUp();
+        } else if (gamepad2.x) { //lower
+            robot.rotateArmDown();
+        }
+
+        //Drone Launcher
         if(gamepad2.dpad_up)
         {
             gamepad2.rumble(800);
@@ -175,61 +214,14 @@ public class Basic_TeleOp extends OpMode {
         gamepad1.setLedColor(0, 0, 255, 100000000);
         gamepad2.setLedColor(0, 0, 255, 100000000);
 
-        if (!gamepad1.y && readyToSuspend == false && !gamepad1.back )
-        {
-            robot.hookMotor.setPower(0);
+        //Open and close claw
+        if (this.gamepad2.b || this.gamepad2.left_trigger > 0.5) { // open
+            robot.openClaw();
+        } else if (this.gamepad2.a || this.gamepad2.right_trigger > 0.5) {//close
+            robot.closeClaw();
         }
 
-        else if(gamepad1.x)
-        {
-            if (readyToSuspend == false) //enable hold
-            {
-
-                speed = 1;
-                robot.hookMotor.setPower(0.4);
-            }
-            else if (readyToSuspend == true) //disable hold
-            {
-                robot.hookMotor.setPower(0);
-                readyToSuspend = false;
-            }
-
-
-
-        }
-         if (gamepad1.b)
-        {
-            robot.hookServo.setPosition(.5);
-        }
-        else if (gamepad1.a)
-        {
-            robot.hookServo.setPosition(0);
-        }
-
-        if (readyToSuspend ==  true)
-        {
-            robot.SuspendRobot();
-        }
-
-
-//Beginning of fast turn
-        if(gamepad1.right_trigger >= 0.5)
-        {
-            //storedSpeed = speed;
-            speed = 1;
-            //Do something
-            //speed = storedSpeed;']]]'
-
-        }
-        else if (gamepad1.left_trigger >0.5)
-        {
-            //storedSpeed = speed;
-            speed = 0.50;
-            //Do something
-            //speed = storedSpeed;
-        }
-
-        //windshield wiper motion... hopefully
+        //windshield wiper motion
         double idealPosition;
         double rightClosedPosition = .6;
         double leftClosedPosition = .4;
@@ -239,31 +231,6 @@ public class Basic_TeleOp extends OpMode {
             robot.openAndCloseRightClaw(rightClosedPosition -= idealPosition);
             robot.openAndCloseLeftClaw(leftClosedPosition -= idealPosition);
         }
-
-
-
-       //Moves The servo arm using a function in Robot.Java
-        if (gamepad2.y){ // up
-            robot.rotateArmUp();
-
-        } else if (gamepad2.x) { //lower
-            robot.rotateArmDown();
-        }
-
-
-
-
-        if (this.gamepad2.b || this.gamepad2.left_trigger > 0.5) { // open
-            robot.openClaw();
-        } else if (this.gamepad2.a || this.gamepad2.right_trigger > 0.5) {//close
-            robot.closeClaw();
-        }
-
-
-        //if (distanceSensor.getDistance((DistanceUnit.CM)))
-
-
-
     }
 
     /*

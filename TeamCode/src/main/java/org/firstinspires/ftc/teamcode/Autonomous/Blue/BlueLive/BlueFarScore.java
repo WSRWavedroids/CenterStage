@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
 
             super.runOpMode();
             if (opModeInInit()) {
-                //Needs TF reference
                 TF.initTfod(robot.hardwareMap);
                 while (opModeInInit()) {
                     currentPosition = TF.position(TF.tfod);
@@ -48,7 +47,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 //This is certainly not tested
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Left");
-                //moveRobotLeft(1500, 2);//This value is off
+                //moveRobotLeft(1500, 2);
                 speed = .70;
                 moveRobotForward(1030, 2);
                 turnRobotLeft(1060, 2);
@@ -62,11 +61,11 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(500);
                 moveRobotRight(1200, 2);
                 robot.rotateArmDown();
-                turnRobotRight(35, 2); // this might be dumb
+                turnRobotRight(35, 2);
                 prepareNextAction(400);
                 speed = 0.90;
                 moveRobotForward(3600,2);
-                turnRobotRight(35, 2); // this might be dumb
+                turnRobotRight(35, 2);
                 speed = .8;
                 moveRobotLeft(1600,2);
                 prepareNextAction(200);
@@ -106,7 +105,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 turnRobotLeft(1060, 2);
                 moveLift("Down",0.55);
                 moveRobotRight(100, 2);
-                turnRobotRight(45, 2); // this might be dumb
+                turnRobotRight(45, 2);
                 speed = 0.85;
                 moveRobotForward(3600,2);
                 moveRobotLeft(1250,2);
@@ -125,44 +124,20 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 robot.rotateArmDown();
             }
 
-            else if(target == "Right Zone")
-            {
-                //None of the values after the inital place work. Be  warned
+            else if(target == "Right Zone") {
                 telemetry.addData("Going to", "Right");
                 moveRobotForward(950, 2);
                 moveRobotRight(550, 2);
-                prepareNextAction(200);//new
+                prepareNextAction(200);
                 moveLift("Up", .55);
-                moveRobotForward(450,2);
+                moveRobotForward(450, 2);
                 robot.openSecondaryClaw();
                 prepareNextAction(400);
                 moveRobotBackward(850, 1);
-                /*moveRobotLeft(500, 2);
-                moveRobotForward(1200, 2);
-                turnRobotLeft(1070, 2);
-                speed = .9;
-                moveRobotForward(3600, 2);
-                moveRobotLeft(900, 2);
-                moveLift("Up",0.55);
-                prepareNextAction(200);
-                robot.rotateArmUp();
-                prepareNextAction(500);
-                moveRobotForward(700, 2);
-                prepareNextAction(200);
-                robot.openClaw();
-                prepareNextAction(200);
-                moveRobotBackward(450, 2);
-                robot.rotateArmDown();
-                moveRobotRight(900, 2);
-                moveRobotForward(450, 2);
-                moveRobotBackward(1,1);
-                /*
-                 */
-
-            } else {
+            }
+            else {
                 robot.rotateArmDown();
                 telemetry.addData("Going to", "Left");
-                //moveRobotLeft(1500, 2);//This value is off
                 speed = .70;
                 moveRobotForward(1030, 2);
                 turnRobotLeft(1060, 2);
@@ -176,11 +151,11 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 prepareNextAction(500);
                 moveRobotRight(1200, 2);
                 robot.rotateArmDown();
-                turnRobotRight(35, 2); // this might be dumb
+                turnRobotRight(35, 2);
                 prepareNextAction(400);
                 speed = 0.90;
                 moveRobotForward(3600,2);
-                turnRobotRight(35, 2); // this might be dumb
+                turnRobotRight(35, 2);
                 speed = .8;
                 moveRobotLeft(1600,2);
                 prepareNextAction(200);
@@ -197,8 +172,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.TensorFlow;
                 moveLift("Down", 0.55);
                 moveRobotRight(1450, 2);
                 moveRobotForward(700, 2);
-                moveRobotBackward(1, 0);//stop the robot
-
+                moveRobotBackward(1, 0);
             }
 
         }
